@@ -4,11 +4,13 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
+import com.revrobotics.SparkRelativeEncoder;
 public class ClimberSubsystem extends SubsystemBase {
 
   private static final int climber1ID = 16;
@@ -17,48 +19,74 @@ public class ClimberSubsystem extends SubsystemBase {
   private CANSparkMax climberMotor1;
   private CANSparkMax climberMotor2;
 
+    private RelativeEncoder m_encoder1;
+    private RelativeEncoder m_encoder2;
+   public double arm1zero;
+    public double arm2zero;
+
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
-
+  
   climberMotor1 = new CANSparkMax(climber1ID, MotorType.kBrushless);
   climberMotor2 = new CANSparkMax(climber2ID, MotorType.kBrushless);
 
+    m_encoder1 = climberMotor1.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+
+    m_encoder2 = climberMotor2.getEncoder(SparkRelativeEncoder.Type.kHallSensor, 42);
+
   climberMotor1.restoreFactoryDefaults();
   climberMotor2.restoreFactoryDefaults();
+  climberMotor1.setIdleMode(IdleMode.kBrake);
+  climberMotor2.setIdleMode(IdleMode.kBrake);
+
+  climberMotor1.burnFlash();
+  climberMotor2.burnFlash();
+   
+  arm1zero = m_encoder1.getPosition();
+  arm2zero = m_encoder2.getPosition();
+
+    }
+  public double getarm1position() {
+    return (m_encoder1.getPosition()-arm1zero);
+  }
+   public double getarm2position() {
+    return (m_encoder2.getPosition()-arm2zero);
   }
 
   public void climber1Up() {
-    System.out.println("climber1Up run");
-    climberMotor1.set(-.2);
+    
+    climberMotor1.set(-.25);
   }
   public void climber1Stop() {
-    System.out.println("climber1Stop run");
     climberMotor1.set(0);
   }
   public void climber1Down() {
-    System.out.println("climber1Down run");
-    climberMotor1.set(.2);
+
+    if (getarm1position() < -5){
+    climberMotor1.set(.25);
+    }
+
   }
   public void climber2Up() {
-    System.out.println("climber2Up run");
-    climberMotor2.set(-.2);
-  }
+    climberMotor2.set(-.25);
+    }
+  
   public void climber2Stop() {
-    System.out.println("climber2Stop run");
     climberMotor2.set(0);
   }
   public void climber2Down() {
-    System.out.println("climber2Down run");
-    climberMotor2.set(.2);
+      if (getarm2position() < -5){
+    climberMotor2.set(.25);
+       }
   }
-  public void climberBrakeMode() {
-    System.out.println("climberBrakeMode run");
-    climberMotor1.setIdleMode(IdleMode.kBrake);
-    climberMotor2.setIdleMode(IdleMode.kBrake);
-  }
+
   
   @Override
   public void periodic() {
+
+    SmartDashboard.putNumber("Encoderleft", m_encoder1.getPosition());
+        SmartDashboard.putNumber("Encoderright", m_encoder2.getPosition());
+
     
     // This method will be called once per scheduler run
   }

@@ -18,6 +18,10 @@ import frc.robot.commands.ClimbersStop;
 import frc.robot.commands.ClimbersUp;
 import frc.robot.commands.DriveManuallyCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.LeftClimberDown;
+import frc.robot.commands.LeftClimberUp;
+import frc.robot.commands.RightClimberDown;
+import frc.robot.commands.RightClimberUp;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.TurnToAngleZeroHeadingCommand;
 import frc.robot.commands.ZeroHeadingCommand;
@@ -158,23 +162,39 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-      // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-      new Trigger(m_exampleSubsystem::exampleCondition)
-              .onTrue(new ExampleCommand(m_exampleSubsystem));
-        //climber
-        new Trigger(m_operator2Controller.button(1))
-            .onTrue(new ClimbersUp(climberSubsystem));
-        new Trigger(m_operator2Controller.button(2))
-            .onTrue(new ClimbersStop(climberSubsystem));
-        new Trigger(m_operator2Controller.button(3))
-            .onTrue(new ClimbersDown(climberSubsystem));
-        //arm
-        new Trigger(m_operator2Controller.button(4))
-            .onTrue(new ArmUp(armSubsystem));
-        new Trigger(m_operator2Controller.button(5))
-            .onTrue(new ArmDown(armSubsystem));
-        new Trigger(m_operator2Controller.button(6))
-            .onTrue(new ArmStop(armSubsystem));
+     
+         //Climber Bindings
+         new Trigger(m_operator1Controller.button(4))
+         .whileTrue(new ClimbersUp(climberSubsystem))
+         .whileFalse(new ClimbersStop(climberSubsystem));
+  
+     new Trigger(m_operator1Controller.button(5))
+         .whileTrue(new ClimbersDown(climberSubsystem));
+
+         //right climber
+
+          new Trigger(m_operator1Controller.button(6))
+         .whileTrue(new LeftClimberUp(climberSubsystem));
+
+     new Trigger(m_operator1Controller.button(7))
+         .whileTrue(new LeftClimberDown(climberSubsystem));
+
+        //left climber
+    
+    new Trigger(m_operator1Controller.button(11))
+         .whileTrue(new RightClimberUp(climberSubsystem));
+
+  
+     new Trigger(m_operator1Controller.button(2))
+         .whileTrue(new RightClimberDown(climberSubsystem));
+
+     //Arm Bindings
+     new Trigger(m_operator2Controller.button(4))
+         .onTrue(new ArmUp(armSubsystem));
+     new Trigger(m_operator2Controller.button(5))
+         .onTrue(new ArmDown(armSubsystem));
+     new Trigger(m_operator2Controller.button(6))
+         .onTrue(new ArmStop(armSubsystem));
       // Schedule `exampleMethodCommand` when the Xbox controller's B button is
       // pressed,
       // cancelling on release.
@@ -263,7 +283,7 @@ private double getDriverXAxis() {
    * @return - true if robot-centric swerve should be used
    */
   private boolean getDriverFieldCentric() {
-      return !turnStick.getRawButton(OIConstants.robotCentricButton);
+      return true;
   }
 
   /**
