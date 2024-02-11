@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class ClimberSubsystem extends SubsystemBase {
@@ -50,7 +51,11 @@ public class ClimberSubsystem extends SubsystemBase {
     System.out.println("climber2Down run");
     climberMotor2.set(.2);
   }
-    
+  public void climberBrakeMode() {
+    System.out.println("climberBrakeMode run");
+    climberMotor1.setIdleMode(IdleMode.kBrake);
+    climberMotor2.setIdleMode(IdleMode.kBrake);
+  }
   
   @Override
   public void periodic() {
