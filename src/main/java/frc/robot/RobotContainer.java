@@ -164,37 +164,40 @@ public class RobotContainer {
   private void configureBindings() {
      
          //Climber Bindings
-         new Trigger(m_operator1Controller.button(4))
+        new Trigger(m_operator1Controller.button(4)) 
          .whileTrue(new ClimbersUp(climberSubsystem))
          .whileFalse(new ClimbersStop(climberSubsystem));
   
-     new Trigger(m_operator1Controller.button(5))
+        new Trigger(m_operator1Controller.button(5))
          .whileTrue(new ClimbersDown(climberSubsystem));
 
          //right climber
 
-          new Trigger(m_operator1Controller.button(6))
+        new Trigger(m_operator1Controller.button(6))
          .whileTrue(new LeftClimberUp(climberSubsystem));
 
-     new Trigger(m_operator1Controller.button(7))
+        new Trigger(m_operator1Controller.button(7))
          .whileTrue(new LeftClimberDown(climberSubsystem));
 
         //left climber
     
-    new Trigger(m_operator1Controller.button(11))
+        new Trigger(m_operator1Controller.button(11))
          .whileTrue(new RightClimberUp(climberSubsystem));
 
   
-     new Trigger(m_operator1Controller.button(2))
+        new Trigger(m_operator1Controller.button(2))
          .whileTrue(new RightClimberDown(climberSubsystem));
 
      //Arm Bindings
-     new Trigger(m_operator2Controller.button(4))
-         .onTrue(new ArmUp(armSubsystem));
-     new Trigger(m_operator2Controller.button(5))
-         .onTrue(new ArmDown(armSubsystem));
-     new Trigger(m_operator2Controller.button(6))
-         .onTrue(new ArmStop(armSubsystem));
+
+        new Trigger(m_operator2Controller.button(4)) // top right
+         .whileTrue(new ArmUp(armSubsystem))
+         .whileFalse(new ArmStop(armSubsystem));
+
+        new Trigger(m_operator2Controller.button(5)) // middle right
+         .whileTrue(new ArmDown(armSubsystem));
+       
+
       // Schedule `exampleMethodCommand` when the Xbox controller's B button is
       // pressed,
       // cancelling on release.

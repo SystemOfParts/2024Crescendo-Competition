@@ -10,7 +10,7 @@ public class RightClimberDown extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new InstantCommand(() -> m_climber.climber2Down()));
+        new InstantCommand(() -> m_climber.climber2Down(.25)));
        
     }
 }

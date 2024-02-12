@@ -10,7 +10,7 @@ public class LeftClimberUp extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new InstantCommand(() -> m_climber.climber1Up()));
+        new InstantCommand(() -> m_climber.climber1Up(.25)));
        
     }
 }

@@ -10,7 +10,7 @@ public class ClimbersStop extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new InstantCommand(() -> m_climber.climber1Stop()),
-        new InstantCommand(() -> m_climber.climber2Stop()));
+        new InstantCommand(() -> m_climber.stopClimber1()),
+        new InstantCommand(() -> m_climber.stopClimber2()));
     }
 }
