@@ -201,7 +201,6 @@ public class RobotContainer {
       // Schedule `exampleMethodCommand` when the Xbox controller's B button is
       // pressed,
       // cancelling on release.
-      //new Trigger(buttonBox2.getRawButtonPressed(0));
 
       
       
@@ -211,49 +210,6 @@ public class RobotContainer {
       //testCalibrateMotorsAndEncodersButtonBindings();
       //swerveValuesTesting();
   }
-
-  /**
-   * Swerve control inputs will be supplied as lambdas to the manual drive
-   * command.
-   * This way it would be easy to be switch between different input devices such
-   * as joystick or Xbox controller.
-   * In order to do a switch appropriate analog axis of the device would need to
-   * be specificed in one of the three
-   * methods below.
-   */
-
-  /**
-   * Logitech joystick returns -1 of Y axis when pushed all the way forward and +1
-   * when pushed all the way backwards.
-   * Since the robot is oriented on the X axis of the field, pushing joystick
-   * forward means robot to go forward
-   * along the X axis.
-   * The next three commands are used for teleop driving, and they should
-   * represent the controller inputs from the field point of view
-   * meaning getDriverXAxis() should provide positive value for robot moving
-   * towards the opposite side of the field where the other team is
-   * located if your team's location is on the left side of the field.
-   * getDriverYAxis() positive value will cause the robot move to the left of your
-   * team's location on the field.
-   * getDriverOmegaAxis() positive value causes the robot to rotate
-   * counterclockwise.
-   *
-   * If you use just one joystick or other controllers, modify the methods below
-   * to return the value from the appropriate controler axis.
-   *
-   * @return
-   */
-//   private double getDriverXAxis() {
-//       return -driveStick.getLeftStickY();
-//   }
-
-//   private double getDriverYAxis() {
-//       return -driveStick.getLeftStickX();
-//   }
-
-//   private double getDriverOmegaAxis() {
-//       return -turnStick.getLeftStickOmega();
-//   }
 
 private double getDriverXAxis() {
     // return -driveStick.getLeftStickY();
@@ -333,90 +289,6 @@ private double getDriverXAxis() {
   * Make sure the swerve calculates the right power and angle numbers, or visually test the robot movement
   * To enable put a call to this method in configureBindings method
   */
-  private void swerveValuesTesting() { // Field centric numbers applied
-
-    // Move robot to the left
-    new JoystickButton(driveStick, 3)
-        .onTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0.3,0, true)))
-        .onFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-
-    // Move robot forward
-    new JoystickButton(driveStick, 4)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0.3,0,0, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-
-    // Move robot to the right
-    new JoystickButton(driveStick, 5)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,-0.3,0, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-
-    // Move robot backwards
-    new JoystickButton(driveStick, 6)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(-0.3,0,0, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-
-    // Turn robot counterclockwise
-    new JoystickButton(driveStick, 7)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, 1, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-
-    // Turn robot clockwise
-    new JoystickButton(driveStick, 8)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.drive(0,0, -1, true)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)))
-           .andThen(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)))
-        );
-    
-    new JoystickButton(turnStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  }
 
   /**
    * Bindings to test simple swerve trajectories done in PathPlanner
