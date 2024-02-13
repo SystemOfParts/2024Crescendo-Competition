@@ -5,13 +5,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.ClimberSubsystem;
-public class LeftClimberUp extends SequentialCommandGroup{
-    public LeftClimberUp(
+public class LeftClimberSetPIDLow extends SequentialCommandGroup{
+    public LeftClimberSetPIDLow(
         ClimberSubsystem m_climber
 
     ){
     addCommands(
-        new RunCommand(() -> m_climber.climber1Up(.75)));
-       
+        new InstantCommand(() -> m_climber.moveToBottom()));
     }
 }

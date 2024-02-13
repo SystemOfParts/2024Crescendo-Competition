@@ -17,6 +17,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.SwerveChassis.*;
+import frc.robot.PassThroughSystems.Motor.BaseMotorNEO;
 
 public class DriveSubsystem extends SubsystemBase {
 
@@ -68,7 +69,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double telemetryDriveEncoder(int modnumber) {
-    return swerveMods[modnumber].telemetryDriveEncoder();
+    return (swerveMods[modnumber].telemetryDriveEncoder() * 42); 
   }
 
   // Used only for motor testing; run motor forward, 0.3 power

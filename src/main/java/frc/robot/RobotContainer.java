@@ -3,45 +3,25 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Devices.Controller;
-import frc.robot.commands.ArmUp;
-import frc.robot.commands.ArmDown;
-import frc.robot.commands.ArmStop;
-
-import frc.robot.commands.Autos;
-import frc.robot.commands.ClimbersDown;
-import frc.robot.commands.ClimbersStop;
-import frc.robot.commands.ClimbersUp;
-import frc.robot.commands.DriveManuallyCommand;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.LeftClimberDown;
-import frc.robot.commands.LeftClimberUp;
-import frc.robot.commands.RightClimberDown;
-import frc.robot.commands.RightClimberUp;
-import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
-import frc.robot.commands.TurnToAngleZeroHeadingCommand;
-import frc.robot.commands.ZeroHeadingCommand;
+import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
-import edu.wpi.first.wpilibj.GenericHID;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -50,143 +30,121 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RobotContainer {
 
-    
-  public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
-
-  public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-
-  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
-
-  public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
-
-    public static final ArmSubsystem armSubsystem = new ArmSubsystem();
-
-
-  public GenericHID buttonBox1 = new GenericHID(0);
-
-  public GenericHID buttonBox2 = new GenericHID(1);
-
-  public static Controller driveStick;
-
-  public static Controller turnStick;
-
+  //Define Controllers
   public static Controller xboxController;
+  
+  //Define and instantiate CommandControllers
+  private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandGenericHID m_operator1Controller = new CommandGenericHID(0);
+  private final CommandGenericHID m_operator2Controller = new CommandGenericHID(1);
+  
+  //Instantiate Subsystems
+  public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
+  public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+  public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+  public static final ArmSubsystem armSubsystem = new ArmSubsystem();
 
+  //Define autos
   public static final String kDefaultAuto = "1MeterForward";
-
   public static final String kCustomAuto = "SwiggleWiggle";
-
   public static final String kCustomAuto2 = "1Meter45Diag";
-
   public static final String kCustomAuto3 = "Test";
-
   public String ChosenAuto;
 
+  //Define the SendableChooser for autos
   public final SendableChooser<String> m_chooser = new SendableChooser<>();
-
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-
   
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
-    private final CommandGenericHID m_operator1Controller = new CommandGenericHID(0);
-    private final CommandGenericHID m_operator2Controller = new CommandGenericHID(1);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-
-    m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
-
-    m_chooser.addOption("SwiggleWiggle", kCustomAuto);
-
-    m_chooser.addOption("1Meter45Diag", kCustomAuto2);
-
-    m_chooser.addOption("Test", kCustomAuto3);
-
-    SmartDashboard.putData("Auto choices", m_chooser);
-
-    
-      // Configure driver interface - binding joystick objects to port numbers
-      configureDriverInterface();
-
-      // Configure the trigger bindings
-      configureBindings();
-
-      // This command should be for the teleop driving
-      // Note that the first three of its parameters are DoubleSupplier, and the last one is a
-      // BooleanSupplier
-      
-      driveSubsystem.setDefaultCommand(
+    // Configure driver interface - binding joystick objects to port numbers
+    configureDriverInterface();
+    // Configure the trigger bindings
+    configureBindings();
+    driveSubsystem.setDefaultCommand(
               new DriveManuallyCommand(
                       () -> getDriverXAxis(),
                       () -> getDriverYAxis(),
                       () -> getDriverOmegaAxis(),
                       () -> getDriverFieldCentric()));
-
+    // add autos to the chooser
+    m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
+    m_chooser.addOption("SwiggleWiggle", kCustomAuto);
+    m_chooser.addOption("1Meter45Diag", kCustomAuto2);
+    m_chooser.addOption("Test", kCustomAuto3);
+    SmartDashboard.putData("Auto choices", m_chooser);
+    
   }
 
-  /**
-   * Use this method to define your controllers depending on the
-   * {@link DriveInterface}
-   */
+ //instantiate drive controllers
   private void configureDriverInterface() {
-
-      /**
-       * We tried driving with a single Logitech joystick that has X,Y and turn axis.
-       * However, the team decided to move the turn to the second joystick for now.
-       * Note that Controller objects are only used to provide DoubleSupplier methods
-       * to the
-       * commands that need manual control input (e.g. DriveManuallyCommand)
-       */
-      driveStick = new Controller(ControllerDevice.DRIVESTICK);
-      turnStick = new Controller(ControllerDevice.TURNSTICK);
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
-      System.out.println("Driver interface configured");
+      //System.out.println("Driver interface configured");
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
+  private double getDriverXAxis() {
+      return -xboxController.getLeftStickY();
+  }
+
+private double getDriverYAxis() {
+      return -xboxController.getLeftStickX();
+}
+
+private double getDriverOmegaAxis() {
+      return -xboxController.getLeftStickOmega();
+}
+
+private boolean getDriverFieldCentric() {
+        return true;
+}
+  
+private void configureBindings() {
      
          //Climber Bindings
         new Trigger(m_operator1Controller.button(4)) 
          .whileTrue(new ClimbersUp(climberSubsystem))
-         .whileFalse(new ClimbersStop(climberSubsystem));
+         .onFalse(new ClimbersStop(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(5))
-         .whileTrue(new ClimbersDown(climberSubsystem));
+         .whileTrue(new ClimbersDown(climberSubsystem))
+         .onFalse(new ClimbersStop(climberSubsystem));
 
-         //right climber
+         //left climber
 
         new Trigger(m_operator1Controller.button(6))
-         .whileTrue(new LeftClimberUp(climberSubsystem));
+         .whileTrue(new LeftClimberUp(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
 
         new Trigger(m_operator1Controller.button(7))
-         .whileTrue(new LeftClimberDown(climberSubsystem));
+         .whileTrue(new LeftClimberDown(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
 
-        //left climber
-    
         new Trigger(m_operator1Controller.button(11))
-         .whileTrue(new RightClimberUp(climberSubsystem));
+         .onTrue(new LeftClimberSetPIDMid(climberSubsystem));
 
+        new Trigger(m_operator1Controller.button(2))
+         .onTrue(new LeftClimberSetPIDLow(climberSubsystem));
+
+          //MANUAL CONTROLS FOR TESTING - BE CAREFUL!
+        new Trigger(m_operator1Controller.button(3))
+         .whileTrue(new LeftClimberManuallyDown(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
+
+          //MANUAL CONTROLS FOR TESTING - BE CAREFUL!
+        new Trigger(m_operator1Controller.button(8))
+         .whileTrue(new LeftClimberManuallyUp(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
+
+          //right climber
+        /* 
+        new Trigger(m_operator1Controller.button(11))
+         .whileTrue(new RightClimberUp(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(2))
-         .whileTrue(new RightClimberDown(climberSubsystem));
+         .whileTrue(new RightClimberDown(climberSubsystem))
+          .onFalse(new LeftClimberStop(climberSubsystem));
+          */
 
      //Arm Bindings
 
@@ -197,138 +155,43 @@ public class RobotContainer {
         new Trigger(m_operator2Controller.button(5)) // middle right
          .whileTrue(new ArmDown(armSubsystem));
        
-
-      // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-      // pressed,
-      // cancelling on release.
-
-      
-      
-      //swerveValuesTesting();
-
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
-      //swerveValuesTesting();
-  }
-
-private double getDriverXAxis() {
-    // return -driveStick.getLeftStickY();
-
-    //System.out.println("***--- DX:"+-xboxController.getLeftStickY());
-
-    return -xboxController.getLeftStickY();
- }
-
- private double getDriverYAxis() {
-    // return -driveStick.getLeftStickX();
-    return -xboxController.getLeftStickX();
- }
-
- private double getDriverOmegaAxis() {
-    // return -turnStick.getLeftStickOmega();
-    return -xboxController.getLeftStickOmega();
- }
-
-  
-
-  /**
-   * If the button is pressed, use robot-centric swerve
-   * Otherwise use field-centric swerve (default).
-   * Currently it's set to a numbered button on a joystick, but if you use Xbox or
-   * similar controller, you may need to modify this
-   * On Logitech joystick button #2 seemed to be the most convenient, though we
-   * may consider moving it to the drivestick.
-   * 
-   * @return - true if robot-centric swerve should be used
-   */
-  private boolean getDriverFieldCentric() {
-      return true;
   }
 
   /**
-   * 
-  * Make sure motors move robot forward with positive power and encoders increase with positive power
-  * To enable put a call to this method in configureBindings method
-  */
-  private void testCalibrateMotorsAndEncodersButtonBindings() {
+* Bindings to test simple swerve trajectories done in PathPlanner
+*/
+public void trajectoryCalibration() {
+  new Trigger(m_operator2Controller.button(1))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(2))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterSideways"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(3))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(4))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("MeterStraightTurn90"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(5))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(6))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(7))
+      .whileTrue(new ZeroHeadingCommand())
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  /*new Trigger(m_operator2Controller.button(8))
+      .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  new Trigger(m_operator2Controller.button(9))
+      .whileTrue(new InstantCommand(RobotContainer.driveSubsystem::testOdometryUpdates));
+      */
+}
 
-    new JoystickButton(driveStick, 5)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(0)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(0)));
-
-    new JoystickButton(driveStick, 6)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(1)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(1)));
-
-    new JoystickButton(driveStick, 3)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(2)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(2)));
-
-    new JoystickButton(driveStick, 4)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testDriveMotorEncoderPhase(3)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopDriveMotor(3)));
-
-    new JoystickButton(driveStick, 11)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(2)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(2)));
-
-    new JoystickButton(driveStick, 12)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(3)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(3)));
-
-    new JoystickButton(driveStick, 10)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(1)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(1)));
-
-    new JoystickButton(driveStick, 9)
-        .whileTrue(new InstantCommand(() -> RobotContainer.driveSubsystem.testAngleMotorEncoderPhase(0)))
-        .whileFalse(new InstantCommand(() -> RobotContainer.driveSubsystem.stopAngleMotor(0)));
-  }
-
-  /**
-  * Make sure the swerve calculates the right power and angle numbers, or visually test the robot movement
-  * To enable put a call to this method in configureBindings method
-  */
-
-  /**
-   * Bindings to test simple swerve trajectories done in PathPlanner
-   */
-  public void trajectoryCalibration() {
-      new JoystickButton(driveStick, 11)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 12)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterSideways"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 9)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("MeterStraightTurn90"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(turnStick, 11)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(turnStick, 10)
-              .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 7)
-              .whileTrue(new ZeroHeadingCommand())
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(driveStick, 8)
-              .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
-              .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-      new JoystickButton(turnStick, 12)
-              .whileTrue(new InstantCommand(RobotContainer.driveSubsystem::testOdometryUpdates));
-        
-
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     ChosenAuto = m_chooser.getSelected();

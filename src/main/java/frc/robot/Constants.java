@@ -56,8 +56,8 @@ public final class Constants {
 		 * Drive train properties
 		 * All measurements are in meters
 		 */
-		public static final double TRACK_WIDTH = 0.64; // left to right
-		public static final double WHEEL_BASE = 0.64; // front to back
+		public static final double TRACK_WIDTH = Units.inchesToMeters(20.75); // left to right
+		public static final double WHEEL_BASE = Units.inchesToMeters(20.6); //front to back
 		public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -65,8 +65,8 @@ public final class Constants {
 
 		// WATCH OUT: CHANGE DIMENSIONS
 
-		public static final double CHASSIS_OUTER_DIMENSIONS_X = 0.8128;	//meters
-		public static final double CHASSIS_OUTER_DIMENSIONS_Y = 0.8128;
+		public static final double CHASSIS_OUTER_DIMENSIONS_X = Units.inchesToMeters(26);	//meters
+		public static final double CHASSIS_OUTER_DIMENSIONS_Y = Units.inchesToMeters(26);
 
 		public static final double CHASSIS_OUTER_DRIVE_RADIUS = Math.sqrt( (CHASSIS_OUTER_DIMENSIONS_X * CHASSIS_OUTER_DIMENSIONS_X) + (CHASSIS_OUTER_DIMENSIONS_Y * CHASSIS_OUTER_DIMENSIONS_Y) );
 
@@ -166,7 +166,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 2.0;
+		public static final double MAX_ACCELERATION = 3;
 
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -458,7 +458,7 @@ public final class Constants {
 					1, // Port Number
 					ControllerDeviceType.LOGITECH,
 					0.02, // deadband X
-					0.02, // deadband Y
+					0.02, // deadband Y																				
 					0.02, // deadband Omega
 					true, // cubeControllerLeft
 					true // cubeControllerRight
@@ -467,9 +467,9 @@ public final class Constants {
 			XBOX_CONTROLLER(
 					5, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
-					0.1, // deadband X for Xbox
-					0.1, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
-					0.1, // deadband Omega for Xbox
+					0.05, // deadband X for Xbox
+					0.05, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
+					0.05, // deadband Omega for Xbox
 					false, // No cube controller configuration for Xbox yet
 					false);
 
