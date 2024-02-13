@@ -149,7 +149,7 @@ private void configureBindings() {
      //Arm Bindings
 
         new Trigger(m_operator2Controller.button(4)) // top right
-         .whileTrue(new ArmUp(armSubsystem))
+         .whileTrue(new ArmTo45Degrees(armSubsystem))
          .whileFalse(new ArmStop(armSubsystem));
 
         new Trigger(m_operator2Controller.button(5)) // middle right

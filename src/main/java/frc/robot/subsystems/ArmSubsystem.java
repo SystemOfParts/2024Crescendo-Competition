@@ -5,43 +5,74 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.SparkPIDController;
 
 public class ArmSubsystem extends SubsystemBase {
+    private final CANSparkMax leftArmMotor = new CANSparkMax(11, MotorType.kBrushless);
+    private final CANSparkMax rightArmMotor = new CANSparkMax(12, MotorType.kBrushless);
+    private final RelativeEncoder encoder = leftArmMotor.getEncoder();
+    private final SparkPIDController pidController = leftArmMotor.getPIDController();
 
-  private static final int Arm1ID = 10;
-  private static final int Arm2ID = 11;
+    // Constants for PID control, adjust based on testing - NEEDS UPDATE
+    private static final double kP = 0.1; // Proportional term
+    private static final double kI = 0.0; // Integral term
+    private static final double kD = 0.0; // Derivative term
+    private static final double kIz = 0; // Integral zone
+    private static final double kFF = 0.0; // Feed-forward
+    private static final double kMaxOutput = 1;
+    private static final double kMinOutput = -1;
+    private static final double maxRPM = 5700; // Max RPM for NEO 500
 
-  private CANSparkMax armMotor1;
-  private CANSparkMax armMotor2;
+    // Gear reduction and encoder conversion factor - NEEDS UPDATE
+    private static final double gearReduction = 60.0; // 60:1 Gear reduction (Not taking chain & Sprocket into account)
+    private static final double encoderConversionFactor = 360.0 / (gearReduction * maxRPM); // Needs changing to convert encoder ticks into degrees
 
-  /** Creates a new ArmSubsystem. */
-  public ArmSubsystem() {
+    public ArmSubsystem() {
+        // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
+        rightArmMotor.follow(leftArmMotor, true);
 
-  armMotor1 = new CANSparkMax(Arm1ID, MotorType.kBrushless);
-  armMotor2 = new CANSparkMax(Arm2ID, MotorType.kBrushless);
+        // Set motors to brake mode
+        leftArmMotor.setIdleMode(IdleMode.kBrake);
+        rightArmMotor.setIdleMode(IdleMode.kBrake);
 
-  armMotor1.restoreFactoryDefaults();
-  armMotor2.restoreFactoryDefaults();
+        // PID configuration - NEEDS UPDATE
+        pidController.setP(kP);
+        pidController.setI(kI);
+        pidController.setD(kD);
+        pidController.setIZone(kIz);
+        pidController.setFF(kFF);
+        pidController.setOutputRange(kMinOutput, kMaxOutput);
 
-  armMotor1.setInverted(true);
-  armMotor2.follow(armMotor1);
+        // Encoder setup
+        encoder.setPositionConversionFactor(encoderConversionFactor); // NEEDS UPDATE
+        encoder.setVelocityConversionFactor(encoderConversionFactor / 60.0); // NEEDS UPDATE
+    }
 
-  }
-  public void armUp (){
+    public void armDown() {
+        moveToAngle(0);
+    }
 
-    armMotor1.set(-.1);
-  }
-   public void armStop (){
+    public void armTo45Degrees() {
+        moveToAngle(45);
+    }
 
-    armMotor1.set(0);
-  }
-  
-  public void armDown (){
+    public void armTo90Degrees() {
+        moveToAngle(90);
+    }
 
-    armMotor1.set(.1);
-  }
+    public void armStop() {
+        leftArmMotor.set(0);
+    }
+
+    private void moveToAngle(double angle) {
+        double targetPosition = angle / 360.0 * gearReduction; // Will change to multiplying by EncoderConversionFactor after testing
+        pidController.setReference(targetPosition, CANSparkMax.ControlType.kPosition);
+    }
 
   @Override
   public void periodic() {
