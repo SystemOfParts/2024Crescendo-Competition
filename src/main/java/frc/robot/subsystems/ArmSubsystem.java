@@ -18,7 +18,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final RelativeEncoder encoder = leftArmMotor.getEncoder();
     private final SparkPIDController pidController = leftArmMotor.getPIDController();
 
-    // Constants for PID control, adjust based on testing - NEEDS UPDATE
+    // Constants for PID control, adjust based on testing - NEEDS TUNING
     private static final double kP = 0.1; // Proportional term
     private static final double kI = 0.0; // Integral term
     private static final double kD = 0.0; // Derivative term
@@ -29,8 +29,9 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double maxRPM = 5700; // Max RPM for NEO 500
 
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
-    private static final double gearReduction = 60.0; // 60:1 Gear reduction (Not taking chain & Sprocket into account)
-    private static final double encoderConversionFactor = 360.0 / (gearReduction * maxRPM); // Needs changing to convert encoder ticks into degrees
+    private static final double gearReduction = 197.142857143; // 60:1 Gear reduction (Not taking chain & Sprocket into account)
+    private static final double encoderConversionFactor = 360.0 / gearReduction; // Needs changing to convert encoder ticks into degrees
+    private static final double degreesPerCount = 360 / (gearReduction * 42);
 
     public ArmSubsystem() {
         // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
@@ -49,8 +50,8 @@ public class ArmSubsystem extends SubsystemBase {
         pidController.setOutputRange(kMinOutput, kMaxOutput);
 
         // Encoder setup
-        encoder.setPositionConversionFactor(encoderConversionFactor); // NEEDS UPDATE
-        encoder.setVelocityConversionFactor(encoderConversionFactor / 60.0); // NEEDS UPDATE
+        encoder.setPositionConversionFactor(encoderConversionFactor); // Refers to degrees, i.e, degrees
+        encoder.setVelocityConversionFactor(encoderConversionFactor / 60); // Sixty refers to seconds, i.e, degrees per second.
     }
 
     public void armDown() {
@@ -70,7 +71,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     private void moveToAngle(double angle) {
-        double targetPosition = angle / 360.0 * gearReduction; // Will change to multiplying by EncoderConversionFactor after testing
+        double targetPosition = angle / degreesPerCount;
         pidController.setReference(targetPosition, CANSparkMax.ControlType.kPosition);
     }
 
