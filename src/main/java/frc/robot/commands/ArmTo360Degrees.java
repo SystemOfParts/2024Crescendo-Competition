@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.ArmSubsystem;
-public class ArmTo90Degrees extends SequentialCommandGroup{
-    public ArmTo90Degrees(
+public class ArmTo360Degrees extends SequentialCommandGroup{
+    public ArmTo360Degrees(
         ArmSubsystem m_arm
 
     ){
     addCommands(
-        new RunCommand(() -> m_arm.armTo90Degrees()));
+        new RunCommand(() -> m_arm.armTo360Degrees()));
     }
 }
