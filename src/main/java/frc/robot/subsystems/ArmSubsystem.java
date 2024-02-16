@@ -90,9 +90,10 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    System.out.print(encoder.getPosition());
+
     System.out.println("encoder position: ");
 
-    System.out.print(encoder.getPosition());
     pidController.setReference(setpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
 
   }

@@ -9,8 +9,11 @@ import frc.robot.Devices.Controller;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
@@ -42,8 +45,13 @@ public class RobotContainer {
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+  
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
+  public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
+
 
   //Define autos
   public static final String kDefaultAuto = "1MeterForward";
@@ -148,16 +156,36 @@ private void configureBindings() {
 
      //Arm Bindings
 
-        new Trigger(m_operator2Controller.button(1)) // top right
+        new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .whileTrue(new ArmDown(armSubsystem));
 
-        new Trigger(m_operator2Controller.button(2)) // middle right
+        new Trigger(m_operator2Controller.button(2)) // button 2 = shooting position
          .whileTrue(new ArmTo45Degrees(armSubsystem));
 
-        new Trigger(m_operator2Controller.button(3)) // bottom right
+        new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
          .whileTrue(new ArmUpPosition(armSubsystem));
 
-       
+       //Intake and Shooter
+
+        new Trigger(m_operator2Controller.button(4)) //button 4 = intake
+         .whileTrue(new IntakeRun(intakeSubsystem))
+         .onFalse(new IntakeStop(intakeSubsystem));
+        
+        new Trigger(m_operator2Controller.button(5)) //button 5 = shoot
+         .whileTrue(new RunShooter(shooterSubsystem))
+         .onFalse(new StopShooter(shooterSubsystem));
+
+        // lead screw forward and back
+
+        new Trigger(m_operator2Controller.button(6)) //button 6 = move end effector forward
+         .whileTrue(new LeadScrewForward(leadScrewSubsystem))
+         .onFalse(new LeadScrewStop(leadScrewSubsystem));
+
+        new Trigger(m_operator2Controller.button(7)) //button 7 = move end effector backward
+         .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
+        
+
+
       //trajectoryCalibration();
       //testCalibrateMotorsAndEncodersButtonBindings();
   }
