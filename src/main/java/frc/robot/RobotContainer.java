@@ -108,7 +108,7 @@ private boolean getDriverFieldCentric() {
   
 private void configureBindings() {
      
-         //Climber Bindings
+         //Dual Climber Bindings
         new Trigger(m_operator1Controller.button(4)) 
          .whileTrue(new ClimbersUp(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
@@ -117,53 +117,40 @@ private void configureBindings() {
          .whileTrue(new ClimbersDown(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
 
-         //left climber
 
+       
+
+          //independent controls
+         
         new Trigger(m_operator1Controller.button(6))
          .whileTrue(new LeftClimberUp(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
-
+         .onFalse(new LeftClimberStop(climberSubsystem));
+  
         new Trigger(m_operator1Controller.button(7))
          .whileTrue(new LeftClimberDown(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
+         .onFalse(new LeftClimberStop(climberSubsystem));
 
-        new Trigger(m_operator1Controller.button(11))
-         .onTrue(new LeftClimberSetPIDMid(climberSubsystem));
 
-        new Trigger(m_operator1Controller.button(2))
-         .onTrue(new LeftClimberSetPIDLow(climberSubsystem));
-
-          //MANUAL CONTROLS FOR TESTING - BE CAREFUL!
-        new Trigger(m_operator1Controller.button(3))
-         .whileTrue(new LeftClimberManuallyDown(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
-
-          //MANUAL CONTROLS FOR TESTING - BE CAREFUL!
-        new Trigger(m_operator1Controller.button(8))
-         .whileTrue(new LeftClimberManuallyUp(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
-
-          //right climber
-        /* 
         new Trigger(m_operator1Controller.button(11))
          .whileTrue(new RightClimberUp(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
+         .onFalse(new RightClimberStop(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(2))
          .whileTrue(new RightClimberDown(climberSubsystem))
-          .onFalse(new LeftClimberStop(climberSubsystem));
-          */
+         .onFalse(new RightClimberStop(climberSubsystem));
+
+          
 
      //Arm Bindings
 
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
-         .whileTrue(new ArmDown(armSubsystem));
+         .onTrue(new ArmDown(armSubsystem));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting position
-         .whileTrue(new ArmTo45Degrees(armSubsystem));
+         .onTrue(new ArmTo45Degrees(armSubsystem));
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
-         .whileTrue(new ArmUpPosition(armSubsystem));
+         .onTrue(new ArmUpPosition(armSubsystem));
 
        //Intake and Shooter
 

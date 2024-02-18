@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ArmSubsystem;
 public class ArmTo45Degrees extends SequentialCommandGroup{
     public ArmTo45Degrees(
@@ -9,6 +9,6 @@ public class ArmTo45Degrees extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new RunCommand(() -> m_arm.armTo45Degrees()));
+        new InstantCommand(() -> m_arm.armTo45Degrees()));
     }
 }

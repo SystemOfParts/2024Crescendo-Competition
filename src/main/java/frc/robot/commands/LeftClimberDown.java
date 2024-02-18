@@ -10,6 +10,6 @@ public class LeftClimberDown extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new RunCommand(() -> m_climber.climber1Down(.75)));
+        new RunCommand(() -> m_climber.climber1Down(.5)));
     }
 }

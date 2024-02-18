@@ -9,6 +9,6 @@ public class RightClimberUp extends SequentialCommandGroup{
         ClimberSubsystem m_climber
     ){
     addCommands(
-        new RunCommand(() -> m_climber.climber2Up(.25)));
+        new RunCommand(() -> m_climber.climber2Up(.5)));
     }
 }

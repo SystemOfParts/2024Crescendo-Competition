@@ -25,23 +25,29 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double kD = 0.0; // Derivative term
     private static final double kIz = 0; // Integral zone
     private static final double kFF = 0.0; // Feed-forward
-    private static final double kMaxOutput = .25;
-    private static final double kMinOutput = -.25;
+    private static final double kMaxOutput = .5;
+    private static final double kMinOutput = -.3;
     private static final double maxRPM = 5700; // Max RPM for NEO 500
     public double setpoint = 0;
 
 
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
-    private static final double encoderConversionFactor = 360.0 / gearReduction; // Needs changing to convert encoder ticks into degrees
+    private static final double encoderConversionFactor = 360.0 / gearReduction;
 
     public ArmSubsystem() {
         // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
         rightArmMotor.follow(leftArmMotor, true);
 
         // Set motors to brake mode
-        leftArmMotor.setIdleMode(IdleMode.kBrake);
-        rightArmMotor.setIdleMode(IdleMode.kBrake);
+        leftArmMotor.setIdleMode(IdleMode.kCoast);
+        rightArmMotor.setIdleMode(IdleMode.kCoast);
+
+        leftArmMotor.setSmartCurrentLimit(40);
+        rightArmMotor.setSmartCurrentLimit(40);
+
+        leftArmMotor.burnFlash();
+        rightArmMotor.burnFlash();
 
         // PID configuration - NEEDS UPDATE
         pidController.setP(kP);
@@ -56,16 +62,16 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void armDown() {
-        setpoint = 0.0;
+        setpoint = 0/encoderConversionFactor;
     }
 
     public void armTo45Degrees() {
-        setpoint = 45/encoderConversionFactor;
+        setpoint = 35/encoderConversionFactor;
 
     }
 
     public void armTo85Degrees() {
-        setpoint = 85/encoderConversionFactor;
+        setpoint = 90/encoderConversionFactor;
 
     }
 
@@ -90,9 +96,9 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    System.out.print(encoder.getPosition());
+    //System.out.print(encoder.getPosition());
 
-    System.out.println("encoder position: ");
+    //System.out.println("encoder position: ");
 
     pidController.setReference(setpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
 
