@@ -66,21 +66,34 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure driver interface - binding joystick objects to port numbers
-    configureDriverInterface();
-    // Configure the trigger bindings
+    
     configureBindings();
+
+    /* 
+    // Try this to use the command xbox controller to drive the swerve instead of the default non-command controller
     driveSubsystem.setDefaultCommand(
-              new DriveManuallyCommand(
-                      () -> getDriverXAxis(),
-                      () -> getDriverYAxis(),
-                      () -> getDriverOmegaAxis(),
-                      () -> getDriverFieldCentric()));
-    // add autos to the chooser
-    m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
-    m_chooser.addOption("SwiggleWiggle", kCustomAuto);
-    m_chooser.addOption("1Meter45Diag", kCustomAuto2);
-    m_chooser.addOption("Test", kCustomAuto3);
-    SmartDashboard.putData("Auto choices", m_chooser);
+                new DriveManuallyCommand(
+                        () -> m_driverController.getLeftX(),
+                        () -> m_driverController.getLeftY(),
+                        () -> m_driverController.getRightX(),
+                        () -> getDriverFieldCentric()));
+
+    */
+    configureDriverInterface();
+      // Configure the trigger bindings
+      driveSubsystem.setDefaultCommand(
+                new DriveManuallyCommand(
+                        () -> getDriverXAxis(),
+                        () -> getDriverYAxis(),
+                        () -> getDriverOmegaAxis(),
+                        () -> getDriverFieldCentric()));
+
+      // add autos to the chooser
+      m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
+      m_chooser.addOption("SwiggleWiggle", kCustomAuto);
+      m_chooser.addOption("1Meter45Diag", kCustomAuto2);
+      m_chooser.addOption("Test", kCustomAuto3);
+      SmartDashboard.putData("Auto choices", m_chooser);
     
   }
 
