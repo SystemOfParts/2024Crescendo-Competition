@@ -27,7 +27,6 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double kFF = 0.0; // Feed-forward
     private static final double kMaxOutput = .5;
     private static final double kMinOutput = -.3;
-    private static final double maxRPM = 5700; // Max RPM for NEO 500
     public double setpoint = 0;
 
 

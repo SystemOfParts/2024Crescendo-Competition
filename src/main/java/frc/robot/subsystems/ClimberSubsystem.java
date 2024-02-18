@@ -22,7 +22,6 @@ public class ClimberSubsystem extends SubsystemBase {
 
  
 
-  private static final double GEAR_REDUCTION = 64.0;
   //private static final double AXLE_ROTATION_DISTANCE = 1.27; // Placeholder value for distance traveled per axle rotation (Centimeters)
   //private static final double AXLE_REVOLUTIONS_TO_MAX = 80.0; // Placeholder value for total axle revolutions to maximum value
   private static final double MAX_POSITION = -400.0;
@@ -101,6 +100,7 @@ public class ClimberSubsystem extends SubsystemBase {
             climberMotor2.set(0);
         }
     }
+    //dangerous controls for testing
   public void climber1DownManually(double speed){
     System.out.println("POSITION: "+(climberEncoder1.getPosition()));
     climberMotor1.set(speed);
@@ -121,6 +121,7 @@ public class ClimberSubsystem extends SubsystemBase {
    // Returns the climber position
     public double getClimberPosition() {
         return climberEncoder1.getPosition();
+      
     }
 
 
@@ -131,63 +132,12 @@ public class ClimberSubsystem extends SubsystemBase {
     climberMotor2.set(0);
   }
 
-  public void tunePIDs() {
-    /* 
-    double p = SmartDashboard.getNumber("Climber P Gain", 0);
-    double i = SmartDashboard.getNumber("Climber I Gain", 0);
-    double d = SmartDashboard.getNumber("Climber D Gain", 0);
-    double iz = SmartDashboard.getNumber("Climber I Zone", 0);
-    double ff = SmartDashboard.getNumber("Climber Feed Forward", 0);
-    double min = SmartDashboard.getNumber("Climber MinOutput", 0);
-    double max = SmartDashboard.getNumber("Climber MaxOutput", 0);
-    
-    if ((p != kP)){
-        m_pidcontroller.setP(p);
-        kP = p;
-    }
-    if ((i != kI)){
-        m_pidcontroller.setI(i);
-        kI = i;
-    }
-    if ((d != kD)){
-        m_pidcontroller.setD(d);
-        kD = d;
-    }
-    if ((iz != kIz)){
-        m_pidcontroller.setIZone(iz);
-        kIz = iz;
-    }
-    if ((ff != kFF)){
-        m_pidcontroller.setFF(ff);
-        kFF = ff;
-    }
-    if ((max != kMaxOutput) || (min != kMinOutput)){
-        m_pidcontroller.setOutputRange(min, max);
-        kMinOutput = min;
-        kMaxOutput = max;
-    }
-    */
-}
+ 
 
   @Override
   public void periodic() {
     System.out.println(climberEncoder2.getPosition());
+    System.out.println(climberEncoder1.getPosition());
 
-/* 
-    SmartDashboard.putNumber("Climber P Gain", kP);
-    SmartDashboard.putNumber("Climber I Gain", kI);
-    SmartDashboard.putNumber("Climber D", kD);
-    SmartDashboard.putNumber("Climber I Zone", kIz);
-    SmartDashboard.putNumber("Climber Feed Forward", kFF);
-    SmartDashboard.putNumber("Climber MinOutput", kMinOutput);
-    SmartDashboard.putNumber("Climber MaxOutput", kMaxOutput);
-    SmartDashboard.putNumber("Climber Position", getClimberPosition());
-    
-    SmartDashboard.putNumber("SetPoint", setpoint);
-    SmartDashboard.putNumber("Encoderleft", climberEncoder1.getPosition());
-    //SmartDashboard.putNumber("Encoderright", climberEncoder2.getPosition());
-    
-    tunePIDs();
-   */ 
   }
 }

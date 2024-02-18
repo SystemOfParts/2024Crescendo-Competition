@@ -17,7 +17,6 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.SwerveChassis.*;
-import frc.robot.PassThroughSystems.Motor.BaseMotorNEO;
 
 public class DriveSubsystem extends SubsystemBase {
 

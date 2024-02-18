@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -116,17 +117,17 @@ private double getDriverOmegaAxis() {
 }
 
 private boolean getDriverFieldCentric() {
-        return true;
+        return true; //return !xboxController.Button(1); bumper
 }
   
 private void configureBindings() {
      
          //Dual Climber Bindings
-        new Trigger(m_operator1Controller.button(4)) 
+        new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up , independent limiting
          .whileTrue(new ClimbersUp(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
   
-        new Trigger(m_operator1Controller.button(5))
+        new Trigger(m_operator1Controller.button(5)) //button 5 = both climbers down , independent limiting
          .whileTrue(new ClimbersDown(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
 
@@ -135,20 +136,20 @@ private void configureBindings() {
 
           //independent controls
          
-        new Trigger(m_operator1Controller.button(6))
+        new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up (limited)
          .whileTrue(new LeftClimberUp(climberSubsystem))
          .onFalse(new LeftClimberStop(climberSubsystem));
   
-        new Trigger(m_operator1Controller.button(7))
+        new Trigger(m_operator1Controller.button(7)) //button 7 = left climber down (limited)
          .whileTrue(new LeftClimberDown(climberSubsystem))
          .onFalse(new LeftClimberStop(climberSubsystem));
 
 
-        new Trigger(m_operator1Controller.button(11))
+        new Trigger(m_operator1Controller.button(11)) //button 11 = right climber up (limited)
          .whileTrue(new RightClimberUp(climberSubsystem))
          .onFalse(new RightClimberStop(climberSubsystem));
   
-        new Trigger(m_operator1Controller.button(2))
+        new Trigger(m_operator1Controller.button(2)) //button 2 = right climber down (limited)
          .whileTrue(new RightClimberDown(climberSubsystem))
          .onFalse(new RightClimberStop(climberSubsystem));
 
@@ -159,40 +160,44 @@ private void configureBindings() {
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
-        new Trigger(m_operator2Controller.button(2)) // button 2 = shooting position
+        new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
          .onTrue(new ArmTo45Degrees(armSubsystem));
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
          .onTrue(new ArmUpPosition(armSubsystem));
 
+         //todo: add safespot position for shooting
+
        //Intake and Shooter
 
-        new Trigger(m_operator2Controller.button(4)) //button 4 = intake
+        new Trigger(m_operator2Controller.button(4)) //button 4 = basi intake
          .whileTrue(new IntakeRun(intakeSubsystem))
          .onFalse(new IntakeStop(intakeSubsystem));
         
-        new Trigger(m_operator2Controller.button(5)) //button 5 = shoot
+        new Trigger(m_operator2Controller.button(5)) //button 5 = basic shoot
          .whileTrue(new RunShooter(shooterSubsystem))
          .onFalse(new StopShooter(shooterSubsystem));
 
         // lead screw forward and back
 
-        new Trigger(m_operator2Controller.button(6)) //button 6 = move end effector forward
+        new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)
          .whileTrue(new LeadScrewForward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
 
-        new Trigger(m_operator2Controller.button(7)) //button 7 = move end effector backward
+        new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
         
 
 
       //trajectoryCalibration();
-      //testCalibrateMotorsAndEncodersButtonBindings();
+      
   }
 
   /**
 * Bindings to test simple swerve trajectories done in PathPlanner
 */
+// to use these make sure you comment out the other uses of buttons before!!!!
+
 public void trajectoryCalibration() {
   new Trigger(m_operator2Controller.button(1))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
@@ -226,6 +231,6 @@ public void trajectoryCalibration() {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     ChosenAuto = m_chooser.getSelected();
-    return new RunTrajectorySequenceRobotAtStartPoint(ChosenAuto);
+    return new RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
   }
 }
