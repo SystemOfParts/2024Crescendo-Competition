@@ -55,10 +55,12 @@ public class RobotContainer {
 
 
   //Define autos
-  public static final String kDefaultAuto = "1MeterForward";
-  public static final String kCustomAuto = "SwiggleWiggle";
-  public static final String kCustomAuto2 = "1Meter45Diag";
-  public static final String kCustomAuto3 = "Test";
+  public static final String kDefaultAuto = "5142_1MeterForward";
+  public static final String kCustomAuto = "5142_1MeterRight";
+  public static final String kCustomAuto2 = "5142_RotateLeft90and1Meter";
+  public static final String kCustomAuto3 = "5142_Rotate180and1Meter";
+  public static final String kCustomAuto4 = "5142_ComplexPath";
+
   public String ChosenAuto;
 
   //Define the SendableChooser for autos
@@ -91,9 +93,11 @@ public class RobotContainer {
 
       // add autos to the chooser
       m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
-      m_chooser.addOption("SwiggleWiggle", kCustomAuto);
-      m_chooser.addOption("1Meter45Diag", kCustomAuto2);
-      m_chooser.addOption("Test", kCustomAuto3);
+      m_chooser.addOption("1MeterRight", kCustomAuto);
+      m_chooser.addOption("RotateLeft90and1Meter", kCustomAuto2);
+      m_chooser.addOption("ComplexPath", kCustomAuto3);
+      m_chooser.addOption("Rotate180and1Meter", kCustomAuto4);
+     
       SmartDashboard.putData("Auto choices", m_chooser);
     
   }
@@ -131,9 +135,6 @@ private void configureBindings() {
          .whileTrue(new ClimbersDown(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
 
-
-       
-
           //independent controls
          
         new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up (limited)
@@ -152,8 +153,6 @@ private void configureBindings() {
         new Trigger(m_operator1Controller.button(2)) //button 2 = right climber down (limited)
          .whileTrue(new RightClimberDown(climberSubsystem))
          .onFalse(new RightClimberStop(climberSubsystem));
-
-          
 
      //Arm Bindings
 
@@ -187,8 +186,6 @@ private void configureBindings() {
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
         
-
-
       //trajectoryCalibration();
       
   }
@@ -200,26 +197,25 @@ private void configureBindings() {
 
 public void trajectoryCalibration() {
   new Trigger(m_operator2Controller.button(1))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterForward"))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
   new Trigger(m_operator2Controller.button(2))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1MeterSideways"))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterRight"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  new Trigger(m_operator2Controller.button(3))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("1Meter45Diag"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  new Trigger(m_operator2Controller.button(4))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("MeterStraightTurn90"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  new Trigger(m_operator2Controller.button(5))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("InPlaceTurn90"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  new Trigger(m_operator2Controller.button(6))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("SwiggleWiggle"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
   new Trigger(m_operator2Controller.button(7))
-      .whileTrue(new ZeroHeadingCommand())
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_RotateLeft90and1Meter"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
+  new Trigger(m_operator2Controller.button(8))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_Rotate180and1Meter"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
+  new Trigger(m_operator2Controller.button(9))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_ComplexPath"))
+      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      
   /*new Trigger(m_operator2Controller.button(8))
       .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));

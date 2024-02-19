@@ -6,11 +6,11 @@ Coding plan as of 2/10:
 1. Swerve (complete)
 2. Intake on button press
 3. Shoot on button press
-4. Rotate arm on button press (will require a lead/follow and a reversed motor)
+4. Rotate arm on button press (will require a lead/follow and a reversed motor) (complete)
 5. Climbers on button press (complete)
 6. Climbers brake on button press
 7. Lead screw on button press
-8. Arm PID with positions : intake, shoot, amp
+8. Arm PID with positions : intake, shoot, amp (complete)
 9. Lead screw PID with positions : extended, retracted
 10. Detection of note in intake using sensor
 11. Basic auto paths (complete)
