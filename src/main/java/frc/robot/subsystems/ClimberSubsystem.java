@@ -28,7 +28,7 @@ public class ClimberSubsystem extends SubsystemBase {
   
 
 
-  private static final double MIN_POSITION = 10;
+  private static final double MIN_POSITION = -10;
 
   /** Creates a new ClimberSubsystem. */
     public ClimberSubsystem() {
