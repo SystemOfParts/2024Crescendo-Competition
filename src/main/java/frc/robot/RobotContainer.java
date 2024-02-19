@@ -38,7 +38,7 @@ public class RobotContainer {
   public static Controller xboxController;
   
   //Define and instantiate CommandControllers
-  private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  //private final CommandXboxController m_driverController;
   private final CommandGenericHID m_operator1Controller = new CommandGenericHID(0);
   private final CommandGenericHID m_operator2Controller = new CommandGenericHID(1);
   
@@ -71,18 +71,8 @@ public class RobotContainer {
     // Configure driver interface - binding joystick objects to port numbers
     
     configureBindings();
-
-    /* 
-    // Try this to use the command xbox controller to drive the swerve instead of the default non-command controller
-    driveSubsystem.setDefaultCommand(
-                new DriveManuallyCommand(
-                        () -> m_driverController.getLeftX(),
-                        () -> m_driverController.getLeftY(),
-                        () -> m_driverController.getRightX(),
-                        () -> getDriverFieldCentric()));
-
-    */
     configureDriverInterface();
+
       // Configure the trigger bindings
       driveSubsystem.setDefaultCommand(
                 new DriveManuallyCommand(
@@ -105,19 +95,23 @@ public class RobotContainer {
  //instantiate drive controllers
   private void configureDriverInterface() {
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
-      //System.out.println("Driver interface configured");
+      //m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort)
+       //System.out.println("Driver interface configured");
   }
 
   private double getDriverXAxis() {
       return -xboxController.getLeftStickY();
+      //return -m_driverController.getLeftX(),
   }
 
 private double getDriverYAxis() {
       return -xboxController.getLeftStickX();
+      //return -m_driverController.getLeftY();
 }
 
 private double getDriverOmegaAxis() {
       return -xboxController.getLeftStickOmega();
+      //return -m_driverController.getRightX();
 }
 
 private boolean getDriverFieldCentric() {
@@ -127,6 +121,7 @@ private boolean getDriverFieldCentric() {
 private void configureBindings() {
      
          //Dual Climber Bindings
+         // Convert to 'climberUpToLow' and 'climberUpToHigh'
         new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up , independent limiting
          .whileTrue(new ClimbersUp(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
@@ -135,7 +130,7 @@ private void configureBindings() {
          .whileTrue(new ClimbersDown(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
 
-          //independent controls
+          //Independent Climber Controls
          
         new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up (limited)
          .whileTrue(new LeftClimberUp(climberSubsystem))
@@ -186,7 +181,7 @@ private void configureBindings() {
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
         
-      //trajectoryCalibration();
+      //DO NOT UNCOMMENT UNTIL YOU UPDATE THE BUTTON VALUES trajectoryCalibration();
       
   }
 
