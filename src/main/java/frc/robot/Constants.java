@@ -56,8 +56,8 @@ public final class Constants {
 		 * Drive train properties
 		 * All measurements are in meters
 		 */
-		public static final double TRACK_WIDTH = Units.inchesToMeters(20.75); // left to right
-		public static final double WHEEL_BASE = Units.inchesToMeters(20.6); //front to back
+		public static final double TRACK_WIDTH = Units.inchesToMeters(21); // left to right
+		public static final double WHEEL_BASE = Units.inchesToMeters(20.75); //front to back
 		public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
 		public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
