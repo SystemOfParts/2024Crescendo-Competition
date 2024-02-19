@@ -5,6 +5,7 @@
 package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
@@ -179,9 +180,17 @@ private void configureBindings() {
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
-         .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
+         .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
+         .onFalse(new LeadScrewStop(leadScrewSubsystem));
+
+        new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+         new Trigger(m_operator2Controller.button(9)) //button 9 = trying a move to orientation INTAKE
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
         
-      //DO NOT UNCOMMENT UNTIL YOU UPDATE THE BUTTON VALUES trajectoryCalibration();
+      //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
+      //trajectoryCalibration();
       
   }
 

@@ -10,7 +10,7 @@ public class IntakeRun extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new RunCommand(() -> m_intake.RunIntake()));
+        new RunCommand(() -> m_intake.runIntake()));
  
     }
 }

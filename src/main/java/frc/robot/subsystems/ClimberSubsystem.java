@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -12,21 +14,14 @@ import com.revrobotics.SparkRelativeEncoder;
 
 public class ClimberSubsystem extends SubsystemBase {
 
-  private final CANSparkMax climberMotor1 = new CANSparkMax(16, MotorType.kBrushless);
-  private final CANSparkMax climberMotor2 = new CANSparkMax(17, MotorType.kBrushless);
+  private final CANSparkMax climberMotor1 = new CANSparkMax(Constants.CanIdConstants.kClimber1Id, MotorType.kBrushless);
+  private final CANSparkMax climberMotor2 = new CANSparkMax(Constants.CanIdConstants.kClimber2Id, MotorType.kBrushless);
 
   private final RelativeEncoder climberEncoder1;
   private final RelativeEncoder climberEncoder2;
 
-
- 
-
-  
-  private static final double MAX_POSITION = -400.0;
-  
-
-
-  private static final double MIN_POSITION = -10;
+  private static final double MAX_POSITION = Constants.ClimberConstants.kMAX_POSITION;//-400.0
+  private static final double MIN_POSITION = Constants.ClimberConstants.kMIN_POSITION;//-10
 
   /** Creates a new ClimberSubsystem. */
     public ClimberSubsystem() {
@@ -47,10 +42,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
         climberEncoder1.setPosition(0);
         climberEncoder2.setPosition(0);
-
     }
-
-  
     
     public void climber1Up(double speed) {
         //System.out.println("POSITION: "+(climberEncoder1.getPosition()));
@@ -100,28 +92,26 @@ public class ClimberSubsystem extends SubsystemBase {
     }
     //dangerous controls for testing
   public void climber1DownManually(double speed){
-    System.out.println("POSITION: "+(climberEncoder1.getPosition()));
     climberMotor1.set(speed);
   }
   public void climber1UpManually(double speed){
-    System.out.println("POSITION: "+(climberEncoder1.getPosition()));
     climberMotor1.set(-speed);
   }
    public void climber2DownManually(double speed){
-    System.out.println("POSITION: "+(climberEncoder2.getPosition()));
     climberMotor2.set(speed);
   }
   public void climber2UpManually(double speed){
-    System.out.println("POSITION: "+(climberEncoder2.getPosition()));
     climberMotor2.set(-speed);
   }
 
    // Returns the climber position
-    public double getClimberPosition() {
+    public double getClimber1Position() {
         return climberEncoder1.getPosition();
-      
     }
 
+    public double getClimber2Position() {
+        return climberEncoder2.getPosition();
+    }
 
   public void stopClimber1() {
     climberMotor1.set(0);
