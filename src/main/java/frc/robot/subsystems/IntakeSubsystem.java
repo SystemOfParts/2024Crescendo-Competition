@@ -16,7 +16,7 @@ public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {}
 
-     public void RunIntake(){
+     public void runIntake(){
 
       intakeMotor.set(.5);
       

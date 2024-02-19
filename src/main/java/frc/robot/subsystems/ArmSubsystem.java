@@ -4,11 +4,15 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+
+import frc.robot.Constants.OrientationConstants.Orientations;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.SparkPIDController;
 
@@ -76,7 +80,16 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void armTo360Degrees() {
         setpoint = 360/encoderConversionFactor;
+    }
 
+    public void moveToPosition(Orientations orientation) {
+        setArmPosition(orientation.armPosition);
+    }
+
+    public void setArmPosition(double armPosition) {
+      System.out.println("**ARM TRYING TO MOVE TO" + armPosition);
+        // move to the position dynamically
+        // need method to VERIFY armPosition is SAFE (within bounds) before using!!!!
     }
 
     public void armStop() {

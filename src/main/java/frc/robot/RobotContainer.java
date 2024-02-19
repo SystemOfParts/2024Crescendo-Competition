@@ -5,6 +5,7 @@
 package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
+import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.Devices.Controller;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveSubsystem;
@@ -38,7 +39,7 @@ public class RobotContainer {
   public static Controller xboxController;
   
   //Define and instantiate CommandControllers
-  private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  //private final CommandXboxController m_driverController;
   private final CommandGenericHID m_operator1Controller = new CommandGenericHID(0);
   private final CommandGenericHID m_operator2Controller = new CommandGenericHID(1);
   
@@ -71,18 +72,8 @@ public class RobotContainer {
     // Configure driver interface - binding joystick objects to port numbers
     
     configureBindings();
-
-    /* 
-    // Try this to use the command xbox controller to drive the swerve instead of the default non-command controller
-    driveSubsystem.setDefaultCommand(
-                new DriveManuallyCommand(
-                        () -> m_driverController.getLeftX(),
-                        () -> m_driverController.getLeftY(),
-                        () -> m_driverController.getRightX(),
-                        () -> getDriverFieldCentric()));
-
-    */
     configureDriverInterface();
+
       // Configure the trigger bindings
       driveSubsystem.setDefaultCommand(
                 new DriveManuallyCommand(
@@ -105,19 +96,23 @@ public class RobotContainer {
  //instantiate drive controllers
   private void configureDriverInterface() {
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
-      //System.out.println("Driver interface configured");
+      //m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort)
+       //System.out.println("Driver interface configured");
   }
 
   private double getDriverXAxis() {
       return -xboxController.getLeftStickY();
+      //return -m_driverController.getLeftX(),
   }
 
 private double getDriverYAxis() {
       return -xboxController.getLeftStickX();
+      //return -m_driverController.getLeftY();
 }
 
 private double getDriverOmegaAxis() {
       return -xboxController.getLeftStickOmega();
+      //return -m_driverController.getRightX();
 }
 
 private boolean getDriverFieldCentric() {
@@ -127,6 +122,7 @@ private boolean getDriverFieldCentric() {
 private void configureBindings() {
      
          //Dual Climber Bindings
+         // Convert to 'climberUpToLow' and 'climberUpToHigh'
         new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up , independent limiting
          .whileTrue(new ClimbersUp(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
@@ -135,7 +131,7 @@ private void configureBindings() {
          .whileTrue(new ClimbersDown(climberSubsystem))
          .onFalse(new ClimbersStop(climberSubsystem));
 
-          //independent controls
+          //Independent Climber Controls
          
         new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up (limited)
          .whileTrue(new LeftClimberUp(climberSubsystem))
@@ -184,8 +180,16 @@ private void configureBindings() {
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
-         .whileTrue(new LeadScrewBackward(leadScrewSubsystem));
+         .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
+         .onFalse(new LeadScrewStop(leadScrewSubsystem));
+
+        new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+         new Trigger(m_operator2Controller.button(9)) //button 9 = trying a move to orientation INTAKE
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
         
+      //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
       //trajectoryCalibration();
       
   }

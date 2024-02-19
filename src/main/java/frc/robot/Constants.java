@@ -7,6 +7,8 @@ package frc.robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,6 +19,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -37,6 +40,92 @@ public final class Constants {
 		public static final int kDriverControllerPort = 5;
 	}
 
+	public static final class CanIdConstants {
+		public static final int kLeadScrewID = 13;
+		public static final int kClimber1Id = 16;
+		public static final int kClimber2Id = 17;
+	}
+
+	public static final class ClimberConstants {
+		public static final double kSpeed = 0.25;
+		public static final double kMAX_POSITION = -400.0;
+  		public static final double kMIN_POSITION = -10;
+	}
+
+	public static final class IntakeConstants {
+		public static final double kSpeed = .9;
+		public static final double kEjectSpeed = -.75;
+	}
+
+	public static final class ShooterConstants {
+        public static double kShooter1SetPoint = 4800;
+        public static double kShooter2SetPoint = 3850;
+    }
+
+	public static final class OrientationConstants {
+		// Arm Positions
+		public enum Orientations {
+			TRAVEL("Travel",
+							0,
+							0,
+							false,
+							false),
+			INTAKE("Intake",
+							0,
+							0,
+							false,
+							true),
+			AMP("Amp",
+							0,
+							0,
+							true,
+							false),
+			PODIUM("Podium",
+							0,
+							0,
+							true,
+							false),
+			SUBWOOFER("Subwoofer",
+							0,
+							0,
+							true,
+							false),
+			PRE_CLIMB("Preclimb",
+							0,
+							0,
+							false,
+							false),
+			CLIMB("Climb",
+							0,
+							0,
+							false,
+							false),
+			TRAP_SCORE("Trap Score",
+							0,
+							0,
+							true,
+							false);
+
+			public final String label;
+			public final double armPosition;
+			public final double leadScrewPosition;
+			public final boolean shooterOn;
+			public final boolean intakeOn;
+
+			private Orientations(String label,
+							double armPosition,
+							double leadScrewPosition,
+							boolean shooterOn,
+							boolean intakeOn) {
+					this.label = label;
+					this.armPosition = armPosition;
+					this.leadScrewPosition = leadScrewPosition;
+					this.shooterOn = shooterOn;
+					this.intakeOn = intakeOn;
+			}
+
+	}
+    }
 	/**
 	 * This class contains configuration constants for the chassis, the individual
 	 * swerve modules and the motors
