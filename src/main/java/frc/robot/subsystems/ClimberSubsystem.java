@@ -18,12 +18,10 @@ public class ClimberSubsystem extends SubsystemBase {
   private final RelativeEncoder climberEncoder1;
   private final RelativeEncoder climberEncoder2;
 
-  //private final SparkPIDController m_pidcontroller;
 
  
 
-  //private static final double AXLE_ROTATION_DISTANCE = 1.27; // Placeholder value for distance traveled per axle rotation (Centimeters)
-  //private static final double AXLE_REVOLUTIONS_TO_MAX = 80.0; // Placeholder value for total axle revolutions to maximum value
+  
   private static final double MAX_POSITION = -400.0;
   
 
@@ -55,7 +53,7 @@ public class ClimberSubsystem extends SubsystemBase {
   
     
     public void climber1Up(double speed) {
-        System.out.println("POSITION: "+(climberEncoder1.getPosition()));
+        //System.out.println("POSITION: "+(climberEncoder1.getPosition()));
         System.out.println("MAX_POSITION: "+(MAX_POSITION));
         System.out.println("POS-> "+(climberEncoder1.getPosition())+" > "+MAX_POSITION+" <-MAX");
         if (climberEncoder1.getPosition() > MAX_POSITION) {

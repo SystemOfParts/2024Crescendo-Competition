@@ -19,7 +19,7 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkPIDController pidController = leftArmMotor.getPIDController();
 
     // Constants for PID control, adjust based on testing - NEEDS TUNING
-    
+
     private static final double kP = 0.1; // Proportional term
     private static final double kI = 0.0; // Integral term
     private static final double kD = 0.0; // Derivative term
@@ -77,7 +77,7 @@ public class ArmSubsystem extends SubsystemBase {
     public void armTo360Degrees() {
         setpoint = 360/encoderConversionFactor;
 
-  }
+    }
 
     public void armStop() {
         leftArmMotor.set(0);
@@ -89,13 +89,13 @@ public class ArmSubsystem extends SubsystemBase {
     public void armMoveDown() {
       leftArmMotor.set(-.25);
     }
-   
+
     
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //System.out.print(encoder.getPosition());
+//System.out.print(encoder.getPosition());
 
     //System.out.println("encoder position: ");
 
