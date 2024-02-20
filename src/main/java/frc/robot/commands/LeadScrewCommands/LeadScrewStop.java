@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.LeadScrewCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
