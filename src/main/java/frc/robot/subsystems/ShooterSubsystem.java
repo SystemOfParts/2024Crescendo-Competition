@@ -15,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
 
 
-  /** Creates a new IntakeSubsystem. */
+  /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
     bottomShooterMotor.follow(topShooterMotor, true);
 
