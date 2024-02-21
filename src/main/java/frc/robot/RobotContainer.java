@@ -170,7 +170,7 @@ private void configureBindings() {
          .onFalse(new RightClimberStop(climberSubsystem));
 
      //Arm Bindings
-
+      /* 
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
@@ -209,7 +209,9 @@ private void configureBindings() {
          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
         
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
-      //trajectoryCalibration();
+
+      */
+      trajectoryCalibration();
       
   }
 
@@ -219,9 +221,14 @@ private void configureBindings() {
 // to use these make sure you comment out the other uses of buttons before!!!!
 
 public void trajectoryCalibration() {
+  
   new Trigger(m_operator2Controller.button(1))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+/* 
+  new Trigger(m_operator2Controller.button(1))
+      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
+      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
 
   new Trigger(m_operator2Controller.button(2))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterRight"))
@@ -234,10 +241,9 @@ public void trajectoryCalibration() {
   new Trigger(m_operator2Controller.button(8))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_Rotate180and1Meter"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-
-  new Trigger(m_operator2Controller.button(9))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_ComplexPath"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    */
+  new Trigger(m_operator1Controller.button(10))
+      .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
       
   /*new Trigger(m_operator2Controller.button(8))
       .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))

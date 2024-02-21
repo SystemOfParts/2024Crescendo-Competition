@@ -56,7 +56,7 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
   }
 
   public double getAngleEncoderPositionCorrected() {
-    return baseMotorInterface.getAngleEncoderPosition();
+    return baseMotorInterface.getAngleEncoderPositionCorrected();
   }
 
   public double getDriveEncoderVelocity() {
@@ -76,7 +76,7 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
   }
 
   public double getAngleEncoderPositionSICorrected() {
-    return baseMotorInterface.getAngleEncoderPositionSI();
+    return baseMotorInterface.getAngleEncoderPositionSICorrected();
   }
   
 

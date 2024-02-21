@@ -124,8 +124,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(climberEncoder2.getPosition());
-    System.out.println(climberEncoder1.getPosition());
+    //System.out.println(climberEncoder2.getPosition());
+   // System.out.println(climberEncoder1.getPosition());
 
   }
 }

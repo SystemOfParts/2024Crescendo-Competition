@@ -27,13 +27,27 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     
   }
 
+  public void updateSwerveModuleTelemetry() {
+
+     for (int i =0; i<4; i++){
+      SmartDashboard.putNumber("S"+i+" Actual Angle Encoder ", RobotContainer.driveSubsystem.actualAngleEncoder(i));
+      SmartDashboard.putNumber("S"+i+" Actual Angle Encoder SI ", RobotContainer.driveSubsystem.actualAngleEncoderSI(i));
+
+     }
+
+  }
+
   public void updateIMUTelemetry() {
     SmartDashboard.putNumber("IMU Yaw", RobotContainer.imuSubsystem.getYaw());
+    SmartDashboard.putNumber("IMU Pitch", RobotContainer.imuSubsystem.getPitch());
+    SmartDashboard.putNumber("IMU Roll", RobotContainer.imuSubsystem.getRoll());
+
   }
 
 
   public void updateAllDisplays(){
     updateOdometryTelemetry();
+    updateSwerveModuleTelemetry();
     updateIMUTelemetry();
   }
 

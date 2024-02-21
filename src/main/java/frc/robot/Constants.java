@@ -238,7 +238,7 @@ public final class Constants {
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
-		public static final double MAX_VELOCITY = 3.0;
+		public static final double MAX_VELOCITY = 1.0;
 
 		/**
 		 * Radians per second.
@@ -255,7 +255,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 3;
+		public static final double MAX_ACCELERATION = 0.75;
 
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -269,7 +269,7 @@ public final class Constants {
 		 */
 
 		public static final class NEOSwerveConfiguration {
-			public static final double metersPerTick = 1.0 / 1462.25; // TODO: measure this number on the robot
+			public static final double metersPerTick = 5.82/5.07282675; // TODO: measure this number on the robot
 			//public static final double ticksPerFullRotation = 2048.0; 
 			//public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
 			public static final double ticksPerFullRotation = 2 * Math.PI;
@@ -324,7 +324,7 @@ public final class Constants {
 			/**
 			 * Print odometry telemetry every 20 milliseconds.
 			 */
-			public static final boolean odometryTelemetryPrint = false;
+			public static final boolean odometryTelemetryPrint = true;
 
 		}
 
@@ -372,7 +372,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					(2.51184335) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.675586) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -383,7 +383,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					4, // driveMotorID
 					3, // angleMotorID
-					(0.162798+Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(0.154961) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -395,7 +395,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					(6.162460-Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(6.141332) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -407,7 +407,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					8, // driveMotorID
 					7, // angleMotorID
-					(5.415143-Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.424344) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -556,11 +556,11 @@ public final class Constants {
 			XBOX_CONTROLLER(
 					5, // Port Number for Xbox controller
 					ControllerDeviceType.XBOX,
-					0.05, // deadband X for Xbox
-					0.05, // deadband Y for Xbox       //TODO: ALL DEADBAND FOR XBOX IS PLACEHOLDER
-					0.05, // deadband Omega for Xbox
-					false, // No cube controller configuration for Xbox yet
-					false);
+					0.1, // deadband X for Xbox
+					0.1, // deadband Y for Xbox      
+					0.1, // deadband Omega for Xbox
+					true, // No cube controller configuration for Xbox yet
+					true);
 
 			private ControllerDeviceType controllerDeviceType;
 			private int portNumber;

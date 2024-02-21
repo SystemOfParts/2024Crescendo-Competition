@@ -113,7 +113,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
         motorNEO.restoreFactoryDefaults();
         motorNEO.clearFaults();
-
+        
         motorNEO.setInverted(c.isAngleMotorInverted());
 
         pid = motorNEO.getPIDController();
@@ -162,7 +162,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public double getAngleEncoderPositionCorrected() {
-        return angleEncoder.getPosition() + cAngle.getAngleOffset();
+        return angleEncoder.getPosition() - (cAngle.getAngleOffset()/360)*NEOSwerveConfiguration.ticksPerFullRotation;
     }
 
     public double getDriveEncoderVelocity() {
@@ -185,7 +185,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
     public double getAngleEncoderPositionSICorrected() {
       
-        return (getAngleEncoderPosition() + cAngle.getAngleOffset())*Constants.SwerveChassis.NEOSwerveConfiguration.degreePerTick;
+        return ((getAngleEncoderPosition() - (cAngle.getAngleOffset())/360*NEOSwerveConfiguration.ticksPerFullRotation)*Constants.SwerveChassis.NEOSwerveConfiguration.degreePerTick)%360;
     }
 
     public double getDriveEncoderVelocitySI() {

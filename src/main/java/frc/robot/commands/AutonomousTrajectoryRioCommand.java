@@ -54,7 +54,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
                         Constants.SwerveChassis.ANGLE_CHASSIS_KI,
                         Constants.SwerveChassis.ANGLE_CHASSIS_KD),
       RobotContainer.driveSubsystem::setDesiredStates,
-      false,
+      false, //not needed, generate separate mirrored paths for blue and red
       RobotContainer.driveSubsystem
     );
     this.trajectoryPath = trajectoryPath;

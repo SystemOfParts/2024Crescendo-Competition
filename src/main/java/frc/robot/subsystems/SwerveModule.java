@@ -67,12 +67,19 @@ public class SwerveModule extends SubsystemBase {
         return angleMotor.getAngleEncoderPositionCorrected();
     }
 
+    public double actualAngleEncoder(){
+        return angleMotor.getAngleEncoderPosition();
+    }
+    public double actualAngleEncoderSI(){
+        return angleMotor.getAngleEncoderPositionSI();
+    }
+
     public double telemetryAngleEncoderSI(){
         return angleMotor.getAngleEncoderPositionSICorrected();
     }
 
     public double telemetryDriveEncoder(){
-        return driveMotor.getDriveEncoderPosition();
+        return driveMotor.getDriveEncoderPositionSI();
     }
 
     public void testDriveMotorApplyPower(double power) {

@@ -34,12 +34,13 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
     // Read the trajectory from a file
     trajectoryPath = PathPlanner.loadPath(trajectory, new PathConstraints(maxVelocity, maxAcceleration), reversed);
 
+    
     addCommands(
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
       new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
       new InstantCommand( () -> RobotContainer.imuSubsystem.setYawForTrajectory(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
-      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ),
+      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ), 
       //new PrintCommand(
       //  "START IX:" + trajectoryPath.getInitialPose().getX()+
       //  " IY:" + trajectoryPath.getInitialPose().getY()+
