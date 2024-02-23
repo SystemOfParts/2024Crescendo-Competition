@@ -206,9 +206,9 @@ public final class Constants {
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
-		public static final double ANGLE_CHASSIS_KP = 6.25;
-		public static final double ANGLE_CHASSIS_KI = 0.4;
-		public static final double ANGLE_CHASSIS_KD = 0.7;
+		public static final double ANGLE_CHASSIS_KP = 6.25; // 6.25
+		public static final double ANGLE_CHASSIS_KI = 0.04; // 0.4
+		public static final double ANGLE_CHASSIS_KD = 0.07; // 0.7
 
 		public static final double ANGLE_MOTOR_MIN_OUTPUT = -1;
 		public static final double ANGLE_MOTOR_MAX_OUTPUT = 1;
@@ -255,7 +255,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 0.75;
+		public static final double MAX_ACCELERATION = 0.1;
 
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -324,7 +324,7 @@ public final class Constants {
 			/**
 			 * Print odometry telemetry every 20 milliseconds.
 			 */
-			public static final boolean odometryTelemetryPrint = true;
+			public static final boolean odometryTelemetryPrint = false;
 
 		}
 

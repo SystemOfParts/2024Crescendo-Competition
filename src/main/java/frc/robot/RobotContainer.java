@@ -80,6 +80,8 @@ public class RobotContainer {
   public static final String kCustomAuto2 = "5142_RotateLeft90and1Meter";
   public static final String kCustomAuto3 = "5142_Rotate180and1Meter";
   public static final String kCustomAuto4 = "5142_ComplexPath";
+  public static final String kCustomAuto5 = "5142_10CentimetersForward";
+
 
   public String ChosenAuto;
 
@@ -107,6 +109,8 @@ public class RobotContainer {
       m_chooser.addOption("RotateLeft90and1Meter", kCustomAuto2);
       m_chooser.addOption("ComplexPath", kCustomAuto3);
       m_chooser.addOption("Rotate180and1Meter", kCustomAuto4);
+      m_chooser.addOption("Rotate180and1Meter", kCustomAuto5);
+
      
       SmartDashboard.putData("Auto choices", m_chooser);
     
@@ -169,8 +173,13 @@ private void configureBindings() {
          .whileTrue(new RightClimberDown(climberSubsystem))
          .onFalse(new RightClimberStop(climberSubsystem));
 
+         //zero robot yaw (new forward)
+         new Trigger(m_operator2Controller.button(10))
+        .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
+      
+
      //Arm Bindings
-      /* 
+      /* //remove to use controls
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
@@ -179,16 +188,16 @@ private void configureBindings() {
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
          .onTrue(new ArmUpPosition(armSubsystem));
-
+*/
          //todo: add safespot position for shooting
 
        //Intake and Shooter
 
-        new Trigger(m_operator2Controller.button(4)) //button 4 = basi intake
+        new Trigger(m_operator2Controller.button(4)) //button 4 = basic intake
          .whileTrue(new IntakeRun(intakeSubsystem))
          .onFalse(new IntakeStop(intakeSubsystem));
         
-        new Trigger(m_operator2Controller.button(5)) //button 5 = basic shoot
+        new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
          .whileTrue(new RunShooter(shooterSubsystem))
          .onFalse(new StopShooter(shooterSubsystem));
 
@@ -201,17 +210,17 @@ private void configureBindings() {
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
-
+/* 
         new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
          new Trigger(m_operator2Controller.button(9)) //button 9 = trying a move to orientation INTAKE
          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
-        
+    */    
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
 
-      */
-      trajectoryCalibration();
+       //remove to use controls
+      trajectoryCalibration(); //tag this out if using controls
       
   }
 
@@ -242,9 +251,7 @@ public void trajectoryCalibration() {
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_Rotate180and1Meter"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     */
-  new Trigger(m_operator1Controller.button(10))
-      .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
-      
+  
   /*new Trigger(m_operator2Controller.button(8))
       .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));

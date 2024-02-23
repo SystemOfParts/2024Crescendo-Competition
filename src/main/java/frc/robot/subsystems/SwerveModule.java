@@ -5,6 +5,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.SwerveChassis.SwerveTelemetry;
@@ -75,7 +76,7 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public double telemetryAngleEncoderSI(){
-        return angleMotor.getAngleEncoderPositionSICorrected();
+        return angleMotor.getAngleEncoderPositionCorrected();   
     }
 
     public double telemetryDriveEncoder(){
@@ -165,7 +166,7 @@ public class SwerveModule extends SubsystemBase {
      * @return SwerveModulePosition - WPILIB kinematics object 
      */
     public SwerveModulePosition getPosition() {
-        double position = driveMotor.getDriveEncoderPositionSI(); 
+        double position = (driveMotor.getDriveEncoderPositionSI())*84; // 84 corrects the drive encoders
         Rotation2d angle = currentAngle;
         return new SwerveModulePosition(position, angle);
     }
@@ -175,8 +176,7 @@ public class SwerveModule extends SubsystemBase {
 
         // While we update the current angle of the angle motor for telemetry,
         // It's not used in the teleop driving, as we use real-time update via getState call.
-        currentAngle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI());
-
+        currentAngle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSICorrected());
         //integratedAngleEncoder.setPosition(cancoder.getAbsolutePosition() - angleOffset);
     }
 }

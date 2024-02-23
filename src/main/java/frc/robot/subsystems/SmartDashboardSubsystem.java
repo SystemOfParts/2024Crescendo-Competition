@@ -20,7 +20,7 @@ public class SmartDashboardSubsystem extends SubsystemBase {
   public void updateOdometryTelemetry() {
     for (int i =0; i<4; i++){
       SmartDashboard.putNumber("S"+i+" Angle Encoder", RobotContainer.driveSubsystem.telemetryAngleEncoder(i));
-      SmartDashboard.putNumber("S"+i+" Angle Encoder SI", RobotContainer.driveSubsystem.telemetryAngleEncoderSI(i));
+      SmartDashboard.putNumber("S"+i+" Angle Encoder SI Corrected ", RobotContainer.driveSubsystem.telemetryAngleEncoderSI(i));
       SmartDashboard.putNumber("S"+i+" Drive Encoder", RobotContainer.driveSubsystem.telemetryDriveEncoder(i));
       
     }

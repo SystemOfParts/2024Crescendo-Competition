@@ -263,8 +263,7 @@ public class DriveSubsystem extends SubsystemBase {
    * in a packet loss. We recommend disabling excessive telemetry for the competition.
    */
   public void updateTrajectoryOdometry() {
-    if (SwerveTelemetry.odometryTelemetryPrint) {
-
+    if (SwerveTelemetry.odometryTelemetryPrint) {  //maybe edit this later
       System.out.println("PoseSupplier: "+getPose());
       Rotation2d r = RobotContainer.imuSubsystem.getYawRotation2d();
       SwerveModulePosition[] s = getPositions();
