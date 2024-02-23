@@ -162,7 +162,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
     public double getAngleEncoderPositionCorrected() {
-        return angleEncoder.getPosition() - cAngle.getAngleOffset();
+        return angleEncoder.getPosition() - getOffsetInRadians();
     }
 
     public double getDriveEncoderVelocity() {
@@ -177,8 +177,9 @@ public class BaseMotorNEO implements BaseMotorInterface {
        
         return getDriveEncoderPosition()*Constants.SwerveChassis.NEOSwerveConfiguration.metersPerTick;
     }
+    
     public double getOffsetInRadians () {
-        return cAngle.getAngleOffset()*.01745329; // = 2pi/360
+        return cAngle.getAngleOffset()*(NEOSwerveConfiguration.maxInput/360); // = 2pi/360 
     }
 
     public double getAngleEncoderPositionSI() {

@@ -52,7 +52,7 @@ public class ArmSubsystem extends SubsystemBase {
         leftArmMotor.burnFlash();
         rightArmMotor.burnFlash();
 
-        // PID configuration - NEEDS UPDATE
+        // PID configuration
         pidController.setP(kP);
         pidController.setI(kI);
         pidController.setD(kD);

@@ -25,7 +25,6 @@ public class NetworkTablesSubsystem extends SubsystemBase {
 
   public String getAllianceKey() {
     Optional<Alliance> alliance = DriverStation.getAlliance();
-
     /*
      * Get your current alliance and depending on what alliance you are you have to
      * set the

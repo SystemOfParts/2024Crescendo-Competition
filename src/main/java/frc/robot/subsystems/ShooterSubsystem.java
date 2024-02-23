@@ -23,8 +23,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double kD = 0.0; // Derivative term
     private static final double kIz = 0; // Integral zone
     private static final double kFF = 0.000015; // Feed-forward
-    private static final double kMaxOutput = 1;
-    private static final double kMinOutput = -1;
+    private static final double kMaxOutput = .25; // Change these later
+    private static final double kMinOutput = -.25;
     public double setpoint = 0;
 
   /** Creates a new ShooterSubsystem. */
@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.burnFlash();
     bottomShooterMotor.burnFlash();
 
-    // PID configuration - NEEDS UPDATE
+    // PID configuration
     shooterPID.setP(kP);
     shooterPID.setI(kI);
     shooterPID.setD(kD);

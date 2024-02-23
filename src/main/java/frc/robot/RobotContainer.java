@@ -59,6 +59,7 @@ public class RobotContainer {
   
   //Define and instantiate CommandControllers
   //private final CommandXboxController m_driverController;
+  //Both of these control the one button box
   private final CommandGenericHID m_operator1Controller = new CommandGenericHID(0);
   private final CommandGenericHID m_operator2Controller = new CommandGenericHID(1);
   
@@ -80,7 +81,7 @@ public class RobotContainer {
   public static final String kCustomAuto2 = "5142_RotateLeft90and1Meter";
   public static final String kCustomAuto3 = "5142_Rotate180and1Meter";
   public static final String kCustomAuto4 = "5142_ComplexPath";
-  public static final String kCustomAuto5 = "5142_10CentimetersForward";
+  public static final String kCustomAuto5 = "5142_TwoNotePart1";
 
 
   public String ChosenAuto;
@@ -109,7 +110,7 @@ public class RobotContainer {
       m_chooser.addOption("RotateLeft90and1Meter", kCustomAuto2);
       m_chooser.addOption("ComplexPath", kCustomAuto3);
       m_chooser.addOption("Rotate180and1Meter", kCustomAuto4);
-      m_chooser.addOption("Rotate180and1Meter", kCustomAuto5);
+      m_chooser.addOption("TwoNotePart1", kCustomAuto5);
 
      
       SmartDashboard.putData("Auto choices", m_chooser);
@@ -173,7 +174,7 @@ private void configureBindings() {
          .whileTrue(new RightClimberDown(climberSubsystem))
          .onFalse(new RightClimberStop(climberSubsystem));
 
-         //zero robot yaw (new forward)
+         //zero robot yaw (new forward) = button 10
          new Trigger(m_operator2Controller.button(10))
         .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
       

@@ -55,7 +55,7 @@ public class IMUNavX implements IMUInterface {
      * @return
      */
     public double getYaw() {
-        return -navX.getYaw();
+        return -navX.getYaw(); // test making this positive?
     }
 
     //TODO: make sure values are positive
