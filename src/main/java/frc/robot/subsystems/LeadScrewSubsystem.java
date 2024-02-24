@@ -9,11 +9,11 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.OrientationConstants.Orientations;
 
 public class LeadScrewSubsystem extends SubsystemBase {
-    private final CANSparkMax leadScrewMotor = new CANSparkMax(Constants.CanIdConstants.kLeadScrewID, MotorType.kBrushless);
+  
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(12, MotorType.kBrushless);
     private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
   
     private static final double MAX_POSITION = 247;
@@ -23,7 +23,7 @@ public class LeadScrewSubsystem extends SubsystemBase {
   /** Creates a new LeadScrewSubsystem. */
   public LeadScrewSubsystem() {
 
-
+    leadScrewMotor.restoreFactoryDefaults();
     leadScrewEncoder.setPosition(0);
     leadScrewMotor.setInverted(true);
     leadScrewMotor.setSmartCurrentLimit(30);

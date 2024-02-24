@@ -11,10 +11,15 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import frc.robot.RobotContainer;
+
+
 public class ShooterSubsystem extends SubsystemBase {
 
-    private final CANSparkMax topShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
-    private final CANSparkMax bottomShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
+    public static final RobotContainer robotContainer = new RobotContainer();
+    
+    private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
+    private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
     private final SparkPIDController shooterPID = bottomShooterMotor.getPIDController();
 
 // PID constants taken from example code
@@ -23,13 +28,19 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double kD = 0.0; // Derivative term
     private static final double kIz = 0; // Integral zone
     private static final double kFF = 0.000015; // Feed-forward
-    private static final double kMaxOutput = .25; // Change these later
-    private static final double kMinOutput = -.25;
+    private static final double kMaxOutput = 1; // Change these later
+    private static final double kMinOutput = -1;
     public double setpoint = 0;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
+
+    topShooterMotor.restoreFactoryDefaults();
+    bottomShooterMotor.restoreFactoryDefaults();
+
+
     topShooterMotor.follow(bottomShooterMotor, true);
+
     topShooterMotor.setIdleMode(IdleMode.kCoast);
     bottomShooterMotor.setIdleMode(IdleMode.kCoast);
 
@@ -50,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
      public void runShooter(){
 
-      setpoint = 1000; //5700 upper limit
+      setpoint = 5700; //5700 upper limit
       
     }
     public void stopShooter(){
@@ -63,9 +74,11 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
+    setpoint = 5700 * robotContainer.getShooterTrigger();
+
+    
     shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
     // This method will be called once per scheduler run
   }
 }
-

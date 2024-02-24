@@ -144,8 +144,8 @@ public class ClimberSubsystem extends SubsystemBase {
     //System.out.println(climberEncoder2.getPosition());
    // System.out.println(climberEncoder1.getPosition());
 
-    System.out.println("Left:" + leftBrakeRelay.get());
-    System.out.println("Right:" + rightBrakeRelay.get());
+    //System.out.println("Left:" + leftBrakeRelay.get());
+    //System.out.println("Right:" + rightBrakeRelay.get());
 
   }
 }

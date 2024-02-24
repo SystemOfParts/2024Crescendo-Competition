@@ -144,6 +144,9 @@ private double getDriverOmegaAxis() {
 private boolean getDriverFieldCentric() {
         return true; //return !xboxController.Button(1); bumper
 }
+public double getShooterTrigger() {
+        return xboxController.getRawAxis(3);
+}
   
 private void configureBindings() {
      
@@ -201,20 +204,23 @@ private void configureBindings() {
          .whileTrue(new IntakeRun(intakeSubsystem))
          .onFalse(new IntakeStop(intakeSubsystem));
         
-        new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
-         .whileTrue(new RunShooter(shooterSubsystem))
-         .onFalse(new StopShooter(shooterSubsystem));
+       // new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
+         //.whileTrue(new RunShooter(shooterSubsystem))
+         //.onFalse(new StopShooter(shooterSubsystem));
 
         // lead screw forward and back
-        /* 
-        new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)
-         .whileTrue(new LeadScrewForward(leadScrewSubsystem))
+         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)
+         .onTrue (new InstantCommand(() -> System.out.println("Robot Container: Null?" + leadScrewSubsystem)));
+
+
+        new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
+         .onTrue(new LeadScrewForward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
 
-        new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
+        new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
-        */
+        
          new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
       
          .whileTrue(new LeftBrakeOn(climberSubsystem));

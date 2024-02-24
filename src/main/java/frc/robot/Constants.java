@@ -41,7 +41,7 @@ public final class Constants {
 	}
 
 	public static final class CanIdConstants {
-		public static final int kLeadScrewID = 13;
+		public static final int kLeadScrewID = 12;
 		public static final int kClimber1Id = 16;
 		public static final int kClimber2Id = 17;
 	}
