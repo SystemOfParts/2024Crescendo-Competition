@@ -144,12 +144,15 @@ private double getDriverOmegaAxis() {
 private boolean getDriverFieldCentric() {
         return true; //return !xboxController.Button(1); bumper
 }
-public double getShooterTrigger() {
+public double getRightTrigger() {
         return xboxController.getRawAxis(3);
 }
-  
+public boolean getRightBumper() {
+        return xboxController.getRawButton(6);
+
+}
 private void configureBindings() {
-     
+
          //Dual Climber Bindings
          // Convert to 'climberUpToLow' and 'climberUpToHigh'
         new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up , independent limiting

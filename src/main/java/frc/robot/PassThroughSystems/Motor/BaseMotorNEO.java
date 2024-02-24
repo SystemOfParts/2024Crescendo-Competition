@@ -102,7 +102,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         pid.setIZone(NEOAngle.kiz);
         pid.setOutputRange(NEOAngle.outputMin, NEOAngle.outputMax);
 
-        motorNEO.burnFlash();
+        //motorNEO.burnFlash();
 
         motorBrakeMode();
     }
@@ -142,7 +142,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
 
         motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20);
 
-        motorNEO.burnFlash();
+        //motorNEO.burnFlash();
 
         
         motorBrakeMode();

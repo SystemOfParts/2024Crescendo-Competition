@@ -20,7 +20,7 @@ public class ShooterSubsystem extends SubsystemBase {
     
     private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
-    private final SparkPIDController shooterPID = bottomShooterMotor.getPIDController();
+    private final SparkPIDController shooterPID = topShooterMotor.getPIDController();
 
 // PID constants taken from example code
     private static final double kP = 6e-5; // Proportional term 
@@ -38,8 +38,7 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.restoreFactoryDefaults();
     bottomShooterMotor.restoreFactoryDefaults();
 
-
-    topShooterMotor.follow(bottomShooterMotor, true);
+    //topShooterMotor.follow(bottomShooterMotor, true);
 
     topShooterMotor.setIdleMode(IdleMode.kCoast);
     bottomShooterMotor.setIdleMode(IdleMode.kCoast);
@@ -47,38 +46,37 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.setSmartCurrentLimit(40);
     bottomShooterMotor.setSmartCurrentLimit(40);
 
-    topShooterMotor.burnFlash();
-    bottomShooterMotor.burnFlash();
+    //topShooterMotor.burnFlash();
+    //bottomShooterMotor.burnFlash();
 
-    // PID configuration
+     //PID configuration 
     shooterPID.setP(kP);
     shooterPID.setI(kI);
     shooterPID.setD(kD);
     shooterPID.setIZone(kIz);
     shooterPID.setFF(kFF);
     shooterPID.setOutputRange(kMinOutput, kMaxOutput);
+    
   }
 
      public void runShooter(){
 
-      setpoint = 5700; //5700 upper limit
+      bottomShooterMotor.set(.1); //5700 upper limit
       
     }
     public void stopShooter(){
       
-      setpoint = 0;
+      bottomShooterMotor.set(0);
       
     }
   
 
   @Override
   public void periodic() {
-
-    setpoint = 5700 * robotContainer.getShooterTrigger();
-
-    
+     
+    setpoint = 5700 * robotContainer.getRightTrigger();
     shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-
+      
     // This method will be called once per scheduler run
   }
 }
