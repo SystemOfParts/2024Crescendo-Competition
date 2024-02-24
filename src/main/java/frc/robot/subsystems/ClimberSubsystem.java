@@ -12,10 +12,16 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkRelativeEncoder;
 
+import edu.wpi.first.wpilibj.Relay;
+
 public class ClimberSubsystem extends SubsystemBase {
 
   private final CANSparkMax climberMotor1 = new CANSparkMax(Constants.CanIdConstants.kClimber1Id, MotorType.kBrushless);
   private final CANSparkMax climberMotor2 = new CANSparkMax(Constants.CanIdConstants.kClimber2Id, MotorType.kBrushless);
+
+  private final Relay leftBrakeRelay = new Relay(0);
+  private final Relay rightBrakeRelay = new Relay(1);
+
 
   private final RelativeEncoder climberEncoder1;
   private final RelativeEncoder climberEncoder2;
@@ -42,6 +48,11 @@ public class ClimberSubsystem extends SubsystemBase {
 
         climberEncoder1.setPosition(0);
         climberEncoder2.setPosition(0);
+
+        leftBrakeRelay.setDirection(Relay.Direction.kBoth);        
+        rightBrakeRelay.setDirection(Relay.Direction.kBoth);
+
+    
     }
     
     public void climber1Up(double speed) {
@@ -120,12 +131,21 @@ public class ClimberSubsystem extends SubsystemBase {
     climberMotor2.set(0);
   }
 
- 
+  public void leftBrakeOn() {
+    leftBrakeRelay.set(Relay.Value.kForward);
+  }
+
+  public void rightBrakeOn() {
+    leftBrakeRelay.set(Relay.Value.kReverse);
+  }
 
   @Override
   public void periodic() {
     //System.out.println(climberEncoder2.getPosition());
    // System.out.println(climberEncoder1.getPosition());
+
+    System.out.println("Left:" + leftBrakeRelay.get());
+    System.out.println("Right:" + rightBrakeRelay.get());
 
   }
 }

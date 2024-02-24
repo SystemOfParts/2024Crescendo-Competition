@@ -14,9 +14,11 @@ import frc.robot.commands.ArmCommands.ArmUpPosition;
 import frc.robot.commands.ClimberCommands.ClimbersDown;
 import frc.robot.commands.ClimberCommands.ClimbersStop;
 import frc.robot.commands.ClimberCommands.ClimbersUp;
+import frc.robot.commands.ClimberCommands.LeftBrakeOn;
 import frc.robot.commands.ClimberCommands.LeftClimberDown;
 import frc.robot.commands.ClimberCommands.LeftClimberStop;
 import frc.robot.commands.ClimberCommands.LeftClimberUp;
+import frc.robot.commands.ClimberCommands.RightBrakeOn;
 import frc.robot.commands.ClimberCommands.RightClimberDown;
 import frc.robot.commands.ClimberCommands.RightClimberStop;
 import frc.robot.commands.ClimberCommands.RightClimberUp;
@@ -77,7 +79,7 @@ public class RobotContainer {
 
   //Define autos
   public static final String kDefaultAuto = "5142_1MeterForward";
-  public static final String kCustomAuto = "5142_1MeterRight";
+  public static final String kCustomAuto  = "5142_1MeterRight";
   public static final String kCustomAuto2 = "5142_RotateLeft90and1Meter";
   public static final String kCustomAuto3 = "5142_Rotate180and1Meter";
   public static final String kCustomAuto4 = "5142_ComplexPath";
@@ -180,7 +182,8 @@ private void configureBindings() {
       
 
      //Arm Bindings
-      /* //remove to use controls
+     /* 
+       //remove to use controls 
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
@@ -189,7 +192,7 @@ private void configureBindings() {
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
          .onTrue(new ArmUpPosition(armSubsystem));
-*/
+         */
          //todo: add safespot position for shooting
 
        //Intake and Shooter
@@ -203,7 +206,7 @@ private void configureBindings() {
          .onFalse(new StopShooter(shooterSubsystem));
 
         // lead screw forward and back
-
+        /* 
         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)
          .whileTrue(new LeadScrewForward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
@@ -211,7 +214,18 @@ private void configureBindings() {
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (unlimited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
-/* 
+        */
+         new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
+      
+         .whileTrue(new LeftBrakeOn(climberSubsystem));
+
+          new Trigger(m_operator1Controller.button(3)) 
+          
+         .whileTrue(new RightBrakeOn(climberSubsystem));
+         
+         //button 8 = trying a move to orientation TRAVEL
+/*      
+          
         new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
@@ -221,7 +235,7 @@ private void configureBindings() {
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
 
        //remove to use controls
-      trajectoryCalibration(); //tag this out if using controls
+      //trajectoryCalibration(); //tag this out if using controls
       
   }
 
