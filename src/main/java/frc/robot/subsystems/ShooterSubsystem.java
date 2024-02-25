@@ -20,14 +20,14 @@ public class ShooterSubsystem extends SubsystemBase {
     
     private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
-    private final SparkPIDController shooterPID = topShooterMotor.getPIDController();
+    private final SparkPIDController shooterPID = bottomShooterMotor.getPIDController();
 
 // PID constants taken from example code
-    private static final double kP = 6e-5; // Proportional term 
-    private static final double kI = 0.0; // Integral term
+    private static final double kP = 0.0004; // Proportional term 
+    private static final double kI = 0.001; // Integral term
     private static final double kD = 0.0; // Derivative term
     private static final double kIz = 0; // Integral zone
-    private static final double kFF = 0.000015; // Feed-forward
+    private static final double kFF = 0.0002; // Feed-forward
     private static final double kMaxOutput = 1; // Change these later
     private static final double kMinOutput = -1;
     public double setpoint = 0;
@@ -38,16 +38,16 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.restoreFactoryDefaults();
     bottomShooterMotor.restoreFactoryDefaults();
 
-    //topShooterMotor.follow(bottomShooterMotor, true);
+    topShooterMotor.follow(bottomShooterMotor, false);
 
-    topShooterMotor.setIdleMode(IdleMode.kCoast);
-    bottomShooterMotor.setIdleMode(IdleMode.kCoast);
+    topShooterMotor.setIdleMode(IdleMode.kBrake);
+    bottomShooterMotor.setIdleMode(IdleMode.kBrake);
 
     topShooterMotor.setSmartCurrentLimit(40);
     bottomShooterMotor.setSmartCurrentLimit(40);
 
-    //topShooterMotor.burnFlash();
-    //bottomShooterMotor.burnFlash();
+    topShooterMotor.burnFlash();
+    bottomShooterMotor.burnFlash();
 
      //PID configuration 
     shooterPID.setP(kP);

@@ -4,46 +4,67 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.Constants.OrientationConstants.Orientations;
-
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 public class LeadScrewSubsystem extends SubsystemBase {
-    private final CANSparkMax leadScrewMotor = new CANSparkMax(Constants.CanIdConstants.kLeadScrewID, MotorType.kBrushless);
 
-  /** Creates a new LeadScrewSubsystem. */
-  public LeadScrewSubsystem() {}
+  private static final RobotContainer robotContainer = new RobotContainer();
 
-  public void leadScrewForward(){
-    leadScrewMotor.set(.1);
-  }
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+
+  /** Creates a new IntakeSubsystem. */
+  public LeadScrewSubsystem() {
+
+    leadScrewMotor.setSmartCurrentLimit(30);
+    leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 235);
+    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
 
 
-  public void leadScrewBackward(){
-    leadScrewMotor.set(-.1);
-  }  
+  } //these methods dont work
 
-  public void leadScrewStop(){
-    leadScrewMotor.set(0);
-  }
+     public void leadScrewForward(){
 
-  public void moveToPosition(Orientations orientation) {
-        setLeadScrewPosition(orientation.leadScrewPosition);
+      leadScrewMotor.set(.3);
+      
+
+    }
+    public void leadScrewStop(){
+      
+      leadScrewMotor.set(0);
+      
+
     }
 
-    public void setLeadScrewPosition(double leadScrewPosition) {
-      System.out.println("**LEADSCREW TRYING TO MOVE TO" + leadScrewPosition);
-      // move to the position dynamically
-      // need method to VERIFY extensionPosition is SAFE (within bounds) before using!!!!
+    public void leadScrewBackward() {
+
+      leadScrewMotor.set(-.3);
     }
+
 
   @Override
   public void periodic() {
+
+    if (robotContainer.getYButton()) {
+
+    leadScrewMotor.set(.3);
+    }
+    else if (robotContainer.getAButton()){
+
+      leadScrewMotor.set(-.3);
+    }
+    else {
+
+      leadScrewMotor.set(0);
+    }
+   
     // This method will be called once per scheduler run
-    //System.out.println(leadScrewEncoder.getPosition());
   }
 }

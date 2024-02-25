@@ -25,11 +25,12 @@ import frc.robot.commands.ClimberCommands.RightClimberUp;
 import frc.robot.commands.IntakeCommands.IntakeReverse;
 import frc.robot.commands.IntakeCommands.IntakeRun;
 import frc.robot.commands.IntakeCommands.IntakeStop;
-import frc.robot.commands.LeadScrewCommands.LeadScrewBackward;
-import frc.robot.commands.LeadScrewCommands.LeadScrewForward;
-import frc.robot.commands.LeadScrewCommands.LeadScrewStop;
 import frc.robot.commands.ShooterCommands.RunShooter;
 import frc.robot.commands.ShooterCommands.StopShooter;
+import frc.robot.commands.LeadScrewForward;
+import frc.robot.commands.LeadScrewBackward;
+import frc.robot.commands.LeadScrewStop;
+
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -152,6 +153,21 @@ public boolean getRightBumper() {
         return xboxController.getRawButton(6);
 
 }
+
+public boolean getYButton() {
+
+  return xboxController.getRawButton(4);
+}
+
+public boolean getAButton() {
+
+  return xboxController.getRawButton(1);
+}
+
+
+
+
+
 private void configureBindings() {
 
          //Dual Climber Bindings
@@ -207,23 +223,22 @@ private void configureBindings() {
          .whileTrue(new IntakeRun(intakeSubsystem))
          .onFalse(new IntakeStop(intakeSubsystem));
         
+
         new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
-         .whileTrue(new RunShooter(shooterSubsystem))
-         .onFalse(new StopShooter(shooterSubsystem));
+         .whileTrue(new IntakeReverse(intakeSubsystem))
+         .onFalse(new IntakeStop(intakeSubsystem));
 
         // lead screw forward and back
-         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)
-         .onTrue (new InstantCommand(() -> System.out.println("Robot Container: Null?" + leadScrewSubsystem)));
 
 
-        new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
-         .onTrue(new LeadScrewForward(leadScrewSubsystem))
+       /*  new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
+         .whileTrue(new LeadScrewForward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
-        
+        */
          new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
       
          .whileTrue(new LeftBrakeOn(climberSubsystem));

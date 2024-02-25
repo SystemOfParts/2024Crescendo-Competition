@@ -5,13 +5,12 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class MoveToOrientation extends SequentialCommandGroup {
     public MoveToOrientation(
             ArmSubsystem m_arm,
-            LeadScrewSubsystem m_leadScrew,
+            //LeadScrewSubsystem m_leadScrew,
             ShooterSubsystem m_shooter,
             IntakeSubsystem m_intake,
             Orientations orientation) {
@@ -19,8 +18,8 @@ public class MoveToOrientation extends SequentialCommandGroup {
         addCommands(
             new ParallelCommandGroup(
                 new InstantCommand(() -> System.out.println("**ORIENTING TO" + orientation.label)),
-                new InstantCommand(() -> m_arm.moveToPosition(orientation)),
-                new InstantCommand(() -> m_leadScrew.moveToPosition(orientation))));
+                new InstantCommand(() -> m_arm.moveToPosition(orientation))));
+                //new InstantCommand(() -> m_leadScrew.moveToPosition(orientation))));
         
         if (orientation.shooterOn) {
             addCommands(
