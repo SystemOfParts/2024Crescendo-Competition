@@ -65,21 +65,21 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void armDown() {
-        setpoint = 0/encoderConversionFactor;
+        setpoint = 3.5/encoderConversionFactor;
     }
 
     public void armTo45Degrees() {
-        setpoint = 35/encoderConversionFactor;
+        setpoint = 15/encoderConversionFactor;
 
     }
 
     public void armTo85Degrees() {
-        setpoint = 90/encoderConversionFactor;
+        setpoint = 45/encoderConversionFactor;
 
     }
 
-    public void armTo360Degrees() {
-        setpoint = 360/encoderConversionFactor;
+    public void armToAmp() {
+        setpoint = 90/encoderConversionFactor;
     }
 
     public void moveToPosition(Orientations orientation) {

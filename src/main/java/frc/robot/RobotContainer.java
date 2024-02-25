@@ -10,6 +10,7 @@ import frc.robot.Devices.Controller;
 import frc.robot.commands.*;
 import frc.robot.commands.ArmCommands.ArmDown;
 import frc.robot.commands.ArmCommands.ArmTo45Degrees;
+import frc.robot.commands.ArmCommands.ArmToAmp;
 import frc.robot.commands.ArmCommands.ArmUpPosition;
 import frc.robot.commands.ClimberCommands.ClimbersDown;
 import frc.robot.commands.ClimberCommands.ClimbersStop;
@@ -149,6 +150,11 @@ private boolean getDriverFieldCentric() {
 public double getRightTrigger() {
         return xboxController.getRawAxis(3);
 }
+
+public double getLeftTrigger() {
+        return xboxController.getRawAxis(2);
+}
+
 public boolean getRightBumper() {
         return xboxController.getRawButton(6);
 
@@ -205,16 +211,20 @@ private void configureBindings() {
       
 
      //Arm Bindings
-      /* //remove to use controls
+        //remove to use controls
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
          .onTrue(new ArmTo45Degrees(armSubsystem));
 
-        new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
+        new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
          .onTrue(new ArmUpPosition(armSubsystem));
-*/
+
+        new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
+         .onTrue(new ArmToAmp(armSubsystem));
+      
+        
          //todo: add safespot position for shooting
 
        //Intake and Shooter

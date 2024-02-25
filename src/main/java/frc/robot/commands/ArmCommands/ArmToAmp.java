@@ -1,14 +1,14 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ArmSubsystem;
-public class ArmTo360Degrees extends SequentialCommandGroup{
-    public ArmTo360Degrees(
+public class ArmToAmp extends SequentialCommandGroup{
+    public ArmToAmp(
         ArmSubsystem m_arm
 
     ){
     addCommands(
-        new RunCommand(() -> m_arm.armTo360Degrees()));
+        new InstantCommand(() -> m_arm.armToAmp()));
     }
 }

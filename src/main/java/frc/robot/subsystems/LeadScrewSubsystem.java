@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -16,15 +17,17 @@ public class LeadScrewSubsystem extends SubsystemBase {
   private static final RobotContainer robotContainer = new RobotContainer();
 
     private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
-
+    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
   /** Creates a new IntakeSubsystem. */
   public LeadScrewSubsystem() {
 
     leadScrewMotor.setSmartCurrentLimit(30);
+
+    leadScrewEncoder.setPosition(0);
     leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 235);
+    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 240);
     leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
 
 
@@ -54,11 +57,11 @@ public class LeadScrewSubsystem extends SubsystemBase {
 
     if (robotContainer.getYButton()) {
 
-    leadScrewMotor.set(.3);
+    leadScrewMotor.set(.75);
     }
     else if (robotContainer.getAButton()){
 
-      leadScrewMotor.set(-.3);
+      leadScrewMotor.set(-.75);
     }
     else {
 
