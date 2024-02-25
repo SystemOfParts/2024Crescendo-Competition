@@ -22,6 +22,7 @@ import frc.robot.commands.ClimberCommands.RightBrakeOn;
 import frc.robot.commands.ClimberCommands.RightClimberDown;
 import frc.robot.commands.ClimberCommands.RightClimberStop;
 import frc.robot.commands.ClimberCommands.RightClimberUp;
+import frc.robot.commands.IntakeCommands.IntakeReverse;
 import frc.robot.commands.IntakeCommands.IntakeRun;
 import frc.robot.commands.IntakeCommands.IntakeStop;
 import frc.robot.commands.LeadScrewCommands.LeadScrewBackward;
@@ -184,12 +185,11 @@ private void configureBindings() {
 
          //zero robot yaw (new forward) = button 10
          new Trigger(m_operator2Controller.button(10))
-        .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
+          .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
       
 
      //Arm Bindings
-     /* 
-       //remove to use controls 
+      /* //remove to use controls
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          .onTrue(new ArmDown(armSubsystem));
 
@@ -198,7 +198,7 @@ private void configureBindings() {
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = amp position
          .onTrue(new ArmUpPosition(armSubsystem));
-         */
+*/
          //todo: add safespot position for shooting
 
        //Intake and Shooter
@@ -207,9 +207,9 @@ private void configureBindings() {
          .whileTrue(new IntakeRun(intakeSubsystem))
          .onFalse(new IntakeStop(intakeSubsystem));
         
-       // new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
-         //.whileTrue(new RunShooter(shooterSubsystem))
-         //.onFalse(new StopShooter(shooterSubsystem));
+        new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
+         .whileTrue(new RunShooter(shooterSubsystem))
+         .onFalse(new StopShooter(shooterSubsystem));
 
         // lead screw forward and back
          new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (unlimited)

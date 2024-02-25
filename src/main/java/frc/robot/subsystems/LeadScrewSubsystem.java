@@ -12,51 +12,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.OrientationConstants.Orientations;
 
 public class LeadScrewSubsystem extends SubsystemBase {
-  
-    private final CANSparkMax leadScrewMotor = new CANSparkMax(12, MotorType.kBrushless);
-    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
-  
-    private static final double MAX_POSITION = 247;
-    private static final double MIN_POSITION = 5;
-
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(Constants.CanIdConstants.kLeadScrewID, MotorType.kBrushless);
 
   /** Creates a new LeadScrewSubsystem. */
-  public LeadScrewSubsystem() {
+  public LeadScrewSubsystem() {}
 
-    leadScrewMotor.restoreFactoryDefaults();
-    leadScrewEncoder.setPosition(0);
-    leadScrewMotor.setInverted(true);
-    leadScrewMotor.setSmartCurrentLimit(30);
-    leadScrewMotor.burnFlash();
-
-  }
-
-  public void leadScrewForward(){ 
-   
-    if (leadScrewEncoder.getPosition() < MAX_POSITION) {
-
-    leadScrewMotor.set(.1);  
-
-    }
-    else {
-    leadScrewMotor.set(0);
-    }
+  public void leadScrewForward(){
+    leadScrewMotor.set(.1);
   }
 
 
   public void leadScrewBackward(){
-
-    if (leadScrewEncoder.getPosition() > MIN_POSITION) {
-
     leadScrewMotor.set(-.1);
-
-    }
-    else {
-    leadScrewMotor.set(0);
-    }
-
   }  
-  
 
   public void leadScrewStop(){
     leadScrewMotor.set(0);
