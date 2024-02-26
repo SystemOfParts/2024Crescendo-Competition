@@ -255,7 +255,7 @@ private void configureBindings() {
 
 
         new Trigger(m_operator2Controller.button(8)) //button 8 = basic move end effector forward (limited)
-          .onTrue(new LeadScrewForward(leadScrewSubsystem, 100));
+          .onTrue(new LeadScrewSetPosition(leadScrewSubsystem, 100));
 
           /* 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
