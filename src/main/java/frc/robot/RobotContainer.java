@@ -146,7 +146,7 @@ private double getDriverOmegaAxis() {
 }
 
 private boolean getDriverFieldCentric() {
-        return true; //return !xboxController.Button(1); bumper
+        return false; //return !xboxController.Button(1); bumper
 }
 public double getRightTrigger() {
         return xboxController.getRawAxis(3);
