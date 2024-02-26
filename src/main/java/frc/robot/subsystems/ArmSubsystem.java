@@ -23,7 +23,6 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkPIDController pidController = leftArmMotor.getPIDController();
 
     // Constants for PID control, adjust based on testing - NEEDS TUNING
-
     private static final double kP = 0.1; // Proportional term
     private static final double kI = 0.0; // Integral term
     private static final double kD = 0.0; // Derivative term
@@ -33,10 +32,11 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double kMinOutput = -.3;
     public double setpoint = 0;
 
-
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
     private static final double encoderConversionFactor = 360.0 / gearReduction;
+
+    private static final String printLocation = "ArmSubsystem: ";
 
     public ArmSubsystem() {
         // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
@@ -83,7 +83,9 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void moveToPosition(Orientations orientation) {
-        setArmPosition(orientation.armPosition);
+      double position = orientation.armPosition;
+      System.out.println(printLocation+"*** Position called to: "+position);   
+      setpoint = position/encoderConversionFactor;
     }
 
     public void setArmPosition(double armPosition) {

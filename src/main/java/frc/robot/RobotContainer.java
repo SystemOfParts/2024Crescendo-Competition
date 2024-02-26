@@ -72,7 +72,6 @@ public class RobotContainer {
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
-  
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -212,17 +211,29 @@ private void configureBindings() {
 
      //Arm Bindings
         //remove to use controls
+
+        new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
+           .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.HOME));
+          //.whileTrue(new LeadScrewForward(leadScrewSubsystem))
+          //.onFalse(new LeadScrewStop(leadScrewSubsystem));
+
+        new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector forward (limited)
+          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
-         .onTrue(new ArmDown(armSubsystem));
+         //.onTrue(new ArmDown(armSubsystem));
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
-         .onTrue(new ArmTo45Degrees(armSubsystem));
+         //.onTrue(new ArmTo45Degrees(armSubsystem));
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
-         .onTrue(new ArmUpPosition(armSubsystem));
+         //.onTrue(new ArmUpPosition(armSubsystem));
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
 
-        new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
-         .onTrue(new ArmToAmp(armSubsystem));
+        //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
+        // .onTrue(new ArmToAmp(armSubsystem));
       
         
          //todo: add safespot position for shooting
@@ -241,14 +252,14 @@ private void configureBindings() {
         // lead screw forward and back
 
 
-       /*  new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
-         .whileTrue(new LeadScrewForward(leadScrewSubsystem))
-         .onFalse(new LeadScrewStop(leadScrewSubsystem));
+        new Trigger(m_operator2Controller.button(8)) //button 8 = basic move end effector forward (limited)
+          .onTrue(new LeadScrewForward(leadScrewSubsystem, 100));
 
+          /* 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
          .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
          .onFalse(new LeadScrewStop(leadScrewSubsystem));
-        */
+         */
          new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
       
          .whileTrue(new LeftBrakeOn(climberSubsystem));
