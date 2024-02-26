@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final SparkPIDController shooterPID = bottomShooterMotor.getPIDController();
 
 // PID constants taken from example code
-    private static final double kP = 0.0004; // Proportional term 
+    private static final double kP = 0.0004; // Proportional term - make lower tommorow
     private static final double kI = 0.001; // Integral term
     private static final double kD = 0.0; // Derivative term
     private static final double kIz = 0; // Integral zone
@@ -73,13 +73,28 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    /*
+    controls for shooter: 
+
+
+    Left trigger = subwoofer shooting
+    Right Trigger = far shooting
+    Right bumper = amp spit out
+
+    */
+  
     
     if (robotContainer.getLeftTrigger() > .25) {
 
       setpoint = 3000 * robotContainer.getLeftTrigger();
 
     }
-    
+    else if (robotContainer.getRightBumper()){
+
+      setpoint = 500;
+
+    }
     else {
     setpoint = 5700 * robotContainer.getRightTrigger();
     }
