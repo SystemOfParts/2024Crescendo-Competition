@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.ClimberSubsystem;
-public class LeftBrakeOn extends SequentialCommandGroup{
-    public LeftBrakeOn(
+public class LeftClimberDownCommand extends SequentialCommandGroup{
+    public LeftClimberDownCommand(
         ClimberSubsystem m_climber
 
     ){
     addCommands(
-        new RunCommand(() -> m_climber.leftBrakeOn()));
+        new RunCommand(() -> m_climber.climber1Down(.5)));
     }
 }

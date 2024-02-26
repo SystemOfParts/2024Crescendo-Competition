@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.ClimberSubsystem;
-public class ClimbersDown extends ParallelCommandGroup{
-    public ClimbersDown(
+public class ClimbersDownCommand extends ParallelCommandGroup{
+    public ClimbersDownCommand(
         ClimberSubsystem m_climber
 
     ){

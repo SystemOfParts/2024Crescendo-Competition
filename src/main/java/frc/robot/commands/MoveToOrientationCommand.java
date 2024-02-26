@@ -11,8 +11,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.LeadScrewSubsystem;
 
-public class MoveToOrientation extends SequentialCommandGroup {
-    public MoveToOrientation(
+public class MoveToOrientationCommand extends SequentialCommandGroup {
+    public MoveToOrientationCommand(
             ArmSubsystem m_arm,
             LeadScrewSubsystem m_leadScrew,
             ShooterSubsystem m_shooter,

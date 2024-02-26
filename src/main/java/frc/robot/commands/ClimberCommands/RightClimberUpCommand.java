@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.ClimberSubsystem;
-public class RightClimberUp extends SequentialCommandGroup{
-    public RightClimberUp(
+public class RightClimberUpCommand extends SequentialCommandGroup{
+    public RightClimberUpCommand(
         ClimberSubsystem m_climber
     ){
     addCommands(

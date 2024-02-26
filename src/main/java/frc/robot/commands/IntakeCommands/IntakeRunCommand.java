@@ -1,16 +1,16 @@
 package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 import frc.robot.subsystems.IntakeSubsystem;
-public class IntakeStop extends SequentialCommandGroup{
-    public IntakeStop(
+public class IntakeRunCommand extends SequentialCommandGroup{
+    public IntakeRunCommand(
         IntakeSubsystem m_intake
 
     ){
     addCommands(
-        new InstantCommand(() -> m_intake.stopIntake()));
+        new RunCommand(() -> m_intake.runIntake()));
  
     }
 }

@@ -20,29 +20,29 @@ import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
-import frc.robot.commands.ArmCommands.ArmDown;
-import frc.robot.commands.ArmCommands.ArmTo45Degrees;
-import frc.robot.commands.ArmCommands.ArmToAmp;
-import frc.robot.commands.ArmCommands.ArmUpPosition;
-import frc.robot.commands.ClimberCommands.ClimbersDown;
-import frc.robot.commands.ClimberCommands.ClimbersStop;
-import frc.robot.commands.ClimberCommands.ClimbersUp;
-import frc.robot.commands.ClimberCommands.LeftBrakeOn;
-import frc.robot.commands.ClimberCommands.LeftClimberDown;
-import frc.robot.commands.ClimberCommands.LeftClimberStop;
-import frc.robot.commands.ClimberCommands.LeftClimberUp;
-import frc.robot.commands.ClimberCommands.RightBrakeOn;
-import frc.robot.commands.ClimberCommands.RightClimberDown;
-import frc.robot.commands.ClimberCommands.RightClimberStop;
-import frc.robot.commands.ClimberCommands.RightClimberUp;
-import frc.robot.commands.IntakeCommands.IntakeReverse;
-import frc.robot.commands.IntakeCommands.IntakeRun;
-import frc.robot.commands.IntakeCommands.IntakeStop;
-import frc.robot.commands.ShooterCommands.RunShooter;
-import frc.robot.commands.ShooterCommands.StopShooter;
-import frc.robot.commands.LeadScrewForward;
-import frc.robot.commands.LeadScrewBackward;
-import frc.robot.commands.LeadScrewStop;
+import frc.robot.commands.ArmCommands.ArmDownCommand;
+import frc.robot.commands.ArmCommands.ArmTo45DegreesCommand;
+import frc.robot.commands.ArmCommands.ArmToAmpCommand;
+import frc.robot.commands.ArmCommands.ArmUpPositionCommand;
+import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
+import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
+import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
+import frc.robot.commands.ClimberCommands.LeftBrakeOnCommand;
+import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
+import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
+import frc.robot.commands.ClimberCommands.LeftClimberUpCommand;
+import frc.robot.commands.ClimberCommands.RightBrakeOnCommand;
+import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
+import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
+import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
+import frc.robot.commands.IntakeCommands.IntakeReverseCommand;
+import frc.robot.commands.IntakeCommands.IntakeRunCommand;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.ShooterCommands.RunShooterCommand;
+import frc.robot.commands.ShooterCommands.StopShooterCommand;
+import frc.robot.commands.LeadScrewForwardCommand;
+import frc.robot.commands.LeadScrewBackwardCommand;
+import frc.robot.commands.LeadScrewStopCommand;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -180,31 +180,31 @@ private void configureBindings() {
          //Dual Climber Bindings
          // Convert to 'climberUpToLow' and 'climberUpToHigh'
         new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up , independent limiting
-         .whileTrue(new ClimbersUp(climberSubsystem))
-         .onFalse(new ClimbersStop(climberSubsystem));
+         .whileTrue(new ClimbersUpCommand(climberSubsystem))
+         .onFalse(new ClimbersStopCommand(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(5)) //button 5 = both climbers down , independent limiting
-         .whileTrue(new ClimbersDown(climberSubsystem))
-         .onFalse(new ClimbersStop(climberSubsystem));
+         .whileTrue(new ClimbersDownCommand(climberSubsystem))
+         .onFalse(new ClimbersStopCommand(climberSubsystem));
 
           //Independent Climber Controls
          
         new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up (limited)
-         .whileTrue(new LeftClimberUp(climberSubsystem))
-         .onFalse(new LeftClimberStop(climberSubsystem));
+         .whileTrue(new LeftClimberUpCommand(climberSubsystem))
+         .onFalse(new LeftClimberStopCommand(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(7)) //button 7 = left climber down (limited)
-         .whileTrue(new LeftClimberDown(climberSubsystem))
-         .onFalse(new LeftClimberStop(climberSubsystem));
+         .whileTrue(new LeftClimberDownCommand(climberSubsystem))
+         .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
 
         new Trigger(m_operator1Controller.button(11)) //button 11 = right climber up (limited)
-         .whileTrue(new RightClimberUp(climberSubsystem))
-         .onFalse(new RightClimberStop(climberSubsystem));
+         .whileTrue(new RightClimberUpCommand(climberSubsystem))
+         .onFalse(new RightClimberStopCommand(climberSubsystem));
   
         new Trigger(m_operator1Controller.button(2)) //button 2 = right climber down (limited)
-         .whileTrue(new RightClimberDown(climberSubsystem))
-         .onFalse(new RightClimberStop(climberSubsystem));
+         .whileTrue(new RightClimberDownCommand(climberSubsystem))
+         .onFalse(new RightClimberStopCommand(climberSubsystem));
 
          //zero robot yaw (new forward) = button 10
          new Trigger(m_operator2Controller.button(10))
@@ -215,24 +215,24 @@ private void configureBindings() {
         //remove to use controls
 
         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
-           .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.HOME));
+           .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.HOME));
           //.whileTrue(new LeadScrewForward(leadScrewSubsystem))
           //.onFalse(new LeadScrewStop(leadScrewSubsystem));
 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector forward (limited)
-          .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+          .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          //.onTrue(new ArmDown(armSubsystem));
-         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
          //.onTrue(new ArmTo45Degrees(armSubsystem));
-         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
+         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
          //.onTrue(new ArmUpPosition(armSubsystem));
-         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
 
         //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
         // .onTrue(new ArmToAmp(armSubsystem));
@@ -243,19 +243,19 @@ private void configureBindings() {
        //Intake and Shooter
 
         new Trigger(m_operator2Controller.button(4)) //button 4 = basic intake
-         .whileTrue(new IntakeRun(intakeSubsystem))
-         .onFalse(new IntakeStop(intakeSubsystem));
+         .whileTrue(new IntakeRunCommand(intakeSubsystem))
+         .onFalse(new IntakeStopCommand(intakeSubsystem));
         
 
         new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
-         .whileTrue(new IntakeReverse(intakeSubsystem))
-         .onFalse(new IntakeStop(intakeSubsystem));
+         .whileTrue(new IntakeReverseCommand(intakeSubsystem))
+         .onFalse(new IntakeStopCommand(intakeSubsystem));
 
         // lead screw forward and back
 
 
         new Trigger(m_operator2Controller.button(8)) //button 8 = basic move end effector forward (limited)
-          .onTrue(new LeadScrewSetPosition(leadScrewSubsystem, 100));
+          .onTrue(new LeadScrewSetPositionCommand(leadScrewSubsystem, 100));
 
           /* 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
@@ -264,11 +264,11 @@ private void configureBindings() {
          */
          new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
       
-         .whileTrue(new LeftBrakeOn(climberSubsystem));
+         .whileTrue(new LeftBrakeOnCommand(climberSubsystem));
 
           new Trigger(m_operator1Controller.button(3)) 
           
-         .whileTrue(new RightBrakeOn(climberSubsystem));
+         .whileTrue(new RightBrakeOnCommand(climberSubsystem));
          
          //button 8 = trying a move to orientation TRAVEL
 /*      

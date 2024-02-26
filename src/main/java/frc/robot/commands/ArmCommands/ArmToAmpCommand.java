@@ -1,14 +1,14 @@
 package frc.robot.commands.ArmCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ArmSubsystem;
-public class ArmMoveDown extends SequentialCommandGroup{
-    public ArmMoveDown(
+public class ArmToAmpCommand extends SequentialCommandGroup{
+    public ArmToAmpCommand(
         ArmSubsystem m_arm
 
     ){
     addCommands(
-        new RunCommand(() -> m_arm.armMoveDown()));
+        new InstantCommand(() -> m_arm.armToAmp()));
     }
 }
