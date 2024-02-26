@@ -71,8 +71,10 @@ public class ArmSubsystem extends SubsystemBase {
 
 
         //Lead Screw
-        leadScrewMotor.setSmartCurrentLimit(30);
+        leadScrewMotor.restoreFactoryDefaults();
 
+        leadScrewMotor.setSmartCurrentLimit(30);
+        leadScrewMotor.setInverted(true);
         leadScrewEncoder.setPosition(0);
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
