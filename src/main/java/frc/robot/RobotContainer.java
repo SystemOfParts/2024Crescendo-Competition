@@ -212,7 +212,6 @@ private void configureBindings() {
       
 
      //Arm Bindings
-        //remove to use controls
 
         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
            .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.HOME));
