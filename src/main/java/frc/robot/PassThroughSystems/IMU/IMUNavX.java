@@ -17,15 +17,8 @@ public class IMUNavX implements IMUInterface {
 
         System.out.println("**** Activating NavX IMU");
 
-        try {
             navX = new AHRS(SPI.Port.kMXP);
-        } catch (RuntimeException ex) {
-            // TODO: We need to set up a drivers system output system: perhaps Robot.java
-            // should catch this exception
-            // Or we could output to the driver system directly, as they do in their example
-            // DriverStation.reportError("Error instantiating navX MXP: " + ex.getMessage(),
-            // true);
-        }
+    
     }
 
     /**
@@ -60,7 +53,7 @@ public class IMUNavX implements IMUInterface {
 
     //TODO: make sure values are positive
 
-    public Rotation2d getYawRotation2d() {
+    public Rotation2d getYawRotation2d(){
         return Rotation2d.fromDegrees(getYaw());
     }
 

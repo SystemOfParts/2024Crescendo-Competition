@@ -41,6 +41,9 @@ public class ClimberSubsystem extends SubsystemBase {
         climberMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
         climberMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
+        climberMotor1.setSmartCurrentLimit(30);
+        climberMotor2.setSmartCurrentLimit(30);
+
         climberMotor2.setInverted(true);
 
         climberMotor1.burnFlash();
@@ -56,22 +59,16 @@ public class ClimberSubsystem extends SubsystemBase {
     }
     
     public void climber1Up(double speed) {
-        //System.out.println("POSITION: "+(climberEncoder1.getPosition()));
-        System.out.println("MAX_POSITION: "+(MAX_POSITION));
-        System.out.println("POS-> "+(climberEncoder1.getPosition())+" > "+MAX_POSITION+" <-MAX");
+        
         if (climberEncoder1.getPosition() > MAX_POSITION) {
-            System.out.println("GOING UP");
             climberMotor1.set(-speed);
         } else {
             climberMotor1.set(0);
         }
     }
       public void climber2Up(double speed) {
-        System.out.println("POSITION: "+(climberEncoder2.getPosition()));
-        System.out.println("MAX_POSITION: "+(MAX_POSITION));
-        System.out.println("POS-> "+(climberEncoder2.getPosition())+" > "+MAX_POSITION+" <-MAX");
+      
         if (climberEncoder2.getPosition() > MAX_POSITION) {
-            System.out.println("GOING UP");
             climberMotor2.set(-speed);
         } else {
             climberMotor2.set(0);
@@ -80,28 +77,23 @@ public class ClimberSubsystem extends SubsystemBase {
     
 
   public void climber1Down(double speed) {
-        System.out.println("POSITION: "+(climberEncoder1.getPosition()));
-        System.out.println("MIN_POSITION: "+(MIN_POSITION));
-        System.out.println("POS-> "+(climberEncoder1.getPosition())+" < "+MIN_POSITION+" <-MIN");
+
         if (climberEncoder1.getPosition() < MIN_POSITION) {
-            System.out.println("GOING DOWN");
             climberMotor1.set(speed);
         } else {
             climberMotor1.set(0);
         }
     }
   public void climber2Down(double speed) {
-        System.out.println("POSITION: "+(climberEncoder2.getPosition()));
-        System.out.println("MIN_POSITION: "+(MIN_POSITION));
-        System.out.println("POS-> "+(climberEncoder2.getPosition())+" < "+MIN_POSITION+" <-MIN");
+
         if (climberEncoder2.getPosition() < MIN_POSITION) {
-            System.out.println("GOING DOWN");
             climberMotor2.set(speed);
         } else {
             climberMotor2.set(0);
         }
     }
     //dangerous controls for testing
+    
   public void climber1DownManually(double speed){
     climberMotor1.set(speed);
   }
