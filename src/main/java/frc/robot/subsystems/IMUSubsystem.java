@@ -74,6 +74,13 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
   }
 
   public double getYaw() {
+    if (imu.getYaw() < 0.05) {
+      return 0.0;
+    } 
+    else if (imu.getYaw() > -0.05) {
+      return 0.0;
+    }
+    else
     return imu.getYaw();
   }
 
