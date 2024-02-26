@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -17,8 +16,15 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.SparkPIDController;
 
 public class ArmSubsystem extends SubsystemBase {
+
     private final CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
     private final CANSparkMax rightArmMotor = new CANSparkMax(11, MotorType.kBrushless);
+
+
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
+
+
     private final RelativeEncoder encoder = leftArmMotor.getEncoder();
     private final SparkPIDController pidController = leftArmMotor.getPIDController();
 
@@ -62,6 +68,19 @@ public class ArmSubsystem extends SubsystemBase {
 
         // Encoder setup
         encoder.setPosition(0);
+
+
+        //Lead Screw
+        leadScrewMotor.setSmartCurrentLimit(30);
+
+        leadScrewEncoder.setPosition(0);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 240);
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
+
+        leadScrewMotor.burnFlash();
     }
 
     public void armDown() {
@@ -102,6 +121,24 @@ public class ArmSubsystem extends SubsystemBase {
     public void armMoveDown() {
       leftArmMotor.set(-.25);
     }
+
+    public void leadScrewForward(){
+
+      leadScrewMotor.set(.3);
+      
+    }
+    public void leadScrewStop(){
+      
+      leadScrewMotor.set(0);
+      
+
+    }
+
+    public void leadScrewBackward() {
+
+      leadScrewMotor.set(-.3);
+    }
+
 
     
 

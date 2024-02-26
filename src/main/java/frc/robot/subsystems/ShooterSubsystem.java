@@ -76,15 +76,16 @@ public class ShooterSubsystem extends SubsystemBase {
     
     if (robotContainer.getLeftTrigger() > .25) {
 
-      setpoint = 3000*robotContainer.getLeftTrigger();
+      setpoint = 3000 * robotContainer.getLeftTrigger();
 
     }
     
     else {
     setpoint = 5700 * robotContainer.getRightTrigger();
-    shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
     }
-      
+    
+    shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+
     // This method will be called once per scheduler run
   }
 }

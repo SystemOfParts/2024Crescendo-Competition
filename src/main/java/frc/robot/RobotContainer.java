@@ -7,6 +7,17 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.Devices.Controller;
+
+
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IMUSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.SmartDashboardSubsystem;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
+
 import frc.robot.commands.*;
 import frc.robot.commands.ArmCommands.ArmDown;
 import frc.robot.commands.ArmCommands.ArmTo45Degrees;
@@ -31,16 +42,6 @@ import frc.robot.commands.ShooterCommands.StopShooter;
 import frc.robot.commands.LeadScrewForward;
 import frc.robot.commands.LeadScrewBackward;
 import frc.robot.commands.LeadScrewStop;
-
-import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IMUSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.LeadScrewSubsystem;
-import frc.robot.subsystems.SmartDashboardSubsystem;
-import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,7 +78,6 @@ public class RobotContainer {
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
 
 
   //Define autos
@@ -241,14 +241,14 @@ private void configureBindings() {
         // lead screw forward and back
 
 
-       /*  new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
-         .whileTrue(new LeadScrewForward(leadScrewSubsystem))
-         .onFalse(new LeadScrewStop(leadScrewSubsystem));
+         new Trigger(m_operator2Controller.button(6)) //button 6 =  move end effector forward (limited)
+         .whileTrue(new LeadScrewForward(armSubsystem))
+         .onFalse(new LeadScrewStop(armSubsystem));
 
-        new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)
-         .whileTrue(new LeadScrewBackward(leadScrewSubsystem))
-         .onFalse(new LeadScrewStop(leadScrewSubsystem));
-        */
+        new Trigger(m_operator2Controller.button(7)) //button 7 =  move end effector backward (limited)
+         .whileTrue(new LeadScrewBackward(armSubsystem))
+         .onFalse(new LeadScrewStop(armSubsystem));
+        
          new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
       
          .whileTrue(new LeftBrakeOn(climberSubsystem));

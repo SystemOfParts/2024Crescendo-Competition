@@ -3,14 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-import frc.robot.subsystems.LeadScrewSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 public class LeadScrewStop extends SequentialCommandGroup{
     public LeadScrewStop(
-        LeadScrewSubsystem m_leadscrew
+        ArmSubsystem m_arm
 
     ){
     addCommands(
-        new InstantCommand(() -> m_leadscrew.leadScrewStop()));
+        new InstantCommand(() -> m_arm.leadScrewStop()));
  
     }
 }
