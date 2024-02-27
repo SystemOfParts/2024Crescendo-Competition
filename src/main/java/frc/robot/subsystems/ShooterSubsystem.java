@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
+import frc.robot.Constants.OrientationConstants.Orientations;
 
 import frc.robot.RobotContainer;
 
@@ -59,15 +60,29 @@ public class ShooterSubsystem extends SubsystemBase {
     
   }
 
-     public void runShooter(){
+    public void runShooter(Orientations orientation){
+        if (orientation.label == Orientations.SUBWOOFER.label){
 
-      bottomShooterMotor.set(.1); //5700 upper limit
+          setpoint = 3000;
+          
+        }
+        else if (orientation.label == Orientations.AMP.label){
+
+          setpoint = 500;
+
+        }
+        else if (orientation.label == Orientations.PODIUM.label){
+
+          setpoint = 5700;
+
+        }
+
+
       
     }
     public void stopShooter(){
       
-      bottomShooterMotor.set(0);
-      
+      setpoint = 0;      
     }
   
 
@@ -80,12 +95,13 @@ public class ShooterSubsystem extends SubsystemBase {
     Right Trigger = far shooting
     Right bumper = amp spit out
 
-    */
+    /* 
     if (robotContainer.getLeftTrigger() > .25) {
       setpoint = 3000 * robotContainer.getLeftTrigger();
     } else {
       setpoint = 5700 * robotContainer.getRightTrigger();
     }    
+    */
     shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
     // This method will be called once per scheduler run

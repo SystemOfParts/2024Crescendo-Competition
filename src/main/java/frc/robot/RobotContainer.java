@@ -20,10 +20,6 @@ import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
-import frc.robot.commands.ArmCommands.ArmDownCommand;
-import frc.robot.commands.ArmCommands.ArmTo45DegreesCommand;
-import frc.robot.commands.ArmCommands.ArmToAmpCommand;
-import frc.robot.commands.ArmCommands.ArmUpPositionCommand;
 import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
 import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
 import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
@@ -38,16 +34,13 @@ import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
 import frc.robot.commands.IntakeCommands.IntakeReverseCommand;
 import frc.robot.commands.IntakeCommands.IntakeRunCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.commands.ShooterCommands.RunShooterCommand;
-import frc.robot.commands.ShooterCommands.StopShooterCommand;
-import frc.robot.commands.LeadScrewForwardCommand;
-import frc.robot.commands.LeadScrewBackwardCommand;
-import frc.robot.commands.LeadScrewStopCommand;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -78,7 +71,7 @@ public class RobotContainer {
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
+  //public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
 
 
   //Define autos
@@ -99,8 +92,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure driver interface - binding joystick objects to port numbers
     
-    configureBindings();
     configureDriverInterface();
+    configureBindings();
 
       // Configure the trigger bindings
       driveSubsystem.setDefaultCommand(
@@ -214,24 +207,28 @@ private void configureBindings() {
      //Arm Bindings
 
         new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
-           .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.HOME));
+           .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
           //.whileTrue(new LeadScrewForward(leadScrewSubsystem))
           //.onFalse(new LeadScrewStop(leadScrewSubsystem));
 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector forward (limited)
-          .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+          
+        new Trigger(m_operator2Controller.button(8)) //button 7 = basic move end effector forward (limited)
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
+
 
         new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          //.onTrue(new ArmDown(armSubsystem));
-         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
          //.onTrue(new ArmTo45Degrees(armSubsystem));
-         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
          //.onTrue(new ArmUpPosition(armSubsystem));
-         .onTrue(new MoveToOrientationCommand(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
 
         //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
         // .onTrue(new ArmToAmp(armSubsystem));
@@ -241,10 +238,10 @@ private void configureBindings() {
 
        //Intake and Shooter
 
-        new Trigger(m_operator2Controller.button(4)) //button 4 = basic intake
-         .whileTrue(new IntakeRunCommand(intakeSubsystem))
-         .onFalse(new IntakeStopCommand(intakeSubsystem));
-        
+
+        new JoystickButton(xboxController, 6)
+          .whileTrue(new IntakeRunCommand(intakeSubsystem))
+          .onFalse(new IntakeStopCommand(intakeSubsystem));
 
         new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
          .whileTrue(new IntakeReverseCommand(intakeSubsystem))
@@ -253,8 +250,8 @@ private void configureBindings() {
         // lead screw forward and back
 
 
-        new Trigger(m_operator2Controller.button(8)) //button 8 = basic move end effector forward (limited)
-          .onTrue(new LeadScrewSetPositionCommand(leadScrewSubsystem, 100));
+        //new Trigger(m_operator2Controller.button(8)) //button 8 = basic move end effector forward (limited)
+          //.onTrue(new LeadScrewSetPositionCommand(armSubsystem, 100));
 
           /* 
         new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector backward (limited)

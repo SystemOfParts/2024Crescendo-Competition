@@ -1,5 +1,7 @@
 package frc.robot.Devices;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -147,5 +149,10 @@ public class Controller extends Joystick {
         }
         return result;
         
+    }
+
+    public BooleanSupplier getRightBumper() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRightBumper'");
     }
 }

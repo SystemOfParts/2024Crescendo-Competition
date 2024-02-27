@@ -17,27 +17,54 @@ import com.revrobotics.SparkPIDController;
 
 public class ArmSubsystem extends SubsystemBase {
 
+    private static final String printLocation = "LeadScrewSubsystem: ";
+
     private final CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
     private final CANSparkMax rightArmMotor = new CANSparkMax(11, MotorType.kBrushless);
 
+
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+    
+    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
+
+
     private final RelativeEncoder encoder = leftArmMotor.getEncoder();
-    private final SparkPIDController pidController = leftArmMotor.getPIDController();
+
+    private final SparkPIDController armController = leftArmMotor.getPIDController();
+
+    private final SparkPIDController leadController = leadScrewMotor.getPIDController();
 
     // Constants for PID control, adjust based on testing - NEEDS TUNING
-    private static final double kP = 0.1; // Proportional term
-    private static final double kI = 0.0; // Integral term
-    private static final double kD = 0.0; // Derivative term
-    private static final double kIz = 0; // Integral zone
-    private static final double kFF = 0.0; // Feed-forward
-    private static final double kMaxOutput = .3;
-    private static final double kMinOutput = -.3;
-    public double setpoint = 0;
+
+    private static final double ArmkP = 0.1; // Proportional term
+    private static final double ArmkI = 0.0; // Integral term
+    private static final double ArmkD = 0.0; // Derivative term
+    private static final double ArmkIz = 0; // Integral zone
+    private static final double ArmkFF = 0.0; // Feed-forward
+    private static final double ArmkMaxOutput = .3;
+    private static final double ArmkMinOutput = -.3;
+
+
+
+    //Lead screw 
+    private static final double LeadkP = 0.1; // Proportional term
+    private static final double LeadkI = 0.0; // Integral term
+    private static final double LeadkD = 0.0; // Derivative term
+    private static final double LeadkIz = 0; // Integral zone
+    private static final double LeadkFF = 0.0; // Feed-forward
+    private static final double LeadkMaxOutput = 1;
+    private static final double LeadkMinOutput = -1;
+
+    public float kLeadFarLimit = 245;
+    public float kLeadHomeLimit = 1;
+    public double armSetpoint = 0;
+    public double leadSetpoint = 0;
+
+
 
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
     private static final double encoderConversionFactor = 360.0 / gearReduction;
-
-    private static final String printLocation = "ArmSubsystem: ";
 
     public ArmSubsystem() {
         // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
@@ -54,48 +81,73 @@ public class ArmSubsystem extends SubsystemBase {
         rightArmMotor.burnFlash();
 
         // PID configuration
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
-        pidController.setIZone(kIz);
-        pidController.setFF(kFF);
-        pidController.setOutputRange(kMinOutput, kMaxOutput);
+        armController.setP(ArmkP);
+        armController.setI(ArmkI);
+        armController.setD(ArmkD);
+        armController.setIZone(ArmkIz);
+        armController.setFF(ArmkFF);
+        armController.setOutputRange(ArmkMinOutput, ArmkMaxOutput);
 
         // Encoder setup
         encoder.setPosition(0);
 
+
+        //Lead Screw
+        
+
+        leadScrewMotor.restoreFactoryDefaults();
+
+        leadScrewMotor.setSmartCurrentLimit(30);
+        leadScrewMotor.setInverted(true);
+        leadScrewEncoder.setPosition(0);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 241);
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
+
+        leadController.setP(LeadkP);
+        leadController.setI(LeadkI);
+        leadController.setD(LeadkD);
+        leadController.setIZone(LeadkIz);
+        leadController.setFF(LeadkFF);
+        leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
+
+        leadScrewMotor.burnFlash();
+
+
+
     }
 
-    public void armDown() {
-        setpoint = 3.5/encoderConversionFactor;
+    /* public void armDown() {
+        armSetpoint = 3.5/encoderConversionFactor;
     }
 
     public void armTo45Degrees() {
-        setpoint = 15/encoderConversionFactor;
+        armSetpoint = 15/encoderConversionFactor;
 
     }
 
     public void armTo85Degrees() {
-        setpoint = 45/encoderConversionFactor;
+        armSetpoint = 45/encoderConversionFactor;
 
     }
 
     public void armToAmp() {
-        setpoint = 90/encoderConversionFactor;
-    }
+        armSetpoint = 90/encoderConversionFactor;
+    } */
 
     public void moveToPosition(Orientations orientation) {
-      double position = orientation.armPosition;
-      System.out.println(printLocation+"*** Position called to: "+position);   
-      setpoint = position/encoderConversionFactor;
+        setArmPosition(orientation.armPosition);
     }
 
     public void setArmPosition(double armPosition) {
       System.out.println("**ARM TRYING TO MOVE TO" + armPosition);
         // move to the position dynamically
         // need method to VERIFY armPosition is SAFE (within bounds) before using!!!!
+        armSetpoint = armPosition;
     }
-
+/*
     public void armStop() {
         leftArmMotor.set(0);
     }
@@ -107,6 +159,52 @@ public class ArmSubsystem extends SubsystemBase {
       leftArmMotor.set(-.25);
     }
 
+     public void leadScrewForward(){
+      leadScrewMotor.set(.3);
+    }
+    
+    public void leadScrewStop(){ 
+      leadScrewMotor.set(0);
+    }
+
+    public void leadScrewBackward() {
+      leadScrewMotor.set(-.3);
+    }
+
+    public void leadScrewHome(){
+
+      leadSetpoint = 1;
+    }
+    
+    public void leadScrewHover(){
+
+      leadSetpoint = 150;
+    }
+
+    
+    public void leadScrewIntake(){
+
+      leadSetpoint = 240;
+    } */
+
+     public void leadMoveToPosition(Orientations orientation) {
+      double position = orientation.leadScrewPosition;
+      System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
+      if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
+        leadSetpoint = position;
+      }
+    }
+  
+    public void leadScrewSetPosition(double position){
+      System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
+      if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
+        leadSetpoint = position;
+      }
+    }
+  
+    
+    
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -114,7 +212,8 @@ public class ArmSubsystem extends SubsystemBase {
 
     //System.out.println("encoder position: ");
 
-    pidController.setReference(setpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
+    armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
+    leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
 
   }
 }

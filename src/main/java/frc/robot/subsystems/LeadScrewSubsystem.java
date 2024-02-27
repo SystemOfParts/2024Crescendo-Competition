@@ -18,10 +18,10 @@ import frc.robot.RobotContainer;
 public class LeadScrewSubsystem extends SubsystemBase {
 
   //private static final RobotContainer robotContainer = new RobotContainer();
+    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
+    private final SparkPIDController pidController = leadScrewMotor.getPIDController();
 
-  private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
-  private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
-  private final SparkPIDController pidController = leadScrewMotor.getPIDController();
 
   public double kP = 1; // Proportional term
   public double kI = 0.0; // Integral term

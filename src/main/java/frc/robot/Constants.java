@@ -63,7 +63,7 @@ public final class Constants {
     }
 
 	public static final class OrientationConstants {
-		// Arm Positions
+		// Arm Positions in order: arm, leadscrew, shooter on, intake on
 		public enum Orientations {
 			HOME("Home",
 							3.5,
@@ -76,23 +76,23 @@ public final class Constants {
 							false,
 							false),
 			INTAKE("Intake",
-							0,
-							230,
+							3.5,
+							240,
 							false,
 							true),
 			AMP("Amp",
 							90,
-							200,
+							240,
 							true,
 							false),
 			PODIUM("Podium",
 							45,
-							200,
+							240,
 							true,
 							false),
 			SUBWOOFER("Subwoofer",
-							15,
-							200,
+							9,
+							240,
 							true,
 							false),
 			PRE_CLIMB("Preclimb",
@@ -108,7 +108,7 @@ public final class Constants {
 			TRAP_SCORE("Trap Score",
 							0,
 							0,
-							true,
+							false,
 							false);
 
 			public final String label;
