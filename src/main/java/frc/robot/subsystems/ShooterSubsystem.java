@@ -22,7 +22,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
     private final SparkPIDController bottomShooterPID = bottomShooterMotor.getPIDController();
-    private final SparkPIDController topShooterPID = bottomShooterMotor.getPIDController();
+    private final SparkPIDController topShooterPID = topShooterMotor.getPIDController();
+    //private boolean runOnce = true;
 
 
 // PID constants taken from example code
@@ -40,6 +41,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     topShooterMotor.restoreFactoryDefaults();
     bottomShooterMotor.restoreFactoryDefaults();
+
+    topShooterMotor.clearFaults();
+    bottomShooterMotor.clearFaults();
 
 
     topShooterMotor.setIdleMode(IdleMode.kBrake);
@@ -82,38 +86,44 @@ public class ShooterSubsystem extends SubsystemBase {
     public void runShooter(Orientations orientation){
         if (orientation.label == Orientations.SUBWOOFER.label){
 
-          setpoint = 3000;
-
+          setpoint = 2500;
           bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
           topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
         }
         else if (orientation.label == Orientations.AMP.label){
 
-          setpoint = 500;
+          setpoint = 1200;
           bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
           topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
         }
         else if (orientation.label == Orientations.PODIUM.label){
 
-          setpoint = 5500;
+          setpoint = 3000;
           bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
           topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
 
+        }
+        else if (orientation.label == Orientations.TRAP_SCORE.label){
+
+          setpoint = 1450;
+          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
         }
 
 
       
     }
     public void stopShooter(){
-      
       setpoint = 0;     
       bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
       topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
     }
+
+
   
 
   @Override
@@ -134,5 +144,9 @@ public class ShooterSubsystem extends SubsystemBase {
     */
 
     // This method will be called once per scheduler run
+    /* if (runOnce){
+      runOnce = false;
+      //topShooterMotor.set(.5);
+    } */
   }
 }

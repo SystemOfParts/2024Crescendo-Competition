@@ -81,12 +81,12 @@ public final class Constants {
 							false,
 							true),
 			AMP("Amp",
-							90,
-							240,
+							80,
+							245,
 							true,
 							false),
 			PODIUM("Podium",
-							45,
+							22,
 							240,
 							true,
 							false),
@@ -106,9 +106,9 @@ public final class Constants {
 							false,
 							false),
 			TRAP_SCORE("Trap Score",
-							0,
-							0,
-							false,
+							11,
+							240,
+							true,
 							false);
 
 			public final String label;

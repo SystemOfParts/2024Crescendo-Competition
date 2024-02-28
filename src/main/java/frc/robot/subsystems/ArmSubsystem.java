@@ -103,7 +103,7 @@ public class ArmSubsystem extends SubsystemBase {
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
     
-        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 241);
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 245);
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
 
         leadController.setP(LeadkP);

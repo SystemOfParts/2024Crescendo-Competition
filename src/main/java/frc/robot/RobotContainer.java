@@ -228,7 +228,7 @@ private void configureBindings() {
 
         new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
          //.onTrue(new ArmUpPosition(armSubsystem));
-          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
         //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
         // .onTrue(new ArmToAmp(armSubsystem));
