@@ -32,7 +32,7 @@ import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
 import frc.robot.commands.IntakeCommands.IntakeReverseCommand;
-import frc.robot.commands.IntakeCommands.IntakeRunCommand;
+import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -240,7 +240,7 @@ private void configureBindings() {
 
 
         new JoystickButton(xboxController, 6)
-          .whileTrue(new IntakeRunCommand(intakeSubsystem))
+          .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem))
           .onFalse(new IntakeStopCommand(intakeSubsystem));
 
         new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
