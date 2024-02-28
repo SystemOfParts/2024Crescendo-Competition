@@ -84,37 +84,9 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
     public void runShooter(Orientations orientation){
-        if (orientation.label == Orientations.SUBWOOFER.label){
-
-          setpoint = 2500;
+          setpoint = orientation.shooterSpeed;
           bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-
-        }
-        else if (orientation.label == Orientations.AMP.label){
-
-          setpoint = 1200;
-          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-
-        }
-        else if (orientation.label == Orientations.PODIUM.label){
-
-          setpoint = 3000;
-          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-
-
-        }
-        else if (orientation.label == Orientations.TRAP_SCORE.label){
-
-          setpoint = 1450;
-          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
-        }
-
-
-      
+          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID     
     }
     public void stopShooter(){
       setpoint = 0;     
