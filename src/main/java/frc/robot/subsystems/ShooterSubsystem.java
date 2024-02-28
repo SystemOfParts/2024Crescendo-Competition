@@ -21,13 +21,15 @@ public class ShooterSubsystem extends SubsystemBase {
     
     private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
     private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
-    private final SparkPIDController shooterPID = bottomShooterMotor.getPIDController();
+    private final SparkPIDController bottomShooterPID = bottomShooterMotor.getPIDController();
+    private final SparkPIDController topShooterPID = bottomShooterMotor.getPIDController();
+
 
 // PID constants taken from example code
     private static final double kP = 0.0004; // Proportional term - make lower tommorow
     private static final double kI = 0.001; // Integral term
     private static final double kD = 0.0; // Derivative term
-    private static final double kIz = 0; // Integral zone
+    private static final double kIz = 10; // Integral zone
     private static final double kFF = 0.0002; // Feed-forward
     private static final double kMaxOutput = 1; // Change these later
     private static final double kMinOutput = -1;
@@ -39,7 +41,6 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.restoreFactoryDefaults();
     bottomShooterMotor.restoreFactoryDefaults();
 
-    topShooterMotor.follow(bottomShooterMotor, false);
 
     topShooterMotor.setIdleMode(IdleMode.kBrake);
     bottomShooterMotor.setIdleMode(IdleMode.kBrake);
@@ -47,16 +48,34 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterMotor.setSmartCurrentLimit(40);
     bottomShooterMotor.setSmartCurrentLimit(40);
 
+    
+     //VPID configuration 
+    bottomShooterPID.setP(kP);
+    bottomShooterPID.setI(kI);
+    bottomShooterPID.setD(kD);
+    bottomShooterPID.setIZone(kIz);
+    bottomShooterPID.setFF(kFF);
+    
+    bottomShooterPID.setOutputRange(kMinOutput, kMaxOutput);
+    bottomShooterPID.setSmartMotionMaxVelocity(5600, 0);
+    bottomShooterPID.setSmartMotionMinOutputVelocity(500, 0);
+    bottomShooterPID.setSmartMotionMaxAccel(3000, 0);
+    bottomShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
+
+    topShooterPID.setP(kP);
+    topShooterPID.setI(kI);
+    topShooterPID.setD(kD);
+    topShooterPID.setIZone(kIz);
+    topShooterPID.setFF(kFF);
+    
+    topShooterPID.setOutputRange(kMinOutput, kMaxOutput);
+    topShooterPID.setSmartMotionMaxVelocity(5600, 0);
+    topShooterPID.setSmartMotionMinOutputVelocity(500, 0);
+    topShooterPID.setSmartMotionMaxAccel(3000, 0);
+    topShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
+
     topShooterMotor.burnFlash();
     bottomShooterMotor.burnFlash();
-
-     //PID configuration 
-    shooterPID.setP(kP);
-    shooterPID.setI(kI);
-    shooterPID.setD(kD);
-    shooterPID.setIZone(kIz);
-    shooterPID.setFF(kFF);
-    shooterPID.setOutputRange(kMinOutput, kMaxOutput);
     
   }
 
@@ -64,16 +83,24 @@ public class ShooterSubsystem extends SubsystemBase {
         if (orientation.label == Orientations.SUBWOOFER.label){
 
           setpoint = 3000;
-          
+
+          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+
         }
         else if (orientation.label == Orientations.AMP.label){
 
           setpoint = 500;
+          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
         }
         else if (orientation.label == Orientations.PODIUM.label){
 
-          setpoint = 5700;
+          setpoint = 5500;
+          bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+          topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+
 
         }
 
@@ -82,7 +109,10 @@ public class ShooterSubsystem extends SubsystemBase {
     }
     public void stopShooter(){
       
-      setpoint = 0;      
+      setpoint = 0;     
+      bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+      topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
+
     }
   
 
@@ -102,7 +132,6 @@ public class ShooterSubsystem extends SubsystemBase {
       setpoint = 5700 * robotContainer.getRightTrigger();
     }    
     */
-    shooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
     // This method will be called once per scheduler run
   }
