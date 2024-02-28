@@ -70,41 +70,48 @@ public final class Constants {
 							1,
 							0,
 							false,
+							false,
 							false),
 			TRAVEL("Travel",
 							3.5,
 							100,
 							0,
 							false,
-							false),
+							false,
+							true),
 			INTAKE("Intake",
 							3.5,
 							240,
 							0,
 							false,
+							true,
 							true),
 			AMP("Amp",
 							80,
 							245,
 							1200,
 							true,
-							false),
+							false, 
+							true),
 			PODIUM("Podium",
 							22,
 							240,
 							3000,
 							true,
-							false),
+							false,
+							true),
 			SUBWOOFER("Subwoofer",
 							9,
 							240,
 							2500,
 							true,
-							false),
+							false,
+							true),
 			PRECLIMB("Preclimb",
 							0,
 							0,
 							0,
+							false,
 							false,
 							false),
 			CLIMB("Climb",
@@ -112,13 +119,15 @@ public final class Constants {
 							0,
 							0,
 							false,
+							false,
 							false),
 			TRAP_SCORE("Trap Score",
 							11,
 							240,
 							1450,
 							true,
-							false);
+							false,
+							true);
 
 			public final String label;
 			public final double armPosition;
@@ -126,19 +135,22 @@ public final class Constants {
 			public final double shooterSpeed;
 			public final boolean shooterOn;
 			public final boolean intakeOn;
+			public final boolean maintainHumSpeed;
 
 			private Orientations(String label,
 							double armPosition,
 							double leadScrewPosition,
 							double shooterSpeed,
 							boolean shooterOn,
-							boolean intakeOn) {
+							boolean intakeOn,
+							boolean maintainHumSpeed) {
 					this.label = label;
 					this.armPosition = armPosition;
 					this.leadScrewPosition = leadScrewPosition;
 					this.shooterSpeed = shooterSpeed;
 					this.shooterOn = shooterOn;
 					this.intakeOn = intakeOn;
+					this.maintainHumSpeed = maintainHumSpeed;
 			}
 
 	}

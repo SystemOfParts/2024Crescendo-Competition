@@ -34,6 +34,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double kFF = 0.0002; // Feed-forward
     private static final double kMaxOutput = 1; // Change these later
     private static final double kMinOutput = -1;
+    private double stopSpeed = 0;
+    private double humSpeed = 500;
     public double setpoint = 0;
 
   /** Creates a new ShooterSubsystem. */
@@ -80,6 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     topShooterMotor.burnFlash();
     bottomShooterMotor.burnFlash();
+
     
   }
 
@@ -88,8 +91,16 @@ public class ShooterSubsystem extends SubsystemBase {
           bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
           topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID     
     }
-    public void stopShooter(){
-      setpoint = 0;     
+
+    public void stopShooter(Orientations orientation){
+      // humSpeed is the slow maintained hum of the shooter motors during the course of the game to allow faster spinup
+      if (orientation.maintainHumSpeed){
+        // when we want to stop the shooter but maintainHumSpeed is set, we set it to the humSpeed instead
+        setpoint = humSpeed;
+      } else {
+        // when we just want to stop the motor (HOME, or CLIMBING), stop the motor fully
+        setpoint = stopSpeed;
+      }
       bottomShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
       topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
 
@@ -101,24 +112,5 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    /*
-    controls for shooter: 
-    Left trigger = subwoofer shooting
-    Right Trigger = far shooting
-    Right bumper = amp spit out
-
-    /* 
-    if (robotContainer.getLeftTrigger() > .25) {
-      setpoint = 3000 * robotContainer.getLeftTrigger();
-    } else {
-      setpoint = 5700 * robotContainer.getRightTrigger();
-    }    
-    */
-
-    // This method will be called once per scheduler run
-    /* if (runOnce){
-      runOnce = false;
-      //topShooterMotor.set(.5);
-    } */
   }
 }
