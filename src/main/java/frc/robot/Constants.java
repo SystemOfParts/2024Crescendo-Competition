@@ -504,7 +504,7 @@ public final class Constants {
 
 			public static final double kP = 0.4;
 			public static final double kI = 0.0;
-			public static final double kD = 0.8;
+			public static final double kD = 0.0;//Changed from .8 2/27 - Jordan
 			public static final double kF = 0.0;
 			public static final double kiz = 0; // I-zone
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
