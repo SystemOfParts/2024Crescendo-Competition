@@ -122,6 +122,7 @@ public class DriveSubsystem extends SubsystemBase {
     SwerveModuleState[] swerveModuleStates;
     //System.out.println("***X: "+xVelocity_m_per_s+" ***Y: "+yVelocity_m_per_s+" ***o: "+omega_rad_per_s);
     if (fieldcentric) { // field-centric swerve
+      
       swerveModuleStates = SwerveChassis.SWERVE_KINEMATICS.toSwerveModuleStates(
           ChassisSpeeds.fromFieldRelativeSpeeds(
               xVelocity_m_per_s,
@@ -235,7 +236,7 @@ public class DriveSubsystem extends SubsystemBase {
     System.out.println("Odometry Command Rotation: "+r);
     
     for(int i = 0; i < 4; i++)  {
-      System.out.println("Odometry Command Module: "+ i + " " + s[i]);
+     // System.out.println("Odometry Command Module: "+ i + " " + s[i]);
     }
   
   }

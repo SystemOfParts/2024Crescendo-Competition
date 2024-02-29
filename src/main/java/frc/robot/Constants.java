@@ -94,9 +94,9 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",
-							22,
-							240,
-							3000,
+							9, //22 for trap shot
+							240, //240 for trap shot
+							3000, //3000 for trap shot
 							true,
 							false,
 							true),
@@ -263,9 +263,9 @@ public final class Constants {
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
-		public static final double ANGLE_CHASSIS_KP = 6.25; // 6.25
-		public static final double ANGLE_CHASSIS_KI = 0.04; // 0.4
-		public static final double ANGLE_CHASSIS_KD = 0.07; // 0.7
+		public static final double ANGLE_CHASSIS_KP = 3.0; // 6.25
+		public static final double ANGLE_CHASSIS_KI = 0.0; // 0.04
+		public static final double ANGLE_CHASSIS_KD = 0.0; // 0.07
 
 		public static final double ANGLE_MOTOR_MIN_OUTPUT = -1;
 		public static final double ANGLE_MOTOR_MAX_OUTPUT = 1;
@@ -295,7 +295,7 @@ public final class Constants {
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
-		public static final double MAX_VELOCITY = 1.0;
+		public static final double MAX_VELOCITY = 3.0;
 
 		/**
 		 * Radians per second.
@@ -312,7 +312,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 0.1;
+		public static final double MAX_ACCELERATION = 0.9;
 
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -381,7 +381,7 @@ public final class Constants {
 			/**
 			 * Print odometry telemetry every 20 milliseconds.
 			 */
-			public static final boolean odometryTelemetryPrint = false;
+			public static final boolean odometryTelemetryPrint = true;
 
 		}
 
@@ -429,7 +429,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					(5.675586) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.675586 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -440,7 +440,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					4, // driveMotorID
 					3, // angleMotorID
-					(0.154961) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(0.154961 + Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -452,7 +452,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					(6.141332) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(6.141332 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -464,7 +464,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					8, // driveMotorID
 					7, // angleMotorID
-					(5.424344) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.424344 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -554,9 +554,9 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = 0.4;
-			public static final double kI = 0.0;
-			public static final double kD = 0.0;//Changed from .8 2/27 - Jordan
+			public static final double kP = .4; //.4
+			public static final double kI = 0;
+			public static final double kD = 2; //Changed from .8 2/27 - Jordan
 			public static final double kF = 0.0;
 			public static final double kiz = 0; // I-zone
 			public static final double Acceleration = 6750; // raw sensor units per 100 ms per second
@@ -566,8 +566,8 @@ public final class Constants {
 			public static final double PeakOutput = 0.5; // Closed Loop peak output
 			public static final double NeutralDeadband = 0.001;
 
-			public static final double outputMin= -1.0;
-			public static final double outputMax = 1.0;
+			public static final double outputMin= -1;
+			public static final double outputMax = 1;
 
 		}
 
@@ -579,6 +579,7 @@ public final class Constants {
 	 * ability flags, such as use of the cube driving
 	 */
 	public static final class OIConstants {
+
 		public static final int driverControllerPort = 5;
 
 		public static final int robotCentricButton = 2;

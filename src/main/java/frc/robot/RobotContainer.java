@@ -39,6 +39,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -58,11 +59,12 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+
   //public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
   
   //Define Controllers
@@ -124,17 +126,17 @@ public class RobotContainer {
   }
 
   private double getDriverXAxis() {
-      return -xboxController.getLeftStickY();
+      return xboxController.getLeftStickY();
       //return -m_driverController.getLeftX(),
   }
 
 private double getDriverYAxis() {
-      return -xboxController.getLeftStickX();
+      return xboxController.getLeftStickX();
       //return -m_driverController.getLeftY();
 }
 
 private double getDriverOmegaAxis() {
-      return -xboxController.getLeftStickOmega();
+      return xboxController.getLeftStickOmega();
       //return -m_driverController.getRightX();
 }
 
@@ -213,9 +215,10 @@ private void configureBindings() {
   new Trigger(m_operator2Controller.button(8)) //button 7 = basic move end effector forward (limited)
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
 
-  new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
-    //.onTrue(new ArmDown(armSubsystem));
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+
+       // new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
+         //.onTrue(new ArmDown(armSubsystem));
+         // .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
   new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
     //.onTrue(new ArmTo45Degrees(armSubsystem));
@@ -225,7 +228,14 @@ private void configureBindings() {
     //.onTrue(new ArmUpPosition(armSubsystem));
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
-  //Intake and Shooter
+        //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
+        // .onTrue(new ArmToAmp(armSubsystem));
+      
+        
+         //todo: add safespot position for shooting
+
+       //Intake and Shooter
+
 
   new JoystickButton(xboxController, 6)
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem))
@@ -238,10 +248,23 @@ private void configureBindings() {
   new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
    .whileTrue(new LeftBrakeOnCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(3)) 
-    .whileTrue(new RightBrakeOnCommand(climberSubsystem));
-  
-  //trajectoryCalibration(); //tag this out if using controls
+          new Trigger(m_operator1Controller.button(3)) 
+          
+         .whileTrue(new RightBrakeOnCommand(climberSubsystem));
+         
+         //button 8 = trying a move to orientation TRAVEL
+/*      
+          
+        new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+         new Trigger(m_operator2Controller.button(9)) //button 9 = trying a move to orientation INTAKE
+         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+    */    
+      //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
+
+       //remove to use controls
+      trajectoryCalibration(); //tag this out if using controls
       
   }
 
@@ -253,7 +276,7 @@ private void configureBindings() {
 public void trajectoryCalibration() {
   
   new Trigger(m_operator2Controller.button(1))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
+      .onTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
 /* 
   new Trigger(m_operator2Controller.button(1))

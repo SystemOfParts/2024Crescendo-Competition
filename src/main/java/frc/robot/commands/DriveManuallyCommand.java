@@ -63,7 +63,14 @@ public class DriveManuallyCommand extends Command {
       yInput * SwerveChassis.MAX_VELOCITY,
       omegaInput * SwerveChassis.MAX_ANGULAR_VELOCITY,
       mFieldCentrSupplier.getAsBoolean()
-    );
+
+    );      
+    System.out.println("X Input: " + xInput);
+    System.out.println("Y Input: " + yInput);
+    System.out.println("Omega Input: " + omegaInput);
+
+
+
 
   }
 

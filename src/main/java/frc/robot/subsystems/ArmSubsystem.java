@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.OrientationConstants.Orientations;
@@ -87,6 +88,8 @@ public class ArmSubsystem extends SubsystemBase {
         armController.setIZone(ArmkIz);
         armController.setFF(ArmkFF);
         armController.setOutputRange(ArmkMinOutput, ArmkMaxOutput);
+
+
 
         // Encoder setup
         encoder.setPosition(0);
