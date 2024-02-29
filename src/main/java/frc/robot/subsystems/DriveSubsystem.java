@@ -235,7 +235,7 @@ public class DriveSubsystem extends SubsystemBase {
     System.out.println("Odometry Command Rotation: "+r);
     
     for(int i = 0; i < 4; i++)  {
-      System.out.println("Odometry Command Module: "+ i + " " + s[i]);
+     // System.out.println("Odometry Command Module: "+ i + " " + s[i]);
     }
   
   }

@@ -39,6 +39,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -66,11 +67,12 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+
   //public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
 
 
@@ -218,9 +220,9 @@ private void configureBindings() {
           .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
 
 
-        new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
+       // new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          //.onTrue(new ArmDown(armSubsystem));
-          .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+         // .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
         new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
          //.onTrue(new ArmTo45Degrees(armSubsystem));
@@ -237,6 +239,7 @@ private void configureBindings() {
          //todo: add safespot position for shooting
 
        //Intake and Shooter
+
 
 
         new JoystickButton(xboxController, 6)
@@ -278,7 +281,7 @@ private void configureBindings() {
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
 
        //remove to use controls
-      //trajectoryCalibration(); //tag this out if using controls
+      trajectoryCalibration(); //tag this out if using controls
       
   }
 
@@ -290,7 +293,7 @@ private void configureBindings() {
 public void trajectoryCalibration() {
   
   new Trigger(m_operator2Controller.button(1))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
+      .onTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
 /* 
   new Trigger(m_operator2Controller.button(1))
