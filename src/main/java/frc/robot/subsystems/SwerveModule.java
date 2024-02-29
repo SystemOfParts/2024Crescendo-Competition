@@ -153,9 +153,9 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public void printSwerveModuleState(SwerveModuleState moduleState) {
-        //System.out.print(" SM: "+moduleNumber);
-        //System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-        //System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
+        System.out.print(" SM: "+moduleNumber);
+        System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
+        System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
     }
 
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.

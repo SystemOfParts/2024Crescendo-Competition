@@ -401,7 +401,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					2, // driveMotorID
 					1, // angleMotorID
-					(5.675586) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.675586 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -412,7 +412,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					4, // driveMotorID
 					3, // angleMotorID
-					(0.154961) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(0.154961 + Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -424,7 +424,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					6, // driveMotorID
 					5, // angleMotorID
-					(6.141332) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(6.141332 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor
@@ -436,7 +436,7 @@ public final class Constants {
 					BaseMotorControllerTypes.SPARKMAX, // Angle motor type
 					8, // driveMotorID
 					7, // angleMotorID
-					(5.424344) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
+					(5.424344 - Math.PI) *360.0/NEOSwerveConfiguration.ticksPerFullRotation, // angleOffset
 					false, // Inversion for drive motor
 					true, // Inversion for angle motor
 					false, // Sensor phase for drive motor

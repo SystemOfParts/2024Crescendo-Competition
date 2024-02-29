@@ -126,17 +126,17 @@ public class RobotContainer {
   }
 
   private double getDriverXAxis() {
-      return -xboxController.getLeftStickY();
+      return xboxController.getLeftStickY();
       //return -m_driverController.getLeftX(),
   }
 
 private double getDriverYAxis() {
-      return -xboxController.getLeftStickX();
+      return xboxController.getLeftStickX();
       //return -m_driverController.getLeftY();
 }
 
 private double getDriverOmegaAxis() {
-      return -xboxController.getLeftStickOmega();
+      return xboxController.getLeftStickOmega();
       //return -m_driverController.getRightX();
 }
 
@@ -264,7 +264,7 @@ private void configureBindings() {
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
 
        //remove to use controls
-      //trajectoryCalibration(); //tag this out if using controls
+      trajectoryCalibration(); //tag this out if using controls
       
   }
 
