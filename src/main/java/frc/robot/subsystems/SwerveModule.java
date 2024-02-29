@@ -166,7 +166,7 @@ public class SwerveModule extends SubsystemBase {
      * @return SwerveModulePosition - WPILIB kinematics object 
      */
     public SwerveModulePosition getPosition() {
-        double position = (driveMotor.getDriveEncoderPositionSI())*84; // 84 corrects the drive encoders
+        double position = (driveMotor.getDriveEncoderPositionSI())*42; // 42 corrects the drive encoders
         Rotation2d angle = currentAngle;
         return new SwerveModulePosition(position, angle);
     }
