@@ -65,9 +65,9 @@ public class DriveManuallyCommand extends Command {
       mFieldCentrSupplier.getAsBoolean()
 
     );      
-    System.out.println("X Input: " + xInput);
-    System.out.println("Y Input: " + yInput);
-    System.out.println("Omega Input: " + omegaInput);
+    //System.out.println("X Input: " + xInput);
+   // System.out.println("Y Input: " + yInput);
+    //System.out.println("Omega Input: " + omegaInput);
 
 
 

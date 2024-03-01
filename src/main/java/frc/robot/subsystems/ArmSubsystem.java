@@ -72,8 +72,8 @@ public class ArmSubsystem extends SubsystemBase {
         rightArmMotor.follow(leftArmMotor, true);
 
         // Set motors to brake mode
-        leftArmMotor.setIdleMode(IdleMode.kCoast);
-        rightArmMotor.setIdleMode(IdleMode.kCoast);
+        leftArmMotor.setIdleMode(IdleMode.kBrake);
+        rightArmMotor.setIdleMode(IdleMode.kBrake);
 
         leftArmMotor.setSmartCurrentLimit(40);
         rightArmMotor.setSmartCurrentLimit(40);
@@ -108,6 +108,8 @@ public class ArmSubsystem extends SubsystemBase {
     
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 245);
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
+        leadScrewMotor.setIdleMode(IdleMode.kBrake);
+
 
         leadController.setP(LeadkP);
         leadController.setI(LeadkI);

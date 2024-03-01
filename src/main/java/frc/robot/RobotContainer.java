@@ -105,7 +105,7 @@ public class RobotContainer {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-      // add autos to the chooser
+      // add autos to the chooser 
       m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
       m_chooser.addOption("1MeterRight", kCustomAuto);
       m_chooser.addOption("RotateLeft90and1Meter", kCustomAuto2);
@@ -141,7 +141,7 @@ private double getDriverOmegaAxis() {
 }
 
 private boolean getDriverFieldCentric() {
-        return false; //return !xboxController.Button(1); bumper
+        return true; //return !xboxController.Button(1); bumper
 }
 public double getRightTrigger() {
         return xboxController.getRawAxis(3);
@@ -218,7 +218,7 @@ private void configureBindings() {
 
        // new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          //.onTrue(new ArmDown(armSubsystem));
-         // .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+       // .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
   new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
     //.onTrue(new ArmTo45Degrees(armSubsystem));
@@ -238,7 +238,7 @@ private void configureBindings() {
 
 
   new JoystickButton(xboxController, 6)
-    .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem))
+    .whileTrue(new FeedShooterCommand(intakeSubsystem))
     .onFalse(new IntakeStopCommand(intakeSubsystem));
 
   new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
@@ -307,6 +307,6 @@ public void trajectoryCalibration() {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     ChosenAuto = m_chooser.getSelected();
-    return new RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
+    return new ThreeNoteAuto(armSubsystem, intakeSubsystem, shooterSubsystem);//RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
   }
 }

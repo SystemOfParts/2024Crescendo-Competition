@@ -80,8 +80,8 @@ public final class Constants {
 							false,
 							true),
 			INTAKE("Intake",
-							3.5,
-							240,
+							2.5,
+							245,
 							0,
 							false,
 							true,
@@ -94,7 +94,7 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",
-							9, //22 for trap shot
+							45, //22 for trap shot
 							240, //240 for trap shot
 							3000, //3000 for trap shot
 							true,
@@ -103,7 +103,7 @@ public final class Constants {
 			SUBWOOFER("Subwoofer",
 							9,
 							240,
-							2500,
+							1500,
 							true,
 							false,
 							true),
@@ -326,7 +326,7 @@ public final class Constants {
 		 */
 
 		public static final class NEOSwerveConfiguration {
-			public static final double metersPerTick = 5.82/5.07282675; // TODO: measure this number on the robot
+			public static final double metersPerTick = 1.1931809; // TODO: measure this number on the robot
 			//public static final double ticksPerFullRotation = 2048.0; 
 			//public static final double degreePerTick = 360.0 / ticksPerFullRotation; // BOTH are copied over from TalonSRX
 			public static final double ticksPerFullRotation = 2 * Math.PI;

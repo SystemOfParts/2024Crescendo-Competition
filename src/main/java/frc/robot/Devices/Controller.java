@@ -90,7 +90,7 @@ public class Controller extends Joystick {
 
 
         if (this.cubeControllerLeftStick) {
-            double cubeY = rawY*rawY*rawY;
+            double cubeY = rawY*rawY*rawY; // Maybe try squared controls?
             result = (cubeY - (rawY > 0 ? 1 : -1) * cubeDeadbandY)/(1 - cubeDeadbandY); // cubeController
             result = Math.abs(result) > this.cubeDeadbandY ? result : 0; // Ignores range of deadband values
         } else {
