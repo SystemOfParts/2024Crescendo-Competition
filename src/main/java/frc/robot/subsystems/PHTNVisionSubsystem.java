@@ -53,7 +53,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     }
 
     this.cameraName = cameraName;
-    camera = new PhotonCamera(cameraName);
+    camera = new PhotonCamera("AprilTagCamera");
     aprilTagResult = new PhotonPipelineResult();
     aprilTagHasTargets = false;
     System.out.println("----=======> PV Working");
