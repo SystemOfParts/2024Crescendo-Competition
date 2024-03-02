@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.ArmSubsystem;
 
 public class SmartDashboardSubsystem extends SubsystemBase {
   /** Creates a new SmartDashboardSubsystem. */
@@ -49,6 +50,11 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     updateOdometryTelemetry();
     updateSwerveModuleTelemetry();
     updateIMUTelemetry();
+
+    SmartDashboard.putNumber("Arm Encoder:", ArmSubsystem.encoder.getPosition());
+    
+    SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
+
   }
 
   @Override

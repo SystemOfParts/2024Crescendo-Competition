@@ -14,6 +14,7 @@ import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.CheckToShoot;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -33,9 +34,10 @@ public class OneNoteAuto extends SequentialCommandGroup {
     addCommands(
     new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
     new CheckToShoot(m_shooter, m_intake),
-    new FeedShooterCommand(m_intake),
+    new InstantCommand(() -> m_intake.runIntake()),
     new WaitCommand(1),
     new IntakeStopCommand(m_intake)
+  
 
       {
     }

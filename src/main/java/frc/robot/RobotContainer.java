@@ -31,7 +31,6 @@ import frc.robot.commands.ClimberCommands.RightBrakeOnCommand;
 import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
-import frc.robot.commands.IntakeCommands.IntakeReverseCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 
@@ -64,6 +63,7 @@ public class RobotContainer {
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+
 
   //public static final LeadScrewSubsystem leadScrewSubsystem = new LeadScrewSubsystem();
   
@@ -200,25 +200,31 @@ private void configureBindings() {
     .whileTrue(new RightClimberDownCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
+  new Trigger(m_operator1Controller.button(8)) //button 8 = left brake
+   .whileTrue(new LeftBrakeOnCommand(climberSubsystem));
+
+  new Trigger(m_operator1Controller.button(3)) //button 3 = right brake
+  .whileTrue(new RightBrakeOnCommand(climberSubsystem));
+
     //zero robot yaw (new forward) = button 10
   new Trigger(m_operator2Controller.button(10))
     .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
 
-  //Arm Bindings
+  //Orientation Bindings
 
-  new Trigger(m_operator2Controller.button(6)) //button 6 = basic move end effector forward (limited)
+  new Trigger(m_operator2Controller.button(6)) //button 6 = Home position
       .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
 
-  new Trigger(m_operator2Controller.button(7)) //button 7 = basic move end effector forward (limited)
+  new Trigger(m_operator2Controller.button(7)) //button 7 = Travel Position
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
     
-  new Trigger(m_operator2Controller.button(8)) //button 7 = basic move end effector forward (limited)
+  new Trigger(m_operator2Controller.button(8)) //button 8 = amp position
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
 
 
-       // new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
+  new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
          //.onTrue(new ArmDown(armSubsystem));
-       // .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+       .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
   new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
     //.onTrue(new ArmTo45Degrees(armSubsystem));
@@ -228,43 +234,33 @@ private void configureBindings() {
     //.onTrue(new ArmUpPosition(armSubsystem));
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
-        //new Trigger(m_operator2Controller.button(8)) // button 8 = amp position
-        // .onTrue(new ArmToAmp(armSubsystem));
-      
-        
-         //todo: add safespot position for shooting
 
-       //Intake and Shooter
+
+
+  new Trigger(m_operator2Controller.button(4))  //button 4 - intake
+    .onTrue(new InstantCommand(() -> intakeSubsystem.runIntake()))
+    .onFalse(new IntakeStopCommand(intakeSubsystem));
+
+  new Trigger(m_operator2Controller.button(5)) //button 5 = reverse intake
+    .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
+    .onFalse(new IntakeStopCommand(intakeSubsystem));
+      
 
 
   new JoystickButton(xboxController, 6)
-    .whileTrue(new FeedShooterCommand(intakeSubsystem))
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
+    .whileTrue(new FeedShooterCommand(intakeSubsystem, shooterSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
+    .onFalse(new IntakeStopCommand(intakeSubsystem))
+    .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
-  new Trigger(m_operator2Controller.button(5)) //button 5 = shoot using vpid
-    .whileTrue(new IntakeReverseCommand(intakeSubsystem))
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
-
-  new Trigger(m_operator1Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
-   .whileTrue(new LeftBrakeOnCommand(climberSubsystem));
-
-          new Trigger(m_operator1Controller.button(3)) 
-          
-         .whileTrue(new RightBrakeOnCommand(climberSubsystem));
+  
+}
+  
          
-         //button 8 = trying a move to orientation TRAVEL
 /*      
-          
-        new Trigger(m_operator2Controller.button(8)) //button 8 = trying a move to orientation TRAVEL
-         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
-
-         new Trigger(m_operator2Controller.button(9)) //button 9 = trying a move to orientation INTAKE
-         .onTrue(new MoveToOrientation(armSubsystem, leadScrewSubsystem, shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
-    */    
       //DO NOT UNCOMMENT UNTIL YOU UPDATE BUTTON IDs SO THEY DONT CONFLICT
 
        //remove to use controls
-      trajectoryCalibration(); //tag this out if using controls
+      //trajectoryCalibration(); //tag this out if using controls
       
   }
 
