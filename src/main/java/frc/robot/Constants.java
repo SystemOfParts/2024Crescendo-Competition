@@ -181,7 +181,7 @@ public final class Constants {
 					this.maintainHumSpeed = maintainHumSpeed;
 			}
 
-	}
+		}
     }
 	/**
 	 * This class contains configuration constants for the chassis, the individual
