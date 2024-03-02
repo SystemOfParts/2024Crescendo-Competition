@@ -34,7 +34,8 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   // private PhotonPoseEstimator poseEstimator;
   private int fiducialID;
   private Transform3d robotToCam;
-  private double aprilTagX, aprilTagY, aprilTagZAngle, aprilTagZ = -1;
+  private double aprilTagX, aprilTagY, aprilTagZAngle;
+  private static double aprilTagZ = -1;
   private Pose2d globalPoseEstimate = new Pose2d();
   private Transform3d fieldToCamera;
   // private Field2d apriltaField2d = new Field2d();
@@ -48,7 +49,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     }
 
     this.cameraName = cameraName;
-    camera = new PhotonCamera(cameraName);
+    camera = new PhotonCamera("AprilTagCamera");
     aprilTagResult = new PhotonPipelineResult();
     aprilTagHasTargets = false;
 
@@ -124,7 +125,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
    * 
    * @return The Z coordinate.
    */
-  public double getAprilTagZ() {
+  public static double getAprilTagZ() {
     return aprilTagZ;
   }
 
