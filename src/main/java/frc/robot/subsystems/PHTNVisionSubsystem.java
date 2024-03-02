@@ -34,16 +34,21 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   // private PhotonPoseEstimator poseEstimator;
   private int fiducialID;
   private Transform3d robotToCam;
-  private double aprilTagX, aprilTagY, aprilTagZAngle, aprilTagZ = -1;
+  private double aprilTagX, aprilTagY;
+  private static double aprilTagZAngle;
+  private static double aprilTagZ = -1;
   private Pose2d globalPoseEstimate = new Pose2d();
   private Transform3d fieldToCamera;
   // private Field2d apriltaField2d = new Field2d();
 
   /** Creates a new PhotonVisionSubsystem. */
+  
   public PHTNVisionSubsystem(String cameraName) {
 
     // Check if we have PV installed
     if (! PhotonVisionConstants.PV_PRESENT) {
+        System.out.println("----=======> PV Not Working");
+
       return;
     }
 
@@ -51,6 +56,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     camera = new PhotonCamera(cameraName);
     aprilTagResult = new PhotonPipelineResult();
     aprilTagHasTargets = false;
+    System.out.println("----=======> PV Working");
 
     // aprilTagFieldLayout = new
     // AprilTagFieldLayout(AprilTagFields.k2024Crescendo.m_resourceFile);
@@ -86,6 +92,31 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
     } 
     return null; // if no apriltags visible or the pose cannot be determined
+  }
+   public void getPHTNData() {
+
+    aprilTagResult = camera.getLatestResult();
+    aprilTagHasTargets = aprilTagResult.hasTargets();
+
+    if (aprilTagHasTargets) {
+      aprilTagTargets = aprilTagResult.getTargets();
+      aprilTagBestTarget = aprilTagResult.getBestTarget();
+
+      fiducialID = aprilTagBestTarget.getFiducialId();
+      aprilTagX = aprilTagBestTarget.getBestCameraToTarget().getX();
+      aprilTagY = aprilTagBestTarget.getBestCameraToTarget().getY();
+      aprilTagZ = aprilTagBestTarget.getBestCameraToTarget().getZ();
+      aprilTagZAngle = aprilTagBestTarget.getBestCameraToTarget().getRotation().getAngle();
+      fieldToCamera = aprilTagResult.getMultiTagResult().estimatedPose.best;
+
+      if (aprilTagResult.getMultiTagResult().estimatedPose.isPresent) { // this may need to be commented out as it depends whether the single tag pose estimation is enabled
+
+        globalPoseEstimate = new Pose2d(fieldToCamera.getX(), fieldToCamera.getY(),
+          new Rotation2d(fieldToCamera.getRotation().getX(), fieldToCamera.getRotation().getY()));
+          // apriltaField2d.setRobotPose(globalPoseEstimate);
+      } 
+
+    } 
   }
 
   public boolean isApriltagVisible() {
@@ -124,7 +155,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
    * 
    * @return The Z coordinate.
    */
-  public double getAprilTagZ() {
+  public  double getAprilTagZ() {
     return aprilTagZ;
   }
 
@@ -134,8 +165,11 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
    * @return The Z angle.
    */
   public double getAprilTagZAngle() {
-    return aprilTagZAngle * (180 / Math.PI);
+
+    return aprilTagZAngle* (180/Math.PI);
+
   }
+
 
   @Override
   public void periodic() {

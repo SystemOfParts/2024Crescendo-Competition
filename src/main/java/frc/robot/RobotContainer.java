@@ -16,6 +16,7 @@ import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.PHTNVisionSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
@@ -62,6 +63,7 @@ public class RobotContainer {
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  public static final PHTNVisionSubsystem phtnVisionSubsystem = new PHTNVisionSubsystem("AprilTagCamera");
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
 
 
@@ -98,6 +100,7 @@ public class RobotContainer {
     configureBindings();
 
       // Configure the trigger bindings
+      
       driveSubsystem.setDefaultCommand(
                 new DriveManuallyCommand(
                         () -> getDriverXAxis(),
@@ -248,9 +251,12 @@ private void configureBindings() {
 
 
   new JoystickButton(xboxController, 6)
-    .whileTrue(new FeedShooterCommand(intakeSubsystem, shooterSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
+    .whileTrue(new FeedShooterCommand(intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
     .onFalse(new IntakeStopCommand(intakeSubsystem))
     .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+  new JoystickButton(xboxController, 5)
+    .whileTrue(new PHTNRunCommand(phtnVisionSubsystem));
 
   
 }
