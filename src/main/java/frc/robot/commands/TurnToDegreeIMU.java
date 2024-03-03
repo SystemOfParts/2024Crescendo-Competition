@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PHTNVisionSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.XboxRumbleCommand;
@@ -24,28 +25,31 @@ public class TurnToDegreeIMU extends PIDCommand {
     private boolean m_relative;
     private double m_degree;
 
-    static double kP = 0.01;
+    static double kP = 1.5;
     static double kI = 0;
-    static double kD = 0.001;
+    static double kD = 0.05;
 
     /**
      * Create a new TurnToDegreeGyro command.
      *
      * @param distance The distance to drive (inches)
      */
-    public TurnToDegreeIMU(double targetAngleDegrees, DriveSubsystem drive, boolean relative) {
+    public TurnToDegreeIMU(double zAngle, DriveSubsystem drive, boolean relative) {
+
         super(new PIDController(kP, kI, kD),
+        
                 // Close loop on heading
                 RobotContainer.imuSubsystem::getYaw,
                 // Set reference to target
-                targetAngleDegrees,
+                zAngle,
                 // Pipe output to turn robot
                 output -> drive.turn(output));
+    
 
         // Require the drive
         m_drive = drive;
         m_relative = relative;
-        m_degree = targetAngleDegrees;
+        m_degree = zAngle;
         //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + targetAngleDegrees);
         addRequirements(m_drive);
         // Set the controller to be continuous (because it is an angle controller)
@@ -55,7 +59,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         // reference
         getController()
                 .setTolerance(2, 8); // figure these out, they are in degrees
-
+       //}
     }
 
     @Override

@@ -14,9 +14,11 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
-
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.VisionConstants.PhotonVisionConstants;
+import frc.robot.commands.XboxRumbleCommand;
 import frc.robot.lib.VisionHelpers;
 
 public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers {
@@ -166,14 +168,26 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
    */
   public double getAprilTagZAngle() {
 
-    return aprilTagZAngle;//* (180/Math.PI);
+    return aprilTagZAngle*(180/Math.PI);
 
   }
+
+  
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     getPHTNData();
+    
+    if (((getAprilTagZAngle()-180) > -10) && ((getAprilTagZAngle()-180) < 10)){
+
+      //RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .25);
+    }
+    else {
+
+      RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
+
+    }
   }
 }

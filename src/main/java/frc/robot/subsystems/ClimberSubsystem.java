@@ -22,6 +22,7 @@ public class ClimberSubsystem extends SubsystemBase {
   private final Relay leftBrakeRelay = new Relay(0);
   private final Relay rightBrakeRelay = new Relay(1);
 
+  public boolean ClimbingModeOn = false;
 
   private final RelativeEncoder climberEncoder1;
   private final RelativeEncoder climberEncoder2;
@@ -59,52 +60,74 @@ public class ClimberSubsystem extends SubsystemBase {
     }
     
     public void climber1Up(double speed) {
+
+      if (ClimbingModeOn){
         
         if (climberEncoder1.getPosition() > MAX_POSITION) {
             climberMotor1.set(-speed);
         } else {
             climberMotor1.set(0);
         }
+      }
     }
       public void climber2Up(double speed) {
       
+              if (ClimbingModeOn){
+
         if (climberEncoder2.getPosition() > MAX_POSITION) {
             climberMotor2.set(-speed);
         } else {
             climberMotor2.set(0);
         }
+      }
     }
     
 
   public void climber1Down(double speed) {
+      if (ClimbingModeOn){
 
         if (climberEncoder1.getPosition() < MIN_POSITION) {
             climberMotor1.set(speed);
         } else {
             climberMotor1.set(0);
         }
+      }
     }
   public void climber2Down(double speed) {
+      if (ClimbingModeOn){
 
         if (climberEncoder2.getPosition() < MIN_POSITION) {
             climberMotor2.set(speed);
         } else {
             climberMotor2.set(0);
         }
+      }
     }
     //dangerous controls for testing
     
   public void climber1DownManually(double speed){
+          if (ClimbingModeOn){
+
     climberMotor1.set(speed);
+          }
   }
   public void climber1UpManually(double speed){
+          if (ClimbingModeOn){
+
     climberMotor1.set(-speed);
+          }
   }
    public void climber2DownManually(double speed){
+          if (ClimbingModeOn){
+
     climberMotor2.set(speed);
+          }
   }
   public void climber2UpManually(double speed){
+          if (ClimbingModeOn){
+
     climberMotor2.set(-speed);
+          }
   }
 
    // Returns the climber position
@@ -117,20 +140,54 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
   public void stopClimber1() {
+          if (ClimbingModeOn){
+
     climberMotor1.set(0);
+          }
   }
   public void stopClimber2() {
+          if (ClimbingModeOn){
+
     climberMotor2.set(0);
+          }
   }
 
   public void leftBrakeOn() {
+          if (ClimbingModeOn){
+
     leftBrakeRelay.set(Relay.Value.kForward);
+          }
   }
 
   public void rightBrakeOn() {
+
+          if (ClimbingModeOn){
+
+
     leftBrakeRelay.set(Relay.Value.kReverse);
+          }
   }
 
+  public void ClimberModeTurnOn() {
+    System.out.println("Turned on climber mode");
+  
+    ClimbingModeOn = true;
+  }
+  
+  
+  public void ClimberModeTurnOff() {
+    System.out.println("Turned off climber mode");
+  
+    ClimbingModeOn = false;
+  }
+  
+  public boolean getClimberMode() {
+  
+    System.out.println("Accessed Climbing Mode");
+    
+    return ClimbingModeOn;
+  }
+  
   @Override
   public void periodic() {
     //System.out.println(climberEncoder2.getPosition());

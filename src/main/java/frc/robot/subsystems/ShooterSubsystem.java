@@ -19,8 +19,6 @@ import frc.robot.RobotContainer;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  public static final RobotContainer robotContainer = new RobotContainer();
-  
   private boolean TUNING_MODE = false;
 
   private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
