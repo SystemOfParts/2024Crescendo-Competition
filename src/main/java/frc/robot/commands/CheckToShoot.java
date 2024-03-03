@@ -19,9 +19,8 @@ public class CheckToShoot extends Command {
     ShooterSubsystem shooter,
     IntakeSubsystem intake
     
-  ){  m_shooter = shooter;
-
-  
+  ){  
+    m_shooter = shooter;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(shooter);
   }

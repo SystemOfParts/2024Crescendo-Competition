@@ -132,24 +132,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     }
 
-    /* public void armDown() {
-        armSetpoint = 3.5/encoderConversionFactor;
-    }
-
-    public void armTo45Degrees() {
-        armSetpoint = 15/encoderConversionFactor;
-
-    }
-
-    public void armTo85Degrees() {
-        armSetpoint = 45/encoderConversionFactor;
-
-    }
-
-    public void armToAmp() {
-        armSetpoint = 90/encoderConversionFactor;
-    } */
-
     public void moveToPosition(Orientations orientation) {
         setArmPosition(orientation.armPosition);
     }
@@ -160,45 +142,6 @@ public class ArmSubsystem extends SubsystemBase {
         // need method to VERIFY armPosition is SAFE (within bounds) before using!!!!
         armSetpoint = armPosition;
     }
-/*
-    public void armStop() {
-        leftArmMotor.set(0);
-    }
-
-    public void armMoveUp() {
-      leftArmMotor.set(.25);
-    }
-    public void armMoveDown() {
-      leftArmMotor.set(-.25);
-    }
-
-     public void leadScrewForward(){
-      leadScrewMotor.set(.3);
-    }
-    
-    public void leadScrewStop(){ 
-      leadScrewMotor.set(0);
-    }
-
-    public void leadScrewBackward() {
-      leadScrewMotor.set(-.3);
-    }
-
-    public void leadScrewHome(){
-
-      leadSetpoint = 1;
-    }
-    
-    public void leadScrewHover(){
-
-      leadSetpoint = 150;
-    }
-
-    
-    public void leadScrewIntake(){
-
-      leadSetpoint = 240;
-    } */
 
      public void leadMoveToPosition(Orientations orientation) {
       double position = orientation.leadScrewPosition;
@@ -215,9 +158,6 @@ public class ArmSubsystem extends SubsystemBase {
       }
     }
   
-    
-    
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -30,12 +30,12 @@ public class ThreeNoteAuto extends SequentialCommandGroup {
     addCommands(
 
     new OneNoteAuto(m_arm, m_shooter, m_intake),
-
-    new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+    
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
 
     new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart1"),
 
-    new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
 
     new CheckToShoot(m_shooter, m_intake),
 
@@ -45,11 +45,11 @@ public class ThreeNoteAuto extends SequentialCommandGroup {
 
     new IntakeStopCommand(m_intake),
 
-    new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
 
     new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart2"),
 
-    new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
 
     new CheckToShoot(m_shooter, m_intake),
 

@@ -17,6 +17,7 @@ public class ShootAuto extends Command {
 
   ShooterSubsystem m_shooter;
   IntakeSubsystem m_intake;
+
   /** Creates a new ShootAuto. */
   public ShootAuto(
     ShooterSubsystem shooter,
@@ -25,9 +26,8 @@ public class ShootAuto extends Command {
   ) { 
     m_shooter = shooter;
     m_intake = intake;
-    addRequirements(shooter, intake);
-    
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter, intake);
   }
 
   // Called when the command is initially scheduled.
@@ -35,7 +35,7 @@ public class ShootAuto extends Command {
   public void initialize() {
 
 
-     }
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -46,8 +46,6 @@ public class ShootAuto extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-        
 
   }
 
