@@ -16,8 +16,8 @@ import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.CheckToShoot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class OneNoteAuto extends SequentialCommandGroup {
-  public OneNoteAuto( 
+public class AutoOneNote extends SequentialCommandGroup {
+  public AutoOneNote( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake

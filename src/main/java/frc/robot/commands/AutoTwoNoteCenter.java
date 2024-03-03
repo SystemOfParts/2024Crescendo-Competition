@@ -17,9 +17,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TwoNoteCenterAuto extends SequentialCommandGroup {
+public class AutoTwoNoteCenter extends SequentialCommandGroup {
   /** Creates a new TwoNoteAuto. */
-  public TwoNoteCenterAuto(
+  public AutoTwoNoteCenter(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -29,13 +29,13 @@ public class TwoNoteCenterAuto extends SequentialCommandGroup {
     addCommands(
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new OneNoteAuto(m_arm, m_shooter, m_intake),
+      new AutoOneNote(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart1")
+        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart1")
       ),
 
       // After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION

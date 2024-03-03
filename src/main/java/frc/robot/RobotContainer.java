@@ -317,7 +317,7 @@ public void trajectoryCalibration() {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     ChosenAuto = m_chooser.getSelected();
-    return new ThreeNoteCenterAuto(armSubsystem, intakeSubsystem, shooterSubsystem);//RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
+    return new AutoThreeNoteCenter(armSubsystem, intakeSubsystem, shooterSubsystem);//RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
   }
 
   // Aliiance color determination

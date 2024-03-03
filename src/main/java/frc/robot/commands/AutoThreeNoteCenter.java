@@ -12,7 +12,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.OneNoteAuto;
+import frc.robot.commands.AutoOneNote;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeNoteCenterAuto extends SequentialCommandGroup {
+public class AutoThreeNoteCenter extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */
-  public ThreeNoteCenterAuto(
+  public AutoThreeNoteCenter(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -32,13 +32,13 @@ public class ThreeNoteCenterAuto extends SequentialCommandGroup {
     addCommands(
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new OneNoteAuto(m_arm, m_shooter, m_intake),
+      new AutoOneNote(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart1")
+        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart1")
       ),
 
       // After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
@@ -52,7 +52,7 @@ public class ThreeNoteCenterAuto extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
         // this trajectory was modified slightly to stop in front of the note w/ room for the intake
-        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart2")
+        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart2")
       ),
       
       // Make sure the shooter is still at speed
@@ -71,7 +71,7 @@ public class ThreeNoteCenterAuto extends SequentialCommandGroup {
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
       
       // path the robot backwards through the 3rd note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNotePart3"),
+      new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart3"),
       
       // TEMPORARY After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
       new WaitCommand(.5), 

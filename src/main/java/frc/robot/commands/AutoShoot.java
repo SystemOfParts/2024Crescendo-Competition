@@ -13,13 +13,13 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootAuto extends Command {
+public class AutoShoot extends Command {
 
   ShooterSubsystem m_shooter;
   IntakeSubsystem m_intake;
 
   /** Creates a new ShootAuto. */
-  public ShootAuto(
+  public AutoShoot(
     ShooterSubsystem shooter,
     IntakeSubsystem intake
 
