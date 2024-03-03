@@ -29,8 +29,11 @@ public class OneNoteAuto extends SequentialCommandGroup {
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake()),
-      new WaitCommand(1),
-      new IntakeStopCommand(m_intake)
+      // only wait a half of a second to make sure the note has been fired
+      new WaitCommand(.5)
+      // Leave the intake on so we can move quickly start moving to INTAKE position
+      // new IntakeStopCommand(m_intake)
+      // why is this here?
       {}
       );
   }
