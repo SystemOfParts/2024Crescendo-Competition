@@ -48,9 +48,9 @@ public class IMUNavX implements IMUInterface {
      * @return
      */
     public double getYaw() {
-        return -navX.getYaw(); // test making this positive?
-    }
+        return -navX.getYaw();
 
+    }
     //TODO: make sure values are positive
 
     public Rotation2d getYawRotation2d(){

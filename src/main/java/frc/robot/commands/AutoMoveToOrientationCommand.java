@@ -23,6 +23,7 @@ public class AutoMoveToOrientationCommand extends SequentialCommandGroup {
                     new InstantCommand(() -> System.out.println("**TURN ON SHOOTER" + auto_orientation.label)),
                     new InstantCommand(() -> m_shooter.runShooter(auto_orientation)),
                     new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + auto_orientation.label)),
+                    
                     new InstantCommand(() -> m_intake.runIntake()));
             addCommands(
                 new ParallelCommandGroup(

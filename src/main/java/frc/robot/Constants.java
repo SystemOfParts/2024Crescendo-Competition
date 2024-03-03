@@ -67,7 +67,7 @@ public final class Constants {
 		public enum Orientations {
 			HOME("Home",
 							3.5,
-							1,
+							0,
 							0,
 							false,
 							false,
@@ -81,28 +81,28 @@ public final class Constants {
 							true),
 			INTAKE("Intake",
 							2.5,
-							245,
+							249,
 							0,
 							false,
-							true,
+							false,
 							true),
 			AMP("Amp",
-							80,
-							245,
+							52,
+							249,
 							1200,
 							true,
 							false, 
 							true),
 			PODIUM("Podium",
 							45, //22 for trap shot
-							240, //240 for trap shot
+							249, //240 for trap shot
 							3000, //3000 for trap shot
 							true,
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
 							9,
-							240,
+							249,
 							1500,
 							true,
 							false,
@@ -121,13 +121,13 @@ public final class Constants {
 							false,
 							false,
 							false),
-			ARM_PID1("ArmPID1",
-							25,
-							0,
+			AUTO_INTAKE("AutoIntake",
+							2.5,
+							249,
 							0,
 							false,
-							false,
-							false),
+							true,
+							true),
 			ARM_PID2("ArmPID2",
 							75,
 							0,
@@ -183,6 +183,8 @@ public final class Constants {
 
 		}
     }
+	
+	
 	/**
 	 * This class contains configuration constants for the chassis, the individual
 	 * swerve modules and the motors
@@ -726,10 +728,10 @@ public final class Constants {
 		}
 		public static final class PhotonVisionConstants {
 
-			public static final boolean PV_PRESENT = false;
-			public static final String PVCameraName = "Razor_Kiyo";
+			public static final boolean PV_PRESENT = true;
+			public static final String PVCameraName = "AprilTagCamera";
 			// Camera position from center of the chassis / floor (for Z) point of view; it's looking backwards
-			public static final Transform3d robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,Math.PI));
+			public static final Transform3d robotToCam = new Transform3d(new Translation3d(0.3048, 0.0, 0.3175), new Rotation3d(0,0,Math.PI));
 
 		}
 	}

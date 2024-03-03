@@ -20,16 +20,17 @@ public class ArmSubsystem extends SubsystemBase {
 
     private static final String printLocation = "LeadScrewSubsystem: ";
 
-    private final CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
+    private final static CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
+
     private final CANSparkMax rightArmMotor = new CANSparkMax(11, MotorType.kBrushless);
 
 
-    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+    private final static CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
     
-    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
+    public final static RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
 
 
-    private final RelativeEncoder encoder = leftArmMotor.getEncoder();
+    public final static RelativeEncoder encoder = leftArmMotor.getEncoder();
 
     private final SparkPIDController armController = leftArmMotor.getPIDController();
 
@@ -39,7 +40,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private static final double ArmkP = 0.1; // Proportional term
     private static final double ArmkI = 0.0; // Integral term
-    private static final double ArmkD = 0.0; // Derivative term
+    private static final double ArmkD = 0.01; // Derivative term
     private static final double ArmkIz = 0; // Integral zone
     private static final double ArmkFF = 0.0; // Feed-forward
     private static final double ArmkMaxOutput = .3;
@@ -50,14 +51,17 @@ public class ArmSubsystem extends SubsystemBase {
     //Lead screw 
     private static final double LeadkP = 0.1; // Proportional term
     private static final double LeadkI = 0.0; // Integral term
-    private static final double LeadkD = 0.0; // Derivative term
+    private static final double LeadkD = 0.01; // Derivative term
     private static final double LeadkIz = 0; // Integral zone
     private static final double LeadkFF = 0.0; // Feed-forward
     private static final double LeadkMaxOutput = 1;
     private static final double LeadkMinOutput = -1;
 
-    public float kLeadFarLimit = 245;
-    public float kLeadHomeLimit = 1;
+    public float kLeadFarLimit = 249;
+    public float kLeadHomeLimit = 0;
+
+    public float kArmUpLimit = 52;
+    public float kArmDownLimit = 0;
     public double armSetpoint = 0;
     public double leadSetpoint = 0;
 
@@ -72,11 +76,17 @@ public class ArmSubsystem extends SubsystemBase {
         rightArmMotor.follow(leftArmMotor, true);
 
         // Set motors to brake mode
-        leftArmMotor.setIdleMode(IdleMode.kBrake);
-        rightArmMotor.setIdleMode(IdleMode.kBrake);
+        leftArmMotor.setIdleMode(IdleMode.kCoast);
+        rightArmMotor.setIdleMode(IdleMode.kCoast);
 
         leftArmMotor.setSmartCurrentLimit(40);
         rightArmMotor.setSmartCurrentLimit(40);
+
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+        leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 52);
+        leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);    
 
         leftArmMotor.burnFlash();
         rightArmMotor.burnFlash();
@@ -88,8 +98,6 @@ public class ArmSubsystem extends SubsystemBase {
         armController.setIZone(ArmkIz);
         armController.setFF(ArmkFF);
         armController.setOutputRange(ArmkMinOutput, ArmkMaxOutput);
-
-
 
         // Encoder setup
         encoder.setPosition(0);
@@ -108,7 +116,7 @@ public class ArmSubsystem extends SubsystemBase {
     
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 245);
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
-        leadScrewMotor.setIdleMode(IdleMode.kBrake);
+        leadScrewMotor.setIdleMode(IdleMode.kCoast);
 
 
         leadController.setP(LeadkP);
