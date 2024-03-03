@@ -252,17 +252,17 @@ private void configureBindings() {
   
  
 
-      new JoystickButton(xboxController, 20)
-       .onTrue(new TurnToDegreeIMU( 90, driveSubsystem, false));
+  new JoystickButton(xboxController, 20)
+    .onTrue(new TurnToDegreeIMU( 90, driveSubsystem, false));
 
-      new JoystickButton(xboxController, 21)
-       .onTrue(new TurnToDegreeIMU( -90, driveSubsystem, false));
+  new JoystickButton(xboxController, 21)
+    .onTrue(new TurnToDegreeIMU( -90, driveSubsystem, false));
 
-   new JoystickButton(xboxController, 22)
-       .onTrue(new TurnToDegreeIMU( 0, driveSubsystem, false));
+  new JoystickButton(xboxController, 22)
+    .onTrue(new TurnToDegreeIMU( 0, driveSubsystem, false));
 
-   new JoystickButton(xboxController, 23)
-       .onTrue(new TurnToDegreeIMU( 180, driveSubsystem, false));
+  new JoystickButton(xboxController, 23)
+    .onTrue(new TurnToDegreeIMU( 180, driveSubsystem, false));
 
 
 
@@ -272,8 +272,7 @@ private void configureBindings() {
     .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
   new JoystickButton(xboxController, 5)
-    .whileTrue(new TargetRecentAprilTag(phtnVisionSubsystem.getAprilTagZAngle(), driveSubsystem, getAButton()));
-     .whileTrue(new TurnToDegreeIMU(phtnVisionSubsystem.getAprilTagZAngle(), driveSubsystem, getAButton()));
+    .whileTrue(new TurnToDegreeIMU(phtnVisionSubsystem.getAprilTagZAngle(), driveSubsystem, getAButton()));
 //add command cancel on false if needed
   
 }
