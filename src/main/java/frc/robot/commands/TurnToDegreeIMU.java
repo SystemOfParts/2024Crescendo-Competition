@@ -5,11 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.RobotContainer;
+import frc.robot.commands.XboxRumbleCommand;
 /**
  * Drive the given distance straight (negative values go backwards). Uses a
  * local PID controller to
@@ -44,9 +46,8 @@ public class TurnToDegreeIMU extends PIDCommand {
         m_drive = drive;
         m_relative = relative;
         m_degree = targetAngleDegrees;
-
+        //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + targetAngleDegrees);
         addRequirements(m_drive);
-
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
         // Set the controller tolerance - the delta tolerance ensures the robot is
@@ -59,12 +60,19 @@ public class TurnToDegreeIMU extends PIDCommand {
 
     @Override
     public void execute() {
+        //System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         super.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
+        //System.out.println("                                           ----->>> [  ENDED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree+ " [ INTERRUPTED ]: "+interrupted);
         super.end(interrupted);
+        // if the command finished properly
+        if (!interrupted){
+            // rumble the Xbox controller
+            new XboxRumbleCommand(0.25, .25, RumbleType.kLeftRumble);
+        }
         m_drive.stopRobot();
     }
 
