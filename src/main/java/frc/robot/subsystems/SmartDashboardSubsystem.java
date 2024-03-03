@@ -53,7 +53,6 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     updateIMUTelemetry();
 
     SmartDashboard.putNumber("Arm Encoder:", ArmSubsystem.encoder.getPosition());
-    SmartDashboard.putNumber("AprilTagZ Angle (In Radians):", PHTNVisionSubsystem.getAprilTagZ());
     SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
 
     SmartDashboard.putNumber("April Z Angle In Radians", RobotContainer.phtnVisionSubsystem.getAprilTagZAngle());

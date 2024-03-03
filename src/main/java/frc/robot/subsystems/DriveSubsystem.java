@@ -150,6 +150,14 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
+  public void turn(double speed) {
+
+    double radianSpeed = speed*.01745329;
+    
+    drive(0, 0, radianSpeed, true);
+  }
+
+
   /**
    * This method sets desired states for the individual swerve modules, specifying angle for the angle motor and power for the drive motor.
    * However, instead of actually driving, it will simply print what did we tell individual swerve modules. So, it should be used for testing.

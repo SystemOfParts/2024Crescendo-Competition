@@ -109,13 +109,13 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
       aprilTagZAngle = aprilTagBestTarget.getBestCameraToTarget().getRotation().getAngle();
       fieldToCamera = aprilTagResult.getMultiTagResult().estimatedPose.best;
 
-      if (aprilTagResult.getMultiTagResult().estimatedPose.isPresent) { // this may need to be commented out as it depends whether the single tag pose estimation is enabled
+     /*  if (aprilTagResult.getMultiTagResult().estimatedPose.isPresent) { // this may need to be commented out as it depends whether the single tag pose estimation is enabled
 
         globalPoseEstimate = new Pose2d(fieldToCamera.getX(), fieldToCamera.getY(),
           new Rotation2d(fieldToCamera.getRotation().getX(), fieldToCamera.getRotation().getY()));
           // apriltaField2d.setRobotPose(globalPoseEstimate);
       } 
-
+ */
     } 
   }
 
@@ -166,7 +166,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
    */
   public double getAprilTagZAngle() {
 
-    return aprilTagZAngle* (180/Math.PI);
+    return aprilTagZAngle;//* (180/Math.PI);
 
   }
 
@@ -174,5 +174,6 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    getPHTNData();
   }
 }
