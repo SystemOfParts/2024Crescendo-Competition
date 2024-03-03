@@ -215,8 +215,8 @@ private void configureBindings() {
   .whileTrue(new RightBrakeOnCommand(climberSubsystem));
 
     //zero robot yaw (new forward) = button 10
-  new Trigger(m_operator2Controller.button(10))
-    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));
+  /* new Trigger(m_operator2Controller.button(10))
+    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw())); */
 
   //Orientation Bindings
   new Trigger(m_operator2Controller.button(6)) //button 6 = Home position
@@ -284,15 +284,15 @@ private void configureBindings() {
 // to use these make sure you comment out the other uses of buttons before!!!!
 
 public void trajectoryCalibration() {
-  
+  /*
   new Trigger(m_operator2Controller.button(1))
       .onTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-/* 
-  new Trigger(m_operator2Controller.button(1))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
+ */
+  new Trigger(m_operator2Controller.button(10))
+      .whileTrue(new AutoTwoNoteCenter(armSubsystem, intakeSubsystem, shooterSubsystem))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-
+/*
   new Trigger(m_operator2Controller.button(2))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterRight"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
