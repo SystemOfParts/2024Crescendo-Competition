@@ -44,7 +44,8 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
             if (orientation.intakeOn) {
                 addCommands(
                     new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + orientation.label)),
-                    new InstantCommand(() -> m_intake.runIntake()));
+                    new InstantCommand(() -> m_intake.runIntake(false)));
+                    
             }
         }
     }

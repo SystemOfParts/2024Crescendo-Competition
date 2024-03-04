@@ -28,7 +28,7 @@ public class AutoMoveToOrientationCommand extends SequentialCommandGroup {
             if (auto_orientation.intakeOn) { // NEED TO STOP INTAKE WHEN NOTE DETECTION IS ADDED
                 addCommands(
                     new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + auto_orientation.label)),
-                    new InstantCommand(() -> m_intake.runIntake()));
+                    new InstantCommand(() -> m_intake.runIntake(false)));
             }
         }
         if ((Objects.nonNull(m_arm)) && (Objects.nonNull(m_shooter)) && (Objects.nonNull(m_intake))){

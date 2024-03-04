@@ -57,7 +57,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double LeadkMaxOutput = 1;
     private static final double LeadkMinOutput = -1;
 
-    public float kLeadFarLimit = 249;
+    public float kLeadFarLimit = 255;
     public float kLeadHomeLimit = 0;
 
     public float kArmUpLimit = 52;
@@ -114,7 +114,7 @@ public class ArmSubsystem extends SubsystemBase {
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
         leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
     
-        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 245);
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
         leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
         leadScrewMotor.setIdleMode(IdleMode.kCoast);
 

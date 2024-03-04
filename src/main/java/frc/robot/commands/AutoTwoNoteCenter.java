@@ -41,9 +41,6 @@ public class AutoTwoNoteCenter extends SequentialCommandGroup {
       // After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
       new WaitCommand(.5), 
 
-      // Stop the intake so we don't shoot it - this might just need to always be a part of the intake subsystem
-      new IntakeStopCommand(m_intake),
-
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
       
@@ -51,7 +48,7 @@ public class AutoTwoNoteCenter extends SequentialCommandGroup {
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake()),
+      new InstantCommand(() -> m_intake.runIntake(true)),
 
       // TEMPORARY Wait .5 seconds for the shot to be fired
       new WaitCommand(1),

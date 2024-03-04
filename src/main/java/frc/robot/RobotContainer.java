@@ -129,7 +129,7 @@ public class RobotContainer {
 
      
       SmartDashboard.putData("Auto choices", m_chooser);
-      // trajectoryCalibration();
+      trajectoryCalibration();
   }
 
  //instantiate drive controllers
@@ -229,8 +229,8 @@ private void configureBindings() {
 
 
     //zero robot yaw (new forward) = button 10
-   new Trigger(m_operator2Controller.button(10))
-    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw())); 
+   /* new Trigger(m_operator2Controller.button(10))
+    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));  */
 
   //Orientation Bindings
   new Trigger(m_operator2Controller.button(6)) //button 6 = Home position
@@ -249,11 +249,11 @@ private void configureBindings() {
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
   new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
 
   // Intake Bindings
   new Trigger(m_operator2Controller.button(4))  //button 4 - intake
-    .onTrue(new InstantCommand(() -> intakeSubsystem.runIntake()))
+    .onTrue(new InstantCommand(() -> intakeSubsystem.runIntake(false)))
     .onFalse(new IntakeStopCommand(intakeSubsystem));
 
   new Trigger(m_operator2Controller.button(5)) //button 5 = reverse intake

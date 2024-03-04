@@ -59,7 +59,7 @@ public class AutoThreeNoteCenter extends SequentialCommandGroup {
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake()),
+      new InstantCommand(() -> m_intake.runIntake(true)),
 
       // TEMPORARY Wait .5 seconds for the shot to be fired
       new WaitCommand(.5),
@@ -86,7 +86,7 @@ public class AutoThreeNoteCenter extends SequentialCommandGroup {
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake()),
+      new InstantCommand(() -> m_intake.runIntake(true)),
 
       new WaitCommand(1),
 

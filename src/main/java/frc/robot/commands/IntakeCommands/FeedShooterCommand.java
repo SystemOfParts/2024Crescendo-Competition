@@ -13,7 +13,7 @@ public class FeedShooterCommand extends SequentialCommandGroup{
     ){
        // if (m_shooter.areShootersAtSpeed()){
             addCommands(
-                new InstantCommand(() -> m_intake.runIntake()));
+                new InstantCommand(() -> m_intake.runIntake(true)));
        // }
     }
 }
