@@ -307,7 +307,7 @@ private void configureBindings() {
   // 
   new JoystickButton(xboxController, 5)
     .onTrue(
-        new TurnToDegreeIMU(((phtnVisionSubsystem.getAprilTagZAngle())-180), driveSubsystem, false)) 
+        new TurnToDegreeIMU((180 - (phtnVisionSubsystem.getAprilTagZAngle())), driveSubsystem, false)) 
 
 
     .onFalse( new DriveManuallyCommand(
