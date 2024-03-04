@@ -35,6 +35,8 @@ public boolean isShooting = false;
     public void runIntake(Boolean bool){
       isShooting = bool;
       intakeMotor.set(1);      
+      System.out.println("Shooting");
+
     }
 
     // stop the intake by setting the speed to 0

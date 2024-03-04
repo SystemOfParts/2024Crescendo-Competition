@@ -42,21 +42,13 @@ public class AutoThreeNoteCenter extends SequentialCommandGroup {
       ),
 
       // After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
-      new WaitCommand(.5), 
 
-      // Stop the intake so we don't shoot it - this might just need to always be a part of the intake subsystem
-      new IntakeStopCommand(m_intake),
-
-      // with the shooter running, the intake off, and a note loaded, orient arm to the intake position AND starting to move to pick up the 3rd note
-      // but STOP before just before we get to the 3rd note so we can shoot the 2nd note
-      new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
-        // this trajectory was modified slightly to stop in front of the note w/ room for the intake
-        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart2")
-      ),
+      // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
       
       // Make sure the shooter is still at speed
       new CheckToShoot(m_shooter, m_intake),
+      
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
       new InstantCommand(() -> m_intake.runIntake(true)),
@@ -71,9 +63,29 @@ public class AutoThreeNoteCenter extends SequentialCommandGroup {
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
       
       // path the robot backwards through the 3rd note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart3"),
+      new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart2"),
+
+
+
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_FAR_SHOT),
+
+
+      new WaitCommand(.5),
+
+      // Make sure the shooter is still at speed
+      new CheckToShoot(m_shooter, m_intake),
       
-      // TEMPORARY After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
+
+      // Feed the intake to actually shoot (still using Podium speed and orientation)
+      new InstantCommand(() -> m_intake.runIntake(true)),
+
+      // TEMPORARY Wait .5 seconds for the shot to be fired
+      new WaitCommand(.5),
+
+      // At the end of auto use the TELEOP orientation command to move to TRAVEL to turn off shooter and intake
+      new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+      
+      /*// TEMPORARY After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
       new WaitCommand(.5), 
 
       // TEMPORARY Stop the intake so we don't shoot it - this might just need to always be a part of the intake subsystem
@@ -94,6 +106,7 @@ public class AutoThreeNoteCenter extends SequentialCommandGroup {
       new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
       
       // END AUTO
+      */
     );
   }
 }

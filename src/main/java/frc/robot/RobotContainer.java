@@ -129,7 +129,7 @@ public class RobotContainer {
 
      
       SmartDashboard.putData("Auto choices", m_chooser);
-      trajectoryCalibration();
+      //trajectoryCalibration();
   }
 
  //instantiate drive controllers
@@ -190,14 +190,7 @@ private void configureBindings() {
   .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
 
 
-  new Trigger(m_operator1Controller.button(4)) //button 4 = both climbers up 
-    .whileTrue(new ClimbersUpCommand(climberSubsystem))
-    .onFalse(new ClimbersStopCommand(climberSubsystem));
-
-  new Trigger(m_operator1Controller.button(5)) //button 5 = both climbers down 
-    .whileTrue(new ClimbersDownCommand(climberSubsystem))
-    .onFalse(new ClimbersStopCommand(climberSubsystem));
-
+ 
     //Independent Climber Controls
     
   new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up
@@ -208,19 +201,14 @@ private void configureBindings() {
     .whileTrue(new LeftClimberDownCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(11)) //button 11 = right climber up
+  new Trigger(m_operator1Controller.button(4)) //button 11 = right climber up
     .whileTrue(new RightClimberUpCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(2)) //button 2 = right climber down
+  new Trigger(m_operator1Controller.button(5)) //button 2 = right climber down
     .whileTrue(new RightClimberDownCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(8)) //button 8 = left brake
-   .whileTrue(new LeftBrakeOnCommand(climberSubsystem));
-
-  new Trigger(m_operator1Controller.button(3)) //button 3 = right brake
-  .whileTrue(new RightBrakeOnCommand(climberSubsystem));
 
 
 
@@ -229,36 +217,39 @@ private void configureBindings() {
 
 
     //zero robot yaw (new forward) = button 10
-   /* new Trigger(m_operator2Controller.button(10))
-    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));  */
+    new Trigger(m_operator2Controller.button(10))
+    .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));  
 
   //Orientation Bindings
-  new Trigger(m_operator2Controller.button(6)) //button 6 = Home position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
-
-  new Trigger(m_operator2Controller.button(7)) //button 7 = Travel Position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
-    
-  new Trigger(m_operator2Controller.button(8)) //button 8 = amp position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
-
-  new Trigger(m_operator2Controller.button(1)) // button 1 = intake position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
-
-  new Trigger(m_operator2Controller.button(2)) // button 2 = shooting (subwoofer) position
+  new Trigger(m_operator2Controller.button(6)) //button 6 = Subwoofer shooting
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
-  new Trigger(m_operator2Controller.button(3)) // button 3 = far shooting position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+  new Trigger(m_operator2Controller.button(7)) //button 7 = Home Position
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
+    
+  new Trigger(m_operator2Controller.button(8)) //button 8 = Trap scoring
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
+
+    
+
+  new Trigger(m_operator2Controller.button(1)) // button 1 = Travel position
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+  new Trigger(m_operator2Controller.button(2)) // button 2 = intake position
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+
+  new Trigger(m_operator2Controller.button(3)) // button 3 = spit out note
+     .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
+    .onFalse(new IntakeStopCommand(intakeSubsystem));
 
   // Intake Bindings
-  new Trigger(m_operator2Controller.button(4))  //button 4 - intake
-    .onTrue(new InstantCommand(() -> intakeSubsystem.runIntake(false)))
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
+  new Trigger(m_operator2Controller.button(4))  //button 4 - amp position
+  .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
 
-  new Trigger(m_operator2Controller.button(5)) //button 5 = reverse intake
-    .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
+  new Trigger(m_operator2Controller.button(5)) //button 5 = podium shooting
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+
+  
 
   // DRIVER QUICK ANGLE BINDINGS
   // Turn exactly right

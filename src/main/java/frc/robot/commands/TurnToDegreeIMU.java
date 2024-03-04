@@ -25,9 +25,9 @@ public class TurnToDegreeIMU extends PIDCommand {
     private boolean m_relative;
     private double m_degree;
 
-    static double kP = 1.5;
+    static double kP = 2;
     static double kI = 0;
-    static double kD = 0.05;
+    static double kD = 0;
 
     /**
      * Create a new TurnToDegreeGyro command.
