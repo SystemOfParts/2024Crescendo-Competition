@@ -21,6 +21,9 @@ import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
+import frc.robot.commands.AutoOneNote;
+import frc.robot.commands.AutosBlue.*;
+import frc.robot.commands.AutosRed.*;
 import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
 import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
 import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
@@ -88,20 +91,8 @@ public class RobotContainer {
   public static boolean isAlianceRed = false;
   public static boolean isReversingControllerAndIMUForRed = true;
 
-
-  //Define autos
-  public static final String kDefaultAuto = "5142_1MeterForward";
-  public static final String kCustomAuto  = "5142_1MeterRight";
-  public static final String kCustomAuto2 = "5142_RotateLeft90and1Meter";
-  public static final String kCustomAuto3 = "5142_Rotate180and1Meter";
-  public static final String kCustomAuto4 = "5142_ComplexPath";
-  public static final String kCustomAuto5 = "5142_TwoNotePart1";
-
-
-  public String ChosenAuto;
-
   //Define the SendableChooser for autos
-  public final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -109,6 +100,7 @@ public class RobotContainer {
     
     configureDriverInterface();
     configureBindings();
+    configureAutos();
 
       // Configure the trigger bindings
       
@@ -119,17 +111,64 @@ public class RobotContainer {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-      // add autos to the chooser 
-      m_chooser.setDefaultOption("1MeterForward", kDefaultAuto);
-      m_chooser.addOption("1MeterRight", kCustomAuto);
-      m_chooser.addOption("RotateLeft90and1Meter", kCustomAuto2);
-      m_chooser.addOption("ComplexPath", kCustomAuto3);
-      m_chooser.addOption("Rotate180and1Meter", kCustomAuto4);
-      m_chooser.addOption("TwoNotePart1", kCustomAuto5);
 
-     
-      SmartDashboard.putData("Auto choices", m_chooser);
-      //trajectoryCalibration();
+    trajectoryCalibration();
+  }
+
+  private void configureAutos(){
+
+    final Command m_AutoShootOnly = new AutoOneNote(armSubsystem, shooterSubsystem, intakeSubsystem);
+    final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueNorthTwoNote = new AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedSouthThreeNoteMid4 = new AutoRedSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueSouthThreeNoteMid4 = new AutoBlueSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoRedSouthThreeNoteMid5 = new AutoRedSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
+    final Command m_AutoBlueSouthThreeNoteMid5 = new AutoBlueSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
+    /*
+    if (isAlianceRed){
+      m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
+      m_chooser.addOption("RED Center 2", m_AutoRedCenterTwoNote);
+      m_chooser.addOption("RED Center 3", m_AutoRedCenterThreeNote);
+      m_chooser.addOption("RED Center 4", m_AutoRedCenterFourNote);
+      m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
+      m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
+      m_chooser.addOption("RED South 3 Mid4", m_AutoRedSouthThreeNoteMid4);
+      m_chooser.addOption("RED South 3 Mid5", m_AutoRedSouthThreeNoteMid5);
+    } else {
+      m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
+      m_chooser.addOption("BLUE Center 2", m_AutoBlueCenterTwoNote);
+      m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
+      m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
+      m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
+      m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
+      m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
+      m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
+    }
+     */
+    m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
+    m_chooser.addOption("BLUE Center 2", m_AutoBlueCenterTwoNote);
+    m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
+    m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
+    m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
+    m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
+    m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
+    m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
+    m_chooser.addOption("RED Center 2", m_AutoRedCenterTwoNote);
+    m_chooser.addOption("RED Center 3", m_AutoRedCenterThreeNote);
+    m_chooser.addOption("RED Center 4", m_AutoRedCenterFourNote);
+    m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
+    m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
+    m_chooser.addOption("RED South 3 Mid4", m_AutoRedSouthThreeNoteMid4);
+    m_chooser.addOption("RED South 3 Mid5", m_AutoRedSouthThreeNoteMid5);
+    SmartDashboard.putData(m_chooser);
   }
 
  //instantiate drive controllers
@@ -212,11 +251,6 @@ private void configureBindings() {
   new Trigger(m_operator1Controller.button(5)) //button 2 = right climber down
     .whileTrue(new RightClimberDownCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
-
-
-
-
-
 
 
 
@@ -324,7 +358,7 @@ public void trajectoryCalibration() {
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
  */
   new Trigger(m_operator2Controller.button(10))
-      .whileTrue(new AutoTwoNoteCenter(armSubsystem, intakeSubsystem, shooterSubsystem))
+      .whileTrue(new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
 /*
   new Trigger(m_operator2Controller.button(2))
@@ -350,8 +384,7 @@ public void trajectoryCalibration() {
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    ChosenAuto = m_chooser.getSelected();
-    return new AutoThreeNoteCenter(armSubsystem, intakeSubsystem, shooterSubsystem);//RunTrajectorySequenceRobotAtStartPoint(ChosenAuto); //basic path testing
+    return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }
 
   // Aliiance color determination
