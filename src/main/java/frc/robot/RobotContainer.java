@@ -201,6 +201,10 @@ private void configureBindings() {
     .whileTrue(new LeftClimberDownCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
+    new Trigger(m_operator1Controller.button(8)) //button 7 = left climber down
+        .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PRECLIMB));
+
+
   new Trigger(m_operator1Controller.button(4)) //button 11 = right climber up
     .whileTrue(new RightClimberUpCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
@@ -271,7 +275,7 @@ private void configureBindings() {
 
   // Face exactly forward
   new JoystickButton(xboxController, 4)
-    .onTrue(new TurnToDegreeIMU( 0, driveSubsystem, false))
+    .onTrue(new TurnToDegreeIMU( -120, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -280,7 +284,7 @@ private void configureBindings() {
 
   // Face exactly backward
   new JoystickButton(xboxController, 1)
-    .onTrue(new TurnToDegreeIMU( 180, driveSubsystem, false))
+    .onTrue(new TurnToDegreeIMU( 120, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -292,8 +296,8 @@ private void configureBindings() {
   // When finished orient to TRAVEL position for safe movement
   new JoystickButton(xboxController, 6)
     .whileTrue(new FeedShooterCommand(intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
-   // .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+    .onFalse(new IntakeStopCommand(intakeSubsystem))
+    .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
   // 
   new JoystickButton(xboxController, 5)
