@@ -117,12 +117,12 @@ public class ArmSubsystem extends SubsystemBase {
       
       // Lead Encoder setup
       leadScrewEncoder.setPosition(0);
-      leadController.setFeedbackDevice(leadScrewEncoder);
+      //leadController.setFeedbackDevice(leadScrewEncoder);
       
       leadController.setP(LeadkP);
       leadController.setI(LeadkI);
       leadController.setD(LeadkD);
-      //leadController.setIZone(LeadkIz);
+      leadController.setIZone(LeadkIz);
       leadController.setFF(LeadkFF);
       leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
       //leadController.setSmartMotionMaxAccel(LeadMaxAccel, 0);
@@ -130,7 +130,8 @@ public class ArmSubsystem extends SubsystemBase {
 
       
       leadScrewMotor.burnFlash();
-
+      // display PID coefficients on SmartDashboard
+    
       if (TUNING_MODE){
         SmartDashboard.putNumber("P Gain", LeadkP);
         SmartDashboard.putNumber("I Gain", LeadkI);
@@ -140,10 +141,6 @@ public class ArmSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Min Output", LeadkMinOutput);
         SmartDashboard.putNumber("Set Rotations", 0);
       }
-
-      // display PID coefficients on SmartDashboard
-    
-
     }
 
     public void moveToPosition(Orientations orientation) {
@@ -175,7 +172,7 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    /*
     double rotations = SmartDashboard.getNumber("Set Rotations", 0);
     if (TUNING_MODE){
         double p = SmartDashboard.getNumber("P Gain", 0);
@@ -196,10 +193,11 @@ public class ArmSubsystem extends SubsystemBase {
         }
         
     }
+     */
     armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
     leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
 
-    SmartDashboard.putNumber("Lead Screw SetPoint:", rotations);
+    //SmartDashboard.putNumber("Lead Screw SetPoint:", rotations);
     SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
   }
 }

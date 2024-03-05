@@ -48,8 +48,8 @@ public class SmartDashboardSubsystem extends SubsystemBase {
 
 
   public void updateAllDisplays(){
-    updateOdometryTelemetry();
-    updateSwerveModuleTelemetry();
+    //updateOdometryTelemetry();
+    //updateSwerveModuleTelemetry();
     updateIMUTelemetry();
 
     SmartDashboard.putNumber("Arm Encoder:", ArmSubsystem.leftArmEncoder.getPosition());

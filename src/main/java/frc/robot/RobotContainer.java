@@ -236,19 +236,19 @@ private void configureBindings() {
     .whileTrue(new LeftClimberUpCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(7)) //button 7 = left climber down
+  new Trigger(m_operator1Controller.button(7)) //button 7 = left climber dow
     .whileTrue(new LeftClimberDownCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
-    new Trigger(m_operator1Controller.button(8)) //button 7 = left climber down
+    new Trigger(m_operator1Controller.button(8))
         .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PRECLIMB));
 
 
-  new Trigger(m_operator1Controller.button(4)) //button 11 = right climber up
+  new Trigger(m_operator1Controller.button(4)) 
     .whileTrue(new RightClimberUpCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(5)) //button 2 = right climber down
+  new Trigger(m_operator1Controller.button(5)) 
     .whileTrue(new RightClimberDownCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
@@ -259,6 +259,15 @@ private void configureBindings() {
     .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));  
 
   //Orientation Bindings
+  //PID TUNING TEMPORARY FOR THESE TWO BUTTONS
+  
+  new Trigger(m_operator1Controller.button(11))
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID1));
+    
+  new Trigger(m_operator1Controller.button(2)) 
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID2));
+
+
   new Trigger(m_operator2Controller.button(6)) //button 6 = Subwoofer shooting
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
