@@ -43,7 +43,7 @@ public class ArmSubsystem extends SubsystemBase {
     private static final double ArmkD = 0.01; // Derivative term
     private static final double ArmkIz = 0; // Integral zone
     private static final double ArmkFF = 0.0; // Feed-forward
-    private static final double ArmkMaxOutput = .3;
+    private static final double ArmkMaxOutput = .5;
     private static final double ArmkMinOutput = -.3;
 
 

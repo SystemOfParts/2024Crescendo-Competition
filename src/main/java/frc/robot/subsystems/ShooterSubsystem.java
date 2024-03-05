@@ -190,5 +190,7 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
+    SmartDashboard.putNumber("Shooter RPM: ", bottomShooterEncoder.getVelocity());
+
   }
 }

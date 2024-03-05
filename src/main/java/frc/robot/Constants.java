@@ -71,6 +71,7 @@ public final class Constants {
 							0,
 							false,
 							false,
+							false,
 							false),
 			TRAVEL("Travel",
 							3.5,
@@ -78,20 +79,23 @@ public final class Constants {
 							0,
 							false,
 							false,
-							true),
+							true,
+							false),
 			INTAKE("Intake",
-							3.0,
+							2.5,
 							255,
 							0,
 							false,
 							true,
-							true),
+							true,
+							false),
 			AMP("Amp",
 							52,
 							249,
 							1200,
 							true,
 							false, 
+							true,
 							true),
 			PODIUM("Podium",
 							19,
@@ -99,18 +103,21 @@ public final class Constants {
 							2500, 
 							true,
 							false,
-							true),
+							true,
+							false),
 			SUBWOOFER("Subwoofer",
 							9,
 							249,
 							1500,
 							true,
 							false,
-							true),
+							true,
+							false),
 			PRECLIMB("Preclimb",
 							0,
 							1,
 							0,
+							false,
 							false,
 							false,
 							false),
@@ -120,6 +127,7 @@ public final class Constants {
 							0,
 							false,
 							false,
+							false,
 							false),
 			AUTO_SUBWOOFER("AutoSubwoofer",
 							9,
@@ -127,25 +135,29 @@ public final class Constants {
 							1500,
 							true,
 							false,
-							true),
+							false,
+							false),
 			AUTO_PODIUM("AutoPodium",
 							19, 
 							249, 
-							2500, 
+							2000, 
 							true,
 							false,
-							true),
+							false,
+							false),
 			AUTO_INTAKE("AutoIntake",
 							2,
 							249,
-							0,
+							2000,
 							false,
 							true,
-							true),
-			ARM_PID2("ArmPID2",
-							75,
-							1,
-							0,
+							false,
+							false),
+			AUTO_FAR_SHOT("AutoFarShot",
+							21,
+							249,
+							2000,
+							true,
 							false,
 							false,
 							false),
@@ -155,11 +167,13 @@ public final class Constants {
 							0,
 							false,
 							false,
+							false,
 							false),
 			LEAD_PID2("LeadPID2",
 							1,
 							175,
 							0,
+							false,
 							false,
 							false,
 							false),
@@ -169,7 +183,8 @@ public final class Constants {
 							1450,
 							true,
 							false,
-							true);
+							true,
+							false);
 
 			public final String label;
 			public final double armPosition;
@@ -178,6 +193,7 @@ public final class Constants {
 			public final boolean shooterOn;
 			public final boolean intakeOn;
 			public final boolean maintainHumSpeed;
+			public final boolean leadScrewFirst;
 
 			private Orientations(String label,
 							double armPosition,
@@ -185,7 +201,8 @@ public final class Constants {
 							double shooterSpeed,
 							boolean shooterOn,
 							boolean intakeOn,
-							boolean maintainHumSpeed) {
+							boolean maintainHumSpeed,
+							boolean leadScrewFirst) {
 					this.label = label;
 					this.armPosition = armPosition;
 					this.leadScrewPosition = leadScrewPosition;
@@ -193,6 +210,7 @@ public final class Constants {
 					this.shooterOn = shooterOn;
 					this.intakeOn = intakeOn;
 					this.maintainHumSpeed = maintainHumSpeed;
+					this.leadScrewFirst = leadScrewFirst;
 			}
 
 		}
@@ -328,7 +346,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 0.9;
+		public static final double MAX_ACCELERATION = .9;
 
 		/**
 		 * Parameters for BaseMotorTalonSRX class
