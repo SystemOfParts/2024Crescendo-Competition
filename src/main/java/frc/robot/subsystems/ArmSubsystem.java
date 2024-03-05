@@ -105,42 +105,33 @@ public class ArmSubsystem extends SubsystemBase {
       leftArmEncoder.setPosition(0);
 
 
-      //Lead Screw
-      leadScrewMotor.restoreFactoryDefaults();
-      leadScrewMotor.setSmartCurrentLimit(30);
-      leadScrewMotor.setInverted(true);
-      leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-      leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);  
-      leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
-      leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
-      leadScrewMotor.setIdleMode(IdleMode.kCoast);
-      
-      // Lead Encoder setup
-      leadScrewEncoder.setPosition(0);
-      //leadController.setFeedbackDevice(leadScrewEncoder);
-      
-      leadController.setP(LeadkP);
-      leadController.setI(LeadkI);
-      leadController.setD(LeadkD);
-      leadController.setIZone(LeadkIz);
-      leadController.setFF(LeadkFF);
-      leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
-      //leadController.setSmartMotionMaxAccel(LeadMaxAccel, 0);
-      //leadController.setSmartMotionMaxVelocity(LeadMaxVelocity, 0);
+        //Lead Screw
+        
 
-      
-      leadScrewMotor.burnFlash();
-      // display PID coefficients on SmartDashboard
+        leadScrewMotor.restoreFactoryDefaults();
+
+        leadScrewMotor.setSmartCurrentLimit(30);
+        leadScrewMotor.setInverted(true);
+        leadScrewEncoder.setPosition(0);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
     
-      if (TUNING_MODE){
-        SmartDashboard.putNumber("P Gain", LeadkP);
-        SmartDashboard.putNumber("I Gain", LeadkI);
-        SmartDashboard.putNumber("D Gain", LeadkD);
-        SmartDashboard.putNumber("Feed Forward", LeadkFF);
-        SmartDashboard.putNumber("Max Output", LeadkMaxOutput);
-        SmartDashboard.putNumber("Min Output", LeadkMinOutput);
-        SmartDashboard.putNumber("Set Rotations", 0);
-      }
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
+        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
+        leadScrewMotor.setIdleMode(IdleMode.kCoast);
+
+
+        leadController.setP(LeadkP);
+        leadController.setI(LeadkI);
+        leadController.setD(LeadkD);
+        leadController.setIZone(LeadkIz);
+        leadController.setFF(LeadkFF);
+        leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
+
+        leadScrewMotor.burnFlash();
+
+
+
     }
 
     public void moveToPosition(Orientations orientation) {
@@ -172,32 +163,12 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    /*
-    double rotations = SmartDashboard.getNumber("Set Rotations", 0);
-    if (TUNING_MODE){
-        double p = SmartDashboard.getNumber("P Gain", 0);
-        double i = SmartDashboard.getNumber("I Gain", 0);
-        double d = SmartDashboard.getNumber("D Gain", 0);
-        double ff = SmartDashboard.getNumber("Feed Forward", 0);
-        double max = SmartDashboard.getNumber("Max Output", 0);
-        double min = SmartDashboard.getNumber("Min Output", 0);
+//System.out.print(encoder.getPosition());
 
-        if((p!=LeadkP)) {leadController.setP(p); LeadkP = p; }
-        if((i!=LeadkI)) {leadController.setP(i); LeadkI = i; }
-        if((d!=LeadkD)) {leadController.setD(d); LeadkD = d; }
-        if((ff!=LeadkFF)) {leadController.setFF(ff); LeadkFF = ff; }
-        if((max!=LeadkMaxOutput)||(min!=LeadkMinOutput)) {
-          leadController.setOutputRange(min, max); 
-          LeadkMinOutput = min; 
-          LeadkMaxOutput = max;
-        }
-        
-    }
-     */
+    //System.out.println("encoder position: ");
+
     armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
     leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
 
-    //SmartDashboard.putNumber("Lead Screw SetPoint:", rotations);
-    SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
   }
 }
