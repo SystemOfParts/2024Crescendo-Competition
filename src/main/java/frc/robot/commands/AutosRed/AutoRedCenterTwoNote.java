@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.AutosRed;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -13,13 +13,17 @@ import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
+import frc.robot.commands.AutoMoveToOrientationCommand;
+import frc.robot.commands.AutoOneNote;
+import frc.robot.commands.CheckToShoot;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoTwoNoteCenter extends SequentialCommandGroup {
+public class AutoRedCenterTwoNote extends SequentialCommandGroup {
   /** Creates a new TwoNoteAuto. */
-  public AutoTwoNoteCenter(
+  public AutoRedCenterTwoNote(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -35,26 +39,17 @@ public class AutoTwoNoteCenter extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("5142_ThreeNoteCenterPart1")
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNotePart1")
       ),
-
-      // After moving, wait .5 seconds to pretend to pick up a note, REPLACE THIS WITH NOTE DETECTION
 
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
       
       // Make sure the shooter is still at speed
       new CheckToShoot(m_shooter, m_intake),
-      
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
-
-      // TEMPORARY Wait .5 seconds for the shot to be fired
-      new WaitCommand(1),
-
-      // At the end of auto use the TELEOP orientation command to move to TRAVEL to turn off shooter and intake
-      new MoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+      new InstantCommand(() -> m_intake.runIntake(true))
       
       // END AUTO
     );
