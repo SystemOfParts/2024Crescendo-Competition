@@ -4,14 +4,20 @@
 
 package frc.robot;
 
+import java.security.Key;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.cameraserver.CameraServer;
+import frc.robot.BuildConstants;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -33,7 +39,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    SmartDashboard.putString("GitCodeVersion", "BRANCH: "+BuildConstants.GIT_BRANCH+" DATE: "+BuildConstants.GIT_DATE+" REVISION: "+BuildConstants.GIT_REVISION);
+    DataLogManager.start();
+    DriverStation.startDataLog(DataLogManager.getLog());
+    m_robotContainer = new RobotContainer(); 
     
    
     }
