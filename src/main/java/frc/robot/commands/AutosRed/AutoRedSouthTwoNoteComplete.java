@@ -18,13 +18,12 @@ import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoOneNote;
 import frc.robot.commands.CheckToShoot;
 
-
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoRedNorthTwoNote extends SequentialCommandGroup {
+public class AutoRedSouthTwoNoteComplete extends SequentialCommandGroup {
   /** Creates a new TwoNoteAuto. */
-  public AutoRedNorthTwoNote(
+  public AutoRedSouthTwoNoteComplete(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -40,11 +39,11 @@ public class AutoRedNorthTwoNote extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("RedNorthTwoNoteComplete")
+        new RunTrajectorySequenceRobotAtStartPoint("RedSouthTwoNoteComplete")
       ),
 
       // with the shooter running, the intake off, and a note loaded, orient arm to the intake position
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_SUBWOOFER),
 
       // Make sure the shooter is still at speed
       new CheckToShoot(m_shooter, m_intake),

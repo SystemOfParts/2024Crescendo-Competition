@@ -9,7 +9,7 @@ public class LeftClimberDownCommand extends SequentialCommandGroup{
         ClimberSubsystem m_climber
 
     ){
-            addCommands(
+    addCommands(
         new RunCommand(() -> m_climber.climber1Down(.5)));
         
     }
