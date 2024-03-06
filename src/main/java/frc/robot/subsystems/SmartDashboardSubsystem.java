@@ -48,19 +48,15 @@ public class SmartDashboardSubsystem extends SubsystemBase {
 
 
   public void updateAllDisplays(){
-    updateOdometryTelemetry();
-    updateSwerveModuleTelemetry();
+    //updateOdometryTelemetry();
+    //updateSwerveModuleTelemetry();
     updateIMUTelemetry();
 
-    SmartDashboard.putNumber("Arm Encoder:", ArmSubsystem.encoder.getPosition());
-    SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
-
+    SmartDashboard.putNumber("Arm Encoder:", ArmSubsystem.leftArmEncoder.getPosition());
+    //SmartDashboard.putNumber("Lead Screw Encoder:", ArmSubsystem.leadScrewEncoder.getPosition());
     SmartDashboard.putNumber("April Z Angle In Radians", RobotContainer.phtnVisionSubsystem.getAprilTagZAngle());
-
     SmartDashboard.putBoolean("April Visibility", RobotContainer.phtnVisionSubsystem.isApriltagVisible());
-
     SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
-
     SmartDashboard.putNumber("April Y in M", RobotContainer.phtnVisionSubsystem.getAprilTagY());
     SmartDashboard.putBoolean("NOTE INTAKE SENSOR", RobotContainer.intakeSubsystem.isNoteInIntake());
 

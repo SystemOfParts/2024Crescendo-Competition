@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -18,89 +19,90 @@ import com.revrobotics.SparkPIDController;
 
 public class ArmSubsystem extends SubsystemBase {
 
-    private static final String printLocation = "LeadScrewSubsystem: ";
+    private static final String printLocation = "ArmSubsystem: ";
 
+    // declare the arm motors
     private final static CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
-
     private final CANSparkMax rightArmMotor = new CANSparkMax(11, MotorType.kBrushless);
 
-
+    // declare the leadScrew motor 550
     private final static CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
     
+    // declare encoders for both
+    public final static RelativeEncoder leftArmEncoder = leftArmMotor.getEncoder();
     public final static RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
-
-
-    public final static RelativeEncoder encoder = leftArmMotor.getEncoder();
-
+    
+    // declare PID Controllers for both 
     private final SparkPIDController armController = leftArmMotor.getPIDController();
-
     private final SparkPIDController leadController = leadScrewMotor.getPIDController();
 
     // Constants for PID control, adjust based on testing - NEEDS TUNING
+    private boolean TUNING_MODE = false;
 
-    private static final double ArmkP = 0.1; // Proportional term
-    private static final double ArmkI = 0.0; // Integral term
-    private static final double ArmkD = 0.01; // Derivative term
-    private static final double ArmkIz = 0; // Integral zone
-    private static final double ArmkFF = 0.0; // Feed-forward
-    private static final double ArmkMaxOutput = .5;
-    private static final double ArmkMinOutput = -.3;
-
-
+    double ArmkP = 0.1; // Proportional term
+    double ArmkI = 0.0; // Integral term
+    double ArmkD = 0.01; // Derivative term
+    double ArmkIz = 0; // Integral zone
+    double ArmkFF = 0.0; // Feed-forward
+    double ArmkMaxOutput = .5;
+    double ArmkMinOutput = -.3;
 
     //Lead screw 
-    private static final double LeadkP = 0.1; // Proportional term
-    private static final double LeadkI = 0.0; // Integral term
-    private static final double LeadkD = 0.01; // Derivative term
-    private static final double LeadkIz = 0; // Integral zone
-    private static final double LeadkFF = 0.0; // Feed-forward
-    private static final double LeadkMaxOutput = 1;
-    private static final double LeadkMinOutput = -1;
+    double LeadkP = 0.1; // Proportional term
+    double LeadkI = 0.0; // Integral term
+    double LeadkD = 0.01; // Derivative term
+    double LeadkIz = 0; // Integral zone
+    double LeadkFF = 0.0; // Feed-forward
+    double LeadkMaxOutput = 1;
+    double LeadkMinOutput = -1;
+    //double LeadMaxAccel = 10;
+    //double LeadMaxVelocity = 10;
 
     public float kLeadFarLimit = 255;
     public float kLeadHomeLimit = 0;
 
     public float kArmUpLimit = 52;
     public float kArmDownLimit = 0;
+
     public double armSetpoint = 0;
     public double leadSetpoint = 0;
 
-
+    double kTuneLeadSetpoint = 150;
 
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
     private static final double encoderConversionFactor = 360.0 / gearReduction;
 
     public ArmSubsystem() {
-        // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
-        rightArmMotor.follow(leftArmMotor, true);
+      // WHY ARE WE NOT SETTING FACTORY DEFAULTS FOR ARM MOTORS?
 
-        // Set motors to brake mode
-        leftArmMotor.setIdleMode(IdleMode.kCoast);
-        rightArmMotor.setIdleMode(IdleMode.kCoast);
+      // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
+      rightArmMotor.follow(leftArmMotor, true);
 
-        leftArmMotor.setSmartCurrentLimit(40);
-        rightArmMotor.setSmartCurrentLimit(40);
+      // Set motors to brake mode
+      leftArmMotor.setIdleMode(IdleMode.kCoast);
+      rightArmMotor.setIdleMode(IdleMode.kCoast);
 
-        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+      leftArmMotor.setSmartCurrentLimit(40);
+      rightArmMotor.setSmartCurrentLimit(40);
 
-        leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 52);
-        leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);    
+      // DO WE NEED A SOFT LIMIT ON THE RIGHT ARM?
+      leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 52);
+      leftArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);    
 
-        leftArmMotor.burnFlash();
-        rightArmMotor.burnFlash();
+      leftArmMotor.burnFlash();
+      rightArmMotor.burnFlash();
 
-        // PID configuration
-        armController.setP(ArmkP);
-        armController.setI(ArmkI);
-        armController.setD(ArmkD);
-        armController.setIZone(ArmkIz);
-        armController.setFF(ArmkFF);
-        armController.setOutputRange(ArmkMinOutput, ArmkMaxOutput);
+      // PID configuration
+      armController.setP(ArmkP);
+      armController.setI(ArmkI);
+      armController.setD(ArmkD);
+      armController.setIZone(ArmkIz);
+      armController.setFF(ArmkFF);
+      armController.setOutputRange(ArmkMinOutput, ArmkMaxOutput);
 
-        // Encoder setup
-        encoder.setPosition(0);
+      // Arm Encoder setup
+      leftArmEncoder.setPosition(0);
 
 
         //Lead Screw

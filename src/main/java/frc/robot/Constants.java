@@ -49,7 +49,7 @@ public final class Constants {
 	public static final class ClimberConstants {
 		public static final double kSpeed = 0.25;
 		public static final double kMAX_POSITION = -400.0;
-  		public static final double kMIN_POSITION = -10;
+  		public static final double kMIN_POSITION = -5;
 	}
 
 	public static final class IntakeConstants {
@@ -106,23 +106,23 @@ public final class Constants {
 							true,
 							false),
 			SUBWOOFER("Subwoofer",
-							9,
+							11,
 							249,
-							1500,
+							2000,
 							true,
 							false,
 							true,
 							false),
 			PRECLIMB("Preclimb",
-							0,
-							1,
+							2.5,
+							255,
 							0,
 							false,
 							false,
 							false,
 							false),
 			CLIMB("Climb",
-							0,
+							1,
 							1,
 							0,
 							false,
@@ -130,9 +130,9 @@ public final class Constants {
 							false,
 							false),
 			AUTO_SUBWOOFER("AutoSubwoofer",
-							9,
+							11,
 							249,
-							1500,
+							2000,
 							true,
 							false,
 							false,
@@ -162,7 +162,7 @@ public final class Constants {
 							false,
 							false),
 			LEAD_PID1("LeadPID1",
-							0,
+							1,
 							50,
 							0,
 							false,
@@ -651,8 +651,8 @@ public final class Constants {
 					0.1, // deadband X for Xbox
 					0.1, // deadband Y for Xbox      
 					0.1, // deadband Omega for Xbox
-					true, // No cube controller configuration for Xbox yet
-					true);
+					false, // No cube controller configuration for Xbox yet
+					false);
 
 			private ControllerDeviceType controllerDeviceType;
 			private int portNumber;
