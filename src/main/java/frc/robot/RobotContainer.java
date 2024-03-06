@@ -17,11 +17,12 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PHTNVisionSubsystem;
+import frc.robot.subsystems.NoteDetectionPHTNVisionSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
-import frc.robot.commands.AutoOneNote;
+import frc.robot.commands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosRed.*;
 import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
@@ -69,6 +70,7 @@ public class RobotContainer {
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final PHTNVisionSubsystem phtnVisionSubsystem = new PHTNVisionSubsystem("AprilTagCamera");
+  public static final NoteDetectionPHTNVisionSubsystem noteDetectionPhtnVisionSubsystem = new NoteDetectionPHTNVisionSubsystem("NoteCamera");
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
   
   //Define Controllers
@@ -105,11 +107,19 @@ public class RobotContainer {
       // Configure the trigger bindings
       
       driveSubsystem.setDefaultCommand(
-                new DriveManuallyCommand(
-                        () -> getDriverXAxis(),
-                        () -> getDriverYAxis(),
-                        () -> getDriverOmegaAxis(),
-                        () -> getDriverFieldCentric()));
+        new DriveManuallyCommand(
+          () -> getDriverXAxis(),
+          () -> getDriverYAxis(),
+          () -> getDriverOmegaAxis(),
+          () -> getDriverFieldCentric()));
+
+      phtnVisionSubsystem.setDefaultCommand(
+        new DetectAprilTagCommand(
+          () -> getLeftTrigger()));
+
+      noteDetectionPhtnVisionSubsystem.setDefaultCommand(
+        new DetectNoteCommand(
+          () -> getRightTrigger()));
 
 
     trajectoryCalibration();
@@ -198,12 +208,20 @@ private double getDriverOmegaAxis() {
 private boolean getDriverFieldCentric() {
         return true; //return !xboxController.Button(1); bumper
 }
-public double getRightTrigger() {
+public static double getRightTrigger() {
         return xboxController.getRawAxis(3);
 }
 
-public double getLeftTrigger() {
+public static double getLeftTrigger() {
         return xboxController.getRawAxis(2);
+}
+
+public static boolean isLeftTriggerPressed(){
+  return (getLeftTrigger() > .1);
+}
+
+public static boolean isRightTriggerPressed(){
+  return (getRightTrigger() > .1);
 }
 
 public boolean getRightBumper() {
@@ -373,10 +391,19 @@ public void trajectoryCalibration() {
       .onTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
  */
-  new Trigger(m_operator2Controller.button(10))
-      .whileTrue(new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem))
+  new Trigger(m_operator1Controller.button(11))
+      .whileTrue(new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem))
       .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-/*
+  
+  new Trigger(m_operator1Controller.button(2))
+      .whileTrue(new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem))
+      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  
+  new Trigger(m_operator1Controller.button(3))
+      .whileTrue(new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem))
+      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  
+      /*
   new Trigger(m_operator2Controller.button(2))
       .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterRight"))
       .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));

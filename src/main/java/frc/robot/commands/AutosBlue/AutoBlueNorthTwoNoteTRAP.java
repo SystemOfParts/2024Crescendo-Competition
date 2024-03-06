@@ -33,25 +33,25 @@ public class AutoBlueNorthTwoNoteTRAP extends SequentialCommandGroup {
     addCommands(
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new AutoOneNote(m_arm, m_shooter, m_intake),
+      //SAFETY new AutoOneNote(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+        //SAFETYnew AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
         new RunTrajectorySequenceRobotAtStartPoint("BlueNorthTwoNotePart1")
       ),
 
-      new RunTrajectorySequenceRobotAtStartPoint("BlueNorthTwoNotePart2TRAP"),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueNorthTwoNotePart2TRAP")//SAFETY,
 
       // with the shooter running, the intake off, and a note loaded, orient arm to the intake position
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAP_SCORE),
+      //SAFETYnew AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAP_SCORE),
 
       // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
+      //SAFETYnew CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true))
+      //SAFETYnew InstantCommand(() -> m_intake.runIntake(true))
       
       // END AUTO
     );

@@ -761,9 +761,11 @@ public final class Constants {
 		public static final class PhotonVisionConstants {
 
 			public static final boolean PV_PRESENT = true;
+			public static final boolean NOTE_PV_PRESENT = true;
 			public static final String PVCameraName = "AprilTagCamera";
 			// Camera position from center of the chassis / floor (for Z) point of view; it's looking backwards
 			public static final Transform3d robotToCam = new Transform3d(new Translation3d(0.3048, 0.0, 0.3175), new Rotation3d(0,0,Math.PI));
+			public static final Transform3d robotToNoteCam = new Transform3d(new Translation3d(0.2900, -1.9, 0.2000), new Rotation3d(0,0,Math.PI));
 
 		}
 	}

@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.VisionConstants.PhotonVisionConstants;
 import frc.robot.commands.XboxRumbleCommand;
@@ -37,7 +38,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   // private PhotonPoseEstimator poseEstimator;
   private int fiducialID;
   private Transform3d robotToCam;
-  private double aprilTagX, aprilTagY;
+  private double aprilTagX, aprilTagY, aprilTagYaw;
   private static double aprilTagZAngle;
   private static double aprilTagZ = -1;
   private Pose2d globalPoseEstimate = new Pose2d();
@@ -96,48 +97,54 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     } 
     return null; // if no apriltags visible or the pose cannot be determined
   }
+
    public void getPHTNData() {
+    //System.out.println("GetPHTNDATA");
     boolean hasGoodTarget;
     aprilTagResult = camera.getLatestResult();
     aprilTagHasTargets = aprilTagResult.hasTargets();
     hasGoodTarget = aprilTagHasTargets;
+    //System.out.println("----=======> PHTN DATA hasTargets: "+aprilTagHasTargets);
     if (aprilTagHasTargets) {
-
+      //System.out.println("----=======> PHTN DATA TARGETS WERE FOUND: ");
       aprilTagTargets = aprilTagResult.getTargets();
       aprilTagBestTarget = aprilTagResult.getBestTarget();
-
       fiducialID = aprilTagBestTarget.getFiducialId();
+      //System.out.println("----=======> PHTN DATA BEST TARGET: "+fiducialID);
       // we have the Fiducial ID of the Best Target, but what if we don't want to use that target?
       // check to make sure one of the offset speaker tags was the best target...
       if ((getFiducialID()!=8)&&(getFiducialID()!=4)){
+        //System.out.println("----=======> PHTN DATA TARGET WASN'T 8 or 4: ");
         // the best target wasn't a speaker tag
         // Let's get rid of the speaker tag for now:
         aprilTagBestTarget = null;
         hasGoodTarget = false;
-        if ((getFiducialID()==3)||(getFiducialID()==7)){
-          // The best target is one of the offset speaker tags so we might still find a speaker tag
-          // let's look through the other targets to see if the main speaker tag is included too:
-          for (PhotonTrackedTarget targ : aprilTagTargets) {
-            // we have a target, is it one of the speaker tags they are tags numbers 8 and 4?
-            if ((targ.getFiducialId()==8)||(targ.getFiducialId()==4)){
-              // if so replace the best target with this new target
-              fiducialID = targ.getFiducialId();
-              aprilTagBestTarget = targ;
-              hasGoodTarget = true;
-              // since we found a good one, let's stop looking for them
-              break;
-            }
+        // The best target is one of the offset speaker tags so we might still find a speaker tag
+        // let's look through the other targets to see if the main speaker tag is included too:
+        for (PhotonTrackedTarget targ : aprilTagTargets) {
+          // we have a target, is it one of the speaker tags? They are tags numbers 8 and 4?
+          if ((targ.getFiducialId()==8)||(targ.getFiducialId()==4)){
+            //System.out.println("-------------=======[ GOOOD TARGET FOUND! ]=======--------------");
+            // if so replace the best target with this new target
+            fiducialID = targ.getFiducialId();
+            aprilTagBestTarget = targ;
+            hasGoodTarget = true;
+            // since we found a good one, let's stop looking for them
+            break;
           }
         }
       }
-      // make sure the best target isn't null 
+      //System.out.println("----=======> PHTN DATA BEST TARGET: "+fiducialID);
       if (aprilTagBestTarget != null){
         // get the data from the tag
         aprilTagX = aprilTagBestTarget.getBestCameraToTarget().getX();
         aprilTagY = aprilTagBestTarget.getBestCameraToTarget().getY();
         aprilTagZ = aprilTagBestTarget.getBestCameraToTarget().getZ();
+        aprilTagYaw = aprilTagBestTarget.getYaw();
         aprilTagZAngle = aprilTagBestTarget.getBestCameraToTarget().getRotation().getAngle();
         //fieldToCamera = aprilTagResult.getMultiTagResult().estimatedPose.best;
+      } else {
+        //System.out.println(" TARGET WAS NULL");
       }
       // if we didn't find a good target
       if (!hasGoodTarget){
@@ -198,27 +205,55 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
   }
 
-  
+  public double getAprilTagYaw() {
 
+    return aprilTagYaw;
+
+  }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    getPHTNData();
+/* 
+    if (RobotContainer.isLeftTriggerPressed()){
+           getPHTNData();
 
-    if (isApriltagVisible()){
-      if (((getAprilTagZAngle()-180) > -5) && ((getAprilTagZAngle()-180) < 5)){
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 1);
-      } else if (((getAprilTagZAngle()-180) > -10) && ((getAprilTagZAngle()-180) < 10)){
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .66);
-      } else if (((getAprilTagZAngle()-180) > -15) && ((getAprilTagZAngle()-180) < 15)){
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .33);
-      } else if (((getAprilTagZAngle()-180) > -20) && ((getAprilTagZAngle()-180) < 20)){
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .1);
+      //System.out.println("]]]]]]]]----=======> IS AN APT VISIBLE? : "+(isApriltagVisible()));
+      if (isApriltagVisible()){
+        double visibleYaw = getAprilTagYaw();
+        //System.out.println("]]]]]]]]]]]]----=======> APT WAS VISIBLE [ "+getFiducialID()+" ] ITS YAW: ["+getAprilTagYaw()+"]");
+        if ((visibleYaw > -3) && (visibleYaw < 3)){
+          //System.out.println("----=======> [ GOOD APT (4 or 8) WITHIN 3 DEGREES ] =======------");
+          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 1);
+        } else if ((visibleYaw > -8)){
+          // TOO FAR LEFT, TURN ON RIGHT RUMBLE
+          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, .3);
+        } else if ((visibleYaw < 8)){
+          // TOO FAR RIGHT, TURN ON LEFT RUMBLE
+          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, .3);
+        } else {
+          // TOO FAR OFF - TURN OFF ALL RUMBLE
+          //System.out.println("----=======> [ GOOD APT (4 or 8) BUT YAW IS TOO FAR OFF ] =======------");
+          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
+        }
       } else {
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
-
+        // no April tag is visible so turn off rumble
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
+        RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+        RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
       }
-    }
-  }
+    } else {
+        // TRIGGER RELEASED, so turn off rumble
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
+        RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
+        RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
+    } */ 
+  } 
 }
