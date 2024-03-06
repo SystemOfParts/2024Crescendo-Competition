@@ -260,41 +260,41 @@ private void configureBindings() {
 
   //Orientation Bindings
   //PID TUNING TEMPORARY FOR THESE TWO BUTTONS
-  
+  /* 
   new Trigger(m_operator1Controller.button(11))
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID1));
     
   new Trigger(m_operator1Controller.button(2)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID2));
+ */
 
-
-  new Trigger(m_operator2Controller.button(6)) //button 6 = Subwoofer shooting
+  new Trigger(m_operator2Controller.button(6)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
-  new Trigger(m_operator2Controller.button(7)) //button 7 = Home Position
+  new Trigger(m_operator2Controller.button(7)) 
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+    
+  new Trigger(m_operator2Controller.button(8)) 
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
+
+    
+
+  new Trigger(m_operator2Controller.button(1)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
-    
-  new Trigger(m_operator2Controller.button(8)) //button 8 = Trap scoring
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
-    
-
-  new Trigger(m_operator2Controller.button(1)) // button 1 = Travel position
+  new Trigger(m_operator2Controller.button(2)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
-  new Trigger(m_operator2Controller.button(2)) // button 2 = intake position
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
-
-  new Trigger(m_operator2Controller.button(3)) // button 3 = spit out note
+  new Trigger(m_operator2Controller.button(4))
      .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
     .onFalse(new IntakeStopCommand(intakeSubsystem));
 
   // Intake Bindings
-  new Trigger(m_operator2Controller.button(4))  //button 4 - amp position
-  .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
+  new Trigger(m_operator2Controller.button(3))  
+  .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
 
-  new Trigger(m_operator2Controller.button(5)) //button 5 = podium shooting
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
+  new Trigger(m_operator2Controller.button(5)) 
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
   
 
