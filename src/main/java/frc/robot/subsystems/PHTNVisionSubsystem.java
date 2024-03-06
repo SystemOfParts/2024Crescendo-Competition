@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
@@ -96,28 +97,53 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     return null; // if no apriltags visible or the pose cannot be determined
   }
    public void getPHTNData() {
-
+    boolean hasGoodTarget;
     aprilTagResult = camera.getLatestResult();
     aprilTagHasTargets = aprilTagResult.hasTargets();
-
+    hasGoodTarget = aprilTagHasTargets;
     if (aprilTagHasTargets) {
+
       aprilTagTargets = aprilTagResult.getTargets();
       aprilTagBestTarget = aprilTagResult.getBestTarget();
 
       fiducialID = aprilTagBestTarget.getFiducialId();
-      aprilTagX = aprilTagBestTarget.getBestCameraToTarget().getX();
-      aprilTagY = aprilTagBestTarget.getBestCameraToTarget().getY();
-      aprilTagZ = aprilTagBestTarget.getBestCameraToTarget().getZ();
-      aprilTagZAngle = aprilTagBestTarget.getBestCameraToTarget().getRotation().getAngle();
-      fieldToCamera = aprilTagResult.getMultiTagResult().estimatedPose.best;
-
-     /*  
-     if (aprilTagResult.getMultiTagResult().estimatedPose.isPresent) { // this may need to be commented out as it depends whether the single tag pose estimation is enabled
-        globalPoseEstimate = new Pose2d(fieldToCamera.getX(), fieldToCamera.getY(),
-          new Rotation2d(fieldToCamera.getRotation().getX(), fieldToCamera.getRotation().getY()));
-          // apriltaField2d.setRobotPose(globalPoseEstimate);
-      } 
-    */
+      // we have the Fiducial ID of the Best Target, but what if we don't want to use that target?
+      // check to make sure one of the offset speaker tags was the best target...
+      if ((getFiducialID()!=8)&&(getFiducialID()!=4)){
+        // the best target wasn't a speaker tag
+        // Let's get rid of the speaker tag for now:
+        aprilTagBestTarget = null;
+        hasGoodTarget = false;
+        if ((getFiducialID()==3)||(getFiducialID()==7)){
+          // The best target is one of the offset speaker tags so we might still find a speaker tag
+          // let's look through the other targets to see if the main speaker tag is included too:
+          for (PhotonTrackedTarget targ : aprilTagTargets) {
+            // we have a target, is it one of the speaker tags they are tags numbers 8 and 4?
+            if ((targ.getFiducialId()==8)||(targ.getFiducialId()==4)){
+              // if so replace the best target with this new target
+              fiducialID = targ.getFiducialId();
+              aprilTagBestTarget = targ;
+              hasGoodTarget = true;
+              // since we found a good one, let's stop looking for them
+              break;
+            }
+          }
+        }
+      }
+      // make sure the best target isn't null 
+      if (aprilTagBestTarget != null){
+        // get the data from the tag
+        aprilTagX = aprilTagBestTarget.getBestCameraToTarget().getX();
+        aprilTagY = aprilTagBestTarget.getBestCameraToTarget().getY();
+        aprilTagZ = aprilTagBestTarget.getBestCameraToTarget().getZ();
+        aprilTagZAngle = aprilTagBestTarget.getBestCameraToTarget().getRotation().getAngle();
+        //fieldToCamera = aprilTagResult.getMultiTagResult().estimatedPose.best;
+      }
+      // if we didn't find a good target
+      if (!hasGoodTarget){
+        // change the hasTargets value to false so we don't try to use it
+        aprilTagHasTargets = false;
+      }
     } 
   }
 
@@ -179,15 +205,20 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   public void periodic() {
     // This method will be called once per scheduler run
     getPHTNData();
-    
-    if (((getAprilTagZAngle()-180) > -10) && ((getAprilTagZAngle()-180) < 10)){
 
-      //RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .25);
-    }
-    else {
+    if (isApriltagVisible()){
+      if (((getAprilTagZAngle()-180) > -5) && ((getAprilTagZAngle()-180) < 5)){
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 1);
+      } else if (((getAprilTagZAngle()-180) > -10) && ((getAprilTagZAngle()-180) < 10)){
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .66);
+      } else if (((getAprilTagZAngle()-180) > -15) && ((getAprilTagZAngle()-180) < 15)){
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .33);
+      } else if (((getAprilTagZAngle()-180) > -20) && ((getAprilTagZAngle()-180) < 20)){
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, .1);
+      } else {
+        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
 
-      RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
-
+      }
     }
   }
 }
