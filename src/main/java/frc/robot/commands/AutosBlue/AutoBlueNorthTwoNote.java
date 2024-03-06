@@ -39,7 +39,7 @@ public class AutoBlueNorthTwoNote extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("BlueNorthTwoNotePart1")
+        new RunTrajectorySequenceRobotAtStartPoint("BlueNorthTwoNoteComplete")
       ),
 
       // with the shooter running, the intake off, and a note loaded, orient arm to the intake position
