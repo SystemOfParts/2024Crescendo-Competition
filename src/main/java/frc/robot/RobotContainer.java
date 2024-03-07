@@ -125,6 +125,19 @@ public class RobotContainer {
     trajectoryCalibration();
   }
 
+  public void trajectoryCalibration() {
+    new Trigger(m_operator1Controller.button(11))
+        .whileTrue(new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    
+    new Trigger(m_operator1Controller.button(2))
+        .whileTrue(new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    
+    new Trigger(m_operator1Controller.button(3))
+        .whileTrue(new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+  }
   private void configureAutos(){
 
     final Command m_AutoShootOnly = new AutoOneNote(armSubsystem, shooterSubsystem, intakeSubsystem);
@@ -384,46 +397,6 @@ private void configureBindings() {
 * Bindings to test simple swerve trajectories done in PathPlanner
 */
 // to use these make sure you comment out the other uses of buttons before!!!!
-
-public void trajectoryCalibration() {
-  /*
-  new Trigger(m_operator2Controller.button(1))
-      .onTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterForward"))
-      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
- */
-  new Trigger(m_operator1Controller.button(11))
-      .whileTrue(new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem))
-      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  
-  new Trigger(m_operator1Controller.button(2))
-      .whileTrue(new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem))
-      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  
-  new Trigger(m_operator1Controller.button(3))
-      .whileTrue(new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem))
-      .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  
-      /*
-  new Trigger(m_operator2Controller.button(2))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_1MeterRight"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-
-  new Trigger(m_operator2Controller.button(7))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_RotateLeft90and1Meter"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-
-  new Trigger(m_operator2Controller.button(8))
-      .whileTrue(new RunTrajectorySequenceRobotAtStartPoint("5142_Rotate180and1Meter"))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-    */
-  
-  /*new Trigger(m_operator2Controller.button(8))
-      .whileTrue(new TurnToAngleZeroHeadingCommand(Rotation2d.fromDegrees(0)))
-      .whileFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-  new Trigger(m_operator2Controller.button(9))
-      .whileTrue(new InstantCommand(RobotContainer.driveSubsystem::testOdometryUpdates));
-      */
-}
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous

@@ -14,12 +14,17 @@ import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.OrientationConstants.Orientations;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.SparkPIDController;
 
 public class ArmSubsystem extends SubsystemBase {
 
     private static final String printLocation = "ArmSubsystem: ";
+    private long startMovementTime;
 
     // declare the arm motors
     private final static CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
@@ -72,9 +77,12 @@ public class ArmSubsystem extends SubsystemBase {
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
     private static final double encoderConversionFactor = 360.0 / gearReduction;
+    private ScheduledExecutorService taskExecutor;
 
     public ArmSubsystem() {
       // WHY ARE WE NOT SETTING FACTORY DEFAULTS FOR ARM MOTORS?
+      // When your program starts up
+      taskExecutor = Executors.newSingleThreadScheduledExecutor();
 
       // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
       rightArmMotor.follow(leftArmMotor, true);
@@ -150,7 +158,18 @@ public class ArmSubsystem extends SubsystemBase {
       System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
       if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
         leadSetpoint = position;
+
+        /* // This is a simple delay task that stops the motor after a 5 second delay in case the PID is working overtimme
+        // PREVENT LEAD SCREW MOTOR BURNOUT:
+        Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
+        //run this task after 5 seconds, nonblock for task3
+        taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); */
       }
+    }
+
+    public void leadScrewStopMotor(Orientations orientation){
+      System.out.println(printLocation+"*** leadScrewPosition told to Stop called by: "+orientation.label);   
+      leadScrewMotor.set(0);
     }
   
     public void leadScrewSetPosition(double position){
