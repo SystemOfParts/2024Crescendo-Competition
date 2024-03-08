@@ -4,22 +4,13 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.revrobotics.CANSparkBase.IdleMode;
-
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -130,15 +121,15 @@ public final class Constants {
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",
-							19, 
+							18, 
 							243, 
-							2000, 
+							2500, 
 							true,
 							false,
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
-							2,
+							2.5,
 							243,
 							2000,
 							false,
@@ -150,22 +141,6 @@ public final class Constants {
 							243,
 							2000,
 							true,
-							false,
-							false,
-							false),
-			LEAD_PID1("LeadPID1",
-							1,
-							50,
-							0,
-							false,
-							false,
-							false,
-							false),
-			LEAD_PID2("LeadPID2",
-							1,
-							175,
-							0,
-							false,
 							false,
 							false,
 							false),

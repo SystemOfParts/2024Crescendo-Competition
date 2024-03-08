@@ -5,14 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.PHTNVisionSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.RobotContainer;
-import frc.robot.commands.XboxRumbleCommand;
 /**
  * Drive the given distance straight (negative values go backwards). Uses a
  * local PID controller to
@@ -50,7 +46,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         m_drive = drive;
         m_relative = relative;
         m_degree = zAngle;
-        //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + targetAngleDegrees);
+        System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         addRequirements(m_drive);
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
@@ -64,18 +60,18 @@ public class TurnToDegreeIMU extends PIDCommand {
 
     @Override
     public void execute() {
-        //System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         super.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
-        //System.out.println("                                           ----->>> [  ENDED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree+ " [ INTERRUPTED ]: "+interrupted);
+        System.out.println("                                           ----->>> [  INTERRUPTED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree+ " [ INTERRUPTED ]: "+interrupted);
         super.end(interrupted);
         // if the command finished properly
         if (!interrupted){
             // rumble the Xbox controller
-            new XboxRumbleCommand(0.25, .25, RumbleType.kLeftRumble);
+            //new XboxRumbleCommand(0.25, .25, RumbleType.kLeftRumble);
         }
         m_drive.stopRobot();
     }
@@ -90,14 +86,18 @@ public class TurnToDegreeIMU extends PIDCommand {
         // Only zero the heading if we are turning relative (e.g., turn 3 degrees from  
         // my current position). Do not zero it if turning absolute (e.g., turn TO 55       // we are in absolute?
         // degrees)
-      //  if (m_relative) {
-           // m_drive.zeroHeading(); 
-        //}
+        if (m_relative) {
+            System.out.println("YAW WAS: "+ RobotContainer.imuSubsystem.getYaw());
+            RobotContainer.imuSubsystem.setYawForTrajectory(RobotContainer.imuSubsystem.getYaw());
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
+        RobotContainer.imuSubsystem.restoreYawAfterTrajectory();
+        System.out.println("                                           ----->>> [  FINISHED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree);
+        System.out.println("YAW RESET TO: "+ RobotContainer.imuSubsystem.getYaw());
         return getController().atSetpoint();
     }
 }

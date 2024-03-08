@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.OrientationConstants.Orientations;
@@ -24,7 +23,6 @@ import com.revrobotics.SparkPIDController;
 public class ArmSubsystem extends SubsystemBase {
 
     private static final String printLocation = "ArmSubsystem: ";
-    private long startMovementTime;
     private boolean CONTROL_MANUALLY = false;
     // declare the arm motors
     private final static CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
@@ -41,8 +39,6 @@ public class ArmSubsystem extends SubsystemBase {
     private final SparkPIDController armController = leftArmMotor.getPIDController();
     private final SparkPIDController leadController = leadScrewMotor.getPIDController();
 
-    // Constants for PID control, adjust based on testing - NEEDS TUNING
-    private boolean TUNING_MODE = false;
 
     double ArmkP = 0.1; // Proportional term
     double ArmkI = 0.0; // Integral term
@@ -53,9 +49,9 @@ public class ArmSubsystem extends SubsystemBase {
     double ArmkMinOutput = -.3;
 
     //Lead screw 
-    double LeadkP = 0.1; // Proportional term
+    double LeadkP = 0.125; // Proportional term
     double LeadkI = 0.0; // Integral term
-    double LeadkD = 0.01; // Derivative term
+    double LeadkD = 0.00; // Derivative term
     double LeadkIz = 0; // Integral zone
     double LeadkFF = 0.0; // Feed-forward
     double LeadkMaxOutput = 1;
@@ -75,14 +71,14 @@ public class ArmSubsystem extends SubsystemBase {
     double kTuneLeadSetpoint = 150;
 
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
-    private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
-    private static final double encoderConversionFactor = 360.0 / gearReduction;
-    //private ScheduledExecutorService taskExecutor;
+    //private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
+    //private static final double encoderConversionFactor = 360.0 / gearReduction;
+    private ScheduledExecutorService taskExecutor;
 
     public ArmSubsystem() {
       // WHY ARE WE NOT SETTING FACTORY DEFAULTS FOR ARM MOTORS?
       // When your program starts up
-      //taskExecutor = Executors.newSingleThreadScheduledExecutor();
+      taskExecutor = Executors.newSingleThreadScheduledExecutor();
 
       // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
       rightArmMotor.follow(leftArmMotor, true);
@@ -173,16 +169,18 @@ public class ArmSubsystem extends SubsystemBase {
 
          // This is a simple delay task that stops the motor after a 5 second delay in case the PID is working overtimme
         // PREVENT LEAD SCREW MOTOR BURNOUT:
-        //Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
-        //run this task after 5 seconds, nonblock for task3
-        //taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); 
+        if ((orientation.label == Orientations.HOME.label)||(orientation.label == Orientations.PRECLIMB.label)){
+          Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
+          //run this task after 5 seconds, nonblock for task3
+          taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); 
+        }
 
       }
     }
 
     public void leadScrewStopMotor(Orientations orientation){
       System.out.println(printLocation+"*** leadScrewPosition told to Stop called by: "+orientation.label);   
-      leadScrewMotor.set(0);
+
     }
   
     public void leadScrewSetPosition(double position){

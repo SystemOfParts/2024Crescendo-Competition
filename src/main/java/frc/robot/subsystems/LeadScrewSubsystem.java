@@ -4,127 +4,131 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+/* 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-
+import java.util.concurrent.ScheduledExecutorService;
 import frc.robot.Constants.OrientationConstants.Orientations;
-import frc.robot.RobotContainer;
+import frc.robot.RobotContainer; */
 
 public class LeadScrewSubsystem extends SubsystemBase {
 
-  //private static final RobotContainer robotContainer = new RobotContainer();
-    private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
-    private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
-    private final SparkPIDController pidController = leadScrewMotor.getPIDController();
-
-
-  public double kP = 1; // Proportional term
-  public double kI = 0.0; // Integral term
-  public double kD = 0.0; // Derivative term
-  public double kIz = 0; // Integral zone
-  public double kFF = 0.0; // Feed-forward
-  public double kMaxOutput = 1;
-  public double kMinOutput = -1;
-
-  public float kFarLimit = 240;
-  public float kHomeLimit = 1;
-
+  /* //private static final RobotContainer robotContainer = new RobotContainer();
+  private final CANSparkMax leadScrewMotor = new CANSparkMax(13, MotorType.kBrushless);
+  private final RelativeEncoder leadScrewEncoder = leadScrewMotor.getEncoder();
+  private final SparkPIDController leadController = leadScrewMotor.getPIDController();
   private static final String printLocation = "LeadScrewSubsystem: ";
-  public double setpoint = 0;
+
+  //Lead screw PID
+  double LeadkP = 0.125; // Proportional term
+  double LeadkI = 0.0; // Integral term
+  double LeadkD = 0.0; // Derivative term
+  double LeadkIz = 0; // Integral zone
+  double LeadkFF = 0.0; // Feed-forward
+  double LeadkMaxOutput = 1;
+  double LeadkMinOutput = -1;
+
+  float kLeadFarLimit = 250;
+  float kLeadHomeLimit = 0;
+
+  double leadSetpoint = 0;
+  double kTuneLeadSetpoint = 150;
+  ScheduledExecutorService taskExecutor; */
 
   public LeadScrewSubsystem() {
+
     
-    leadScrewMotor.setSmartCurrentLimit(30);
+    
+    /* taskExecutor = Executors.newSingleThreadScheduledExecutor();
+
+    leadScrewMotor.setSmartCurrentLimit(30, 30);
+    leadScrewMotor.setInverted(true);
     leadScrewEncoder.setPosition(0);
 
     leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kFarLimit);
-    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kHomeLimit);
+    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, kLeadFarLimit);
+    leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, kLeadHomeLimit);
 
-    // set PID coefficients
-    /* pidController.setP(kP);
-    pidController.setI(kI);
-    pidController.setD(kD);
-    pidController.setIZone(kIz);
-    pidController.setFF(kFF);
-    pidController.setOutputRange(kMinOutput, kMaxOutput); */
+    leadScrewMotor.setIdleMode(IdleMode.kCoast);
 
-    // display PID coefficients on SmartDashboard
-    SmartDashboard.putNumber("P Gain", kP);
-    SmartDashboard.putNumber("I Gain", kI);
-    SmartDashboard.putNumber("D Gain", kD);
-    SmartDashboard.putNumber("I Zone", kIz);
-    SmartDashboard.putNumber("Feed Forward", kFF);
-    SmartDashboard.putNumber("Max Output", kMaxOutput);
-    SmartDashboard.putNumber("Min Output", kMinOutput);
-    SmartDashboard.putNumber("Set Rotations", 0);
+    leadController.setP(LeadkP);
+    leadController.setI(LeadkI);
+    leadController.setD(LeadkD);
+    leadController.setIZone(LeadkIz);
+    leadController.setFF(LeadkFF);
+    leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
 
-    // Encoder setup
-    leadScrewEncoder.setPosition(0);
+    leadScrewMotor.burnFlash(); */
+
+    /* // display PID coefficients on SmartDashboard
+        SmartDashboard.putNumber("P Gain", LeadkP);
+        SmartDashboard.putNumber("I Gain", LeadkI);
+        SmartDashboard.putNumber("D Gain", LeadkD);
+        SmartDashboard.putNumber("I Zone", LeadkIz);
+        SmartDashboard.putNumber("Feed Forward", LeadkFF);
+        SmartDashboard.putNumber("Max Output", LeadkMaxOutput);
+        SmartDashboard.putNumber("Min Output", LeadkMinOutput);
+        SmartDashboard.putNumber("Set Rotations", 0); */
+
       
   } 
 
-  public void moveToPosition(Orientations orientation) {
+  /* public void leadMoveToPosition(Orientations orientation) {
     double position = orientation.leadScrewPosition;
-    System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
-    if ((position >= kHomeLimit) && (position <=kFarLimit)){
-      setpoint = position;
+    //System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
+    if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
+      leadSetpoint = position;
+      if ((orientation.label == Orientations.HOME.label)||(orientation.label == Orientations.PRECLIMB.label)){
+        Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
+        //run this task after 5 seconds
+        taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); 
+      }
+
     }
+  }
+
+  // called when orientation goes to HOME or PRECLIMB and turns off the motor
+  public void leadScrewStopMotor(Orientations orientation){
+    System.out.println(printLocation+"*** leadScrewPosition told to Stop called by: "+orientation.label);   
   }
 
   public void leadScrewSetPosition(double position){
     System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
-    if ((position >= kHomeLimit) && (position <=kFarLimit)){
-      setpoint = position;
+    if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
+      leadSetpoint = position;
     }
   }
 
- 
+  public void leadScrewForward(){
+    leadScrewMotor.set(.2);
+  }
 
+  public void leadScrewStop(){
+    leadScrewMotor.set(0);
+  }
+
+  public void leadScrewBackward() {
+      leadScrewMotor.set(-.2);
+  } */
 
   @Override
   public void periodic() {
-    // read PID coefficients from SmartDashboard
-    double p = SmartDashboard.getNumber("P Gain", 0);
-    double i = SmartDashboard.getNumber("I Gain", 0);
-    double d = SmartDashboard.getNumber("D Gain", 0);
-    double iz = SmartDashboard.getNumber("I Zone", 0);
-    double ff = SmartDashboard.getNumber("Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Max Output", 0);
-    double min = SmartDashboard.getNumber("Min Output", 0);
-    double rotations = SmartDashboard.getNumber("Set Rotations", 0);
+    /* SmartDashboard.putNumber("Lead Motor Temp", leadScrewMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Output voltage", leadScrewMotor.getOutputCurrent());
+    SmartDashboard.putNumber("AppliedOutput", leadScrewMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Lead Screw Encoder", leadScrewEncoder.getPosition());
 
-    // if PID coefficients on SmartDashboard have changed, write new values to controller
-    if((p != kP)) { pidController.setP(p); kP = p; }
-    if((i != kI)) { pidController.setI(i); kI = i; }
-    if((d != kD)) { pidController.setD(d); kD = d; }
-    if((iz != kIz)) { pidController.setIZone(iz); kIz = iz; }
-    if((ff != kFF)) { pidController.setFF(ff); kFF = ff; }
-    if((max != kMaxOutput) || (min != kMinOutput)) { 
-      pidController.setOutputRange(min, max); 
-      kMinOutput = min; kMaxOutput = max; 
-    }
-   /*  if (robotContainer.getYButton()) {
-
-      leadScrewMotor.set(1);
-    }
-    else if (robotContainer.getAButton()){
-
-      leadScrewMotor.set(-1);
-    }
-    else {
-
-      leadScrewMotor.set(0);
-    } */
-   
-    // This method will be called once per scheduler run
-    pidController.setReference(setpoint, CANSparkMax.ControlType.kPosition);
+    leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID */
   }
 }

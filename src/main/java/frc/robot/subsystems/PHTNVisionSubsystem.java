@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.photonvision.PhotonCamera;
@@ -15,12 +14,8 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.VisionConstants.PhotonVisionConstants;
-import frc.robot.commands.XboxRumbleCommand;
 import frc.robot.lib.VisionHelpers;
 
 public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers {
@@ -213,47 +208,6 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
   @Override
   public void periodic() {
-/* 
-    if (RobotContainer.isLeftTriggerPressed()){
-           getPHTNData();
 
-      //System.out.println("]]]]]]]]----=======> IS AN APT VISIBLE? : "+(isApriltagVisible()));
-      if (isApriltagVisible()){
-        double visibleYaw = getAprilTagYaw();
-        //System.out.println("]]]]]]]]]]]]----=======> APT WAS VISIBLE [ "+getFiducialID()+" ] ITS YAW: ["+getAprilTagYaw()+"]");
-        if ((visibleYaw > -3) && (visibleYaw < 3)){
-          //System.out.println("----=======> [ GOOD APT (4 or 8) WITHIN 3 DEGREES ] =======------");
-          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 1);
-        } else if ((visibleYaw > -8)){
-          // TOO FAR LEFT, TURN ON RIGHT RUMBLE
-          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, .3);
-        } else if ((visibleYaw < 8)){
-          // TOO FAR RIGHT, TURN ON LEFT RUMBLE
-          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, .3);
-        } else {
-          // TOO FAR OFF - TURN OFF ALL RUMBLE
-          //System.out.println("----=======> [ GOOD APT (4 or 8) BUT YAW IS TOO FAR OFF ] =======------");
-          RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-          RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-        }
-      } else {
-        // no April tag is visible so turn off rumble
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
-        RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-        RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-      }
-    } else {
-        // TRIGGER RELEASED, so turn off rumble
-        RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
-        RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
-        RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-    } */ 
   } 
 }

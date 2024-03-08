@@ -21,37 +21,26 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
         if ((Objects.nonNull(m_arm)) && (Objects.nonNull(m_shooter)) && (Objects.nonNull(m_intake))){
             //System.out.println("*** m_leadscrew and arm were not null");   
             if (orientation.leadScrewFirst) {
-            addCommands(
-            new SequentialCommandGroup(
-                new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
-
-                    new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
-                    new InstantCommand(() -> m_shooter.stopShooter(orientation)),
-                    new InstantCommand(m_intake::stopIntake),
-
-
-                    new WaitCommand(1), // adds a wait command to allow lead screw to get somewhere
-                    new InstantCommand(() -> m_arm.moveToPosition(orientation)),
-
-
-                    new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
-
-                    new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
-                    new WaitCommand(1)));
-            }
-            else {
-            addCommands(
-                new ParallelCommandGroup(
-                    new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
-                    new InstantCommand(() -> m_arm.moveToPosition(orientation)),
-                    new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
-
-                    new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
-                    new InstantCommand(() -> m_shooter.stopShooter(orientation)),
-
-                    new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
-                    new InstantCommand(m_intake::stopIntake),
-                    new WaitCommand(1)));
+                addCommands(
+                    new SequentialCommandGroup(
+                        new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
+                            new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
+                            new InstantCommand(() -> m_shooter.stopShooter(orientation)),
+                            new InstantCommand(m_intake::stopIntake),
+                            new WaitCommand(1), // adds a wait command to allow lead screw to get somewhere
+                            new InstantCommand(() -> m_arm.moveToPosition(orientation)),
+                            new WaitCommand(1)));
+            } else {
+                addCommands(
+                    new ParallelCommandGroup(
+                        new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
+                        new InstantCommand(() -> m_arm.moveToPosition(orientation)),
+                        new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
+                        new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
+                        new InstantCommand(() -> m_shooter.stopShooter(orientation)),
+                        new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
+                        new InstantCommand(m_intake::stopIntake),
+                        new WaitCommand(1)));
             }
         }
         if (Objects.nonNull(m_shooter)){

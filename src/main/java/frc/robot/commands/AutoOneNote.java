@@ -5,15 +5,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.IntakeCommands.FeedShooterCommand;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.commands.CheckToShoot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class AutoOneNote extends SequentialCommandGroup {

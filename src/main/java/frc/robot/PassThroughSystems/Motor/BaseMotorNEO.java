@@ -2,21 +2,12 @@ package frc.robot.PassThroughSystems.Motor;
 
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
-import com.revrobotics.SparkAbsoluteEncoder;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.DutyCycle;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
@@ -31,7 +22,7 @@ import frc.robot.Constants.SwerveChassis.SwerveModuleConstants;
  */
 public class BaseMotorNEO implements BaseMotorInterface {
     private CANSparkMax motorNEO;
-    private int CANID;
+    //private int CANID;
     private SwerveModuleConstants cAngle;
     private RelativeEncoder driveEncoder;
     private SparkAbsoluteEncoder angleEncoder;
@@ -45,7 +36,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         driveEncoder = motorNEO.getEncoder();
         angleEncoder = motorNEO.getAbsoluteEncoder(Type.kDutyCycle);
 
-        this.CANID=CANID;
+        //this.CANID=CANID;
 
 
 

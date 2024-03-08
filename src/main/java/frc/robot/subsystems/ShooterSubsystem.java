@@ -14,8 +14,6 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
 import frc.robot.Constants.OrientationConstants.Orientations;
 
-import frc.robot.RobotContainer;
-
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -60,6 +58,28 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterPID.setFeedbackDevice(topShooterEncoder);
     bottomShooterPID.setFeedbackDevice(bottomShooterEncoder);
 
+    topShooterMotor.setIdleMode(IdleMode.kBrake);
+    bottomShooterMotor.setIdleMode(IdleMode.kBrake);
+
+    topShooterMotor.setSmartCurrentLimit(40);
+    bottomShooterMotor.setSmartCurrentLimit(40);
+
+    /* topShooterEncoder.setPositionConversionFactor(2*Math.PI);
+    topShooterEncoder.setVelocityConversionFactor(2*Math.PI/60);
+    bottomShooterEncoder.setPositionConversionFactor(2*Math.PI);
+    bottomShooterEncoder.setVelocityConversionFactor(2*Math.PI/60); */
+
+    /* topShooterMotor.setCANTimeout(0);
+    bottomShooterMotor.setCANTimeout(0); */
+
+    /* topShooterMotor.enableVoltageCompensation(12.0);
+    bottomShooterMotor.enableVoltageCompensation(12.0); */
+
+    /* topShooterMotor.setOpenLoopRampRate(.25);
+    topShooterMotor.setClosedLoopRampRate(.25);
+    bottomShooterMotor.setOpenLoopRampRate(.25);
+    bottomShooterMotor.setClosedLoopRampRate(.25); */
+
      //VPID configuration 
     bottomShooterPID.setP(kP);
     bottomShooterPID.setI(kI);
@@ -72,6 +92,7 @@ public class ShooterSubsystem extends SubsystemBase {
     bottomShooterPID.setSmartMotionMinOutputVelocity(500, 0);
     bottomShooterPID.setSmartMotionMaxAccel(3000, 0);
     bottomShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
+    bottomShooterPID.setPositionPIDWrappingEnabled(false);
 
     topShooterPID.setP(kP);
     topShooterPID.setI(kI);
@@ -84,17 +105,14 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterPID.setSmartMotionMinOutputVelocity(500, 0);
     topShooterPID.setSmartMotionMaxAccel(3000, 0);
     topShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
-
-    topShooterMotor.setIdleMode(IdleMode.kBrake);
-    bottomShooterMotor.setIdleMode(IdleMode.kBrake);
-
-    topShooterMotor.setSmartCurrentLimit(40);
-    bottomShooterMotor.setSmartCurrentLimit(40);
+    bottomShooterPID.setPositionPIDWrappingEnabled(false);
 
     topShooterMotor.burnFlash();
     bottomShooterMotor.burnFlash();
 
-    if (TUNING_MODE){addPIDToDashboard();}
+    if (TUNING_MODE){
+      addPIDToDashboard();
+    }
   }
 
   public void addPIDToDashboard() {
@@ -111,6 +129,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double sdD = SmartDashboard.getNumber(("kShooterD"), 0);
     double sdFF = SmartDashboard.getNumber(("kShooterFF"), 0);
 
+    
     if (sdP != kP){
       kP = sdP;
       topShooterPID.setP(kP);
@@ -190,7 +209,18 @@ public class ShooterSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
 
-    SmartDashboard.putNumber("Shooter RPM: ", bottomShooterEncoder.getVelocity());
+    SmartDashboard.putNumber("TOP Shooter RPM: ", topShooterEncoder.getVelocity());
+    //SmartDashboard.putNumber("TOP Shooter getOutputMin: ", topShooterPID.getOutputMin());
+    //SmartDashboard.putNumber("TOP Shooter getOutputMax: ", topShooterPID.getOutputMax());
+    //SmartDashboard.putNumber("TOP Shooter getOutputCurrent: ", topShooterMotor.getOutputCurrent());
+    //SmartDashboard.putNumber("TOP Shooter getAppliedOutput: ", topShooterMotor.getAppliedOutput());
+    SmartDashboard.putNumber("TOP Shooter getPosition: ", topShooterEncoder.getPosition());
+    SmartDashboard.putNumber("BOTTOM Shooter RPM: ", bottomShooterEncoder.getVelocity());
+    //SmartDashboard.putNumber("BOTTOM Shooter getOutputMin: ", bottomShooterPID.getOutputMin());
+    //SmartDashboard.putNumber("BOTTOM Shooter getOutputMax: ", bottomShooterPID.getOutputMax());
+    //SmartDashboard.putNumber("BOTTOM Shooter getOutputCurrent: ", bottomShooterMotor.getOutputCurrent());
+    //SmartDashboard.putNumber("BOTTOM Shooter getAppliedOutput: ", bottomShooterMotor.getAppliedOutput());
+    SmartDashboard.putNumber("BOTTOM Shooter getPosition: ", bottomShooterEncoder.getPosition());
 
   }
 }

@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.OIConstants.ControllerDevice;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.Devices.Controller;
@@ -12,7 +11,7 @@ import frc.robot.Devices.Controller;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LeadScrewSubsystem;
+//import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -25,31 +24,31 @@ import frc.robot.commands.*;
 import frc.robot.commands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosRed.*;
-import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
-import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
-import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
-import frc.robot.commands.ClimberCommands.LeftBrakeOnCommand;
+//import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
+//import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
+//import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
+//import frc.robot.commands.ClimberCommands.LeftBrakeOnCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberUpCommand;
-import frc.robot.commands.ClimberCommands.RightBrakeOnCommand;
+//import frc.robot.commands.ClimberCommands.RightBrakeOnCommand;
 import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+//import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+//import edu.wpi.first.wpilibj2.command.RunCommand;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
+//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -95,6 +94,25 @@ public class RobotContainer {
 
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  private final Command m_AutoShootOnly = new AutoOneNote(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueNorthTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueSouthThreeNoteMid4 = new AutoBlueSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueSouthThreeNoteMid5 = new AutoBlueSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
+    
+  private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //final Command m_AutoRedSouthThreeNoteMid4 = new AutoRedSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //final Command m_AutoRedSouthThreeNoteMid5 = new AutoRedSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -104,27 +122,29 @@ public class RobotContainer {
     configureBindings();
     configureAutos();
 
-      // Configure the trigger bindings
-      
-      driveSubsystem.setDefaultCommand(
-        new DriveManuallyCommand(
-          () -> getDriverXAxis(),
-          () -> getDriverYAxis(),
-          () -> getDriverOmegaAxis(),
-          () -> getDriverFieldCentric()));
+    // SET THE DEFAULT COMMAND FOR DRIVING SWERVE
+    driveSubsystem.setDefaultCommand(
+      new DriveManuallyCommand(
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        () -> getDriverOmegaAxis(),
+        () -> getDriverFieldCentric()));
 
-      phtnVisionSubsystem.setDefaultCommand(
-        new DetectAprilTagCommand(
-          () -> getLeftTrigger()));
+    // SET THE DEFAULT COMMAND ON XBOX LEFT TRIGGER TO DETECT THE ANGLE OF AN APRIL TAG
+    phtnVisionSubsystem.setDefaultCommand(
+      new DetectAprilTagCommand(
+        () -> getLeftTrigger()));
 
-      noteDetectionPhtnVisionSubsystem.setDefaultCommand(
-        new DetectNoteCommand(
-          () -> getRightTrigger()));
+    // SET THE DEFAULT COMMAND ON XBOX RIGHT TRIGGER TO DETECT THE ANGLE OF A DETECTED NOTE WITH PHOTONVISION
+    noteDetectionPhtnVisionSubsystem.setDefaultCommand(
+      new DetectNoteCommand(
+        () -> getRightTrigger()));
 
-
+  // UNCOMMENT TO TEST TRAJECTORIES
   //  trajectoryCalibration();
   }
 
+  // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
     new Trigger(m_operator1Controller.button(11))
         .whileTrue(new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem))
@@ -138,28 +158,8 @@ public class RobotContainer {
         .whileTrue(new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
-  private void configureAutos(){
 
-    final Command m_AutoShootOnly = new AutoOneNote(armSubsystem, shooterSubsystem, intakeSubsystem);
-    final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueNorthTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueSouthThreeNoteMid4 = new AutoBlueSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueSouthThreeNoteMid5 = new AutoBlueSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
-    
-    final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedSouthThreeNoteMid4 = new AutoRedSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedSouthThreeNoteMid5 = new AutoRedSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
-    final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
-    
-    
+  private void configureAutos(){
     /*
     if (isAlianceRed){
       m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
@@ -201,159 +201,155 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
   }
 
- //instantiate drive controllers
+ // INSTANTIATE XBOX DRIVER CONTROLLER
   private void configureDriverInterface() {
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
   }
 
-  private double getDriverXAxis() {
-      return xboxController.getLeftStickY();
-  }
+// RETURN XBOX LEFT JOYSTICK X AXIS
+private double getDriverXAxis() {
+    return xboxController.getLeftStickY();
+}
 
+// RETURN XBOX LEFT JOYSTICK Y AXIS
 private double getDriverYAxis() {
       return xboxController.getLeftStickX();
 }
 
+// RETURN XBOX RIGHT JOYSTICK
 private double getDriverOmegaAxis() {
       return xboxController.getLeftStickOmega();
 }
 
+// ALWAYS ORIENT TO FIELD CENTRIC
 private boolean getDriverFieldCentric() {
-        return true; //return !xboxController.Button(1); bumper
+        return true; 
 }
+
+// RETURN XBOX RIGHT TRIGGER
 public static double getRightTrigger() {
         return xboxController.getRawAxis(3);
 }
 
+// RETURN XBOX LEFT TRIGGER
 public static double getLeftTrigger() {
         return xboxController.getRawAxis(2);
 }
 
+// RETURN XBOX LEFT TRIGGER PRESSED AT ALL UNUSED?
 public static boolean isLeftTriggerPressed(){
   return (getLeftTrigger() > .1);
 }
 
+// RETURN XBOX RIGHT TRIGGER PRESSED AT ALL UNUSED?
 public static boolean isRightTriggerPressed(){
   return (getRightTrigger() > .1);
 }
 
+// RETURN XBOX RIGHT BUMPER
 public boolean getRightBumper() {
         return xboxController.getRawButton(6);
-
 }
 
+// RETURN XBOX Y BUTTON
 public boolean getYButton() {
-
   return xboxController.getRawButton(4);
 }
 
+// RETURN XBOX A BUTTON
 public boolean getAButton() {
-
   return xboxController.getRawButton(1);
 }
 
+private void configureBindings() {    
 
-
-
-
-private void configureBindings() {
-
-  //Dual Climber Bindings
-    
-
-
+  // ENABLE CLIMBING MODE
   new Trigger (m_operator1Controller.button(9))
-  .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn()))
-  .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
+    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn()))
+    .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
 
-
-
-  new Trigger(m_operator1Controller.button(11)) //button 6 = left climber up
+  // MANUALLY MOVE LEAD SCREW FORWARD
+  new Trigger(m_operator1Controller.button(11)) 
     .whileTrue(new LeadScrewForwardCommand(armSubsystem))
     .onFalse(new LeadScrewStopCommand(armSubsystem));
 
-    new Trigger(m_operator1Controller.button(2)) //button 6 = left climber up
-      .whileTrue(new LeadScrewBackwardCommand(armSubsystem))
+  // MANUALLY MOVE LEAD SCREW BACKWARD
+  new Trigger(m_operator1Controller.button(2)) 
+    .whileTrue(new LeadScrewBackwardCommand(armSubsystem))
     .onFalse(new LeadScrewStopCommand(armSubsystem));
-
-    //Independent Climber Controls
-    
-  new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up
+  
+  // MOVE THE LEFT CLIMBER UP
+  new Trigger(m_operator1Controller.button(6)) 
     .whileTrue(new LeftClimberUpCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
-  new Trigger(m_operator1Controller.button(7)) //button 7 = left climber dow
+  // MOVE THE LEFT CLIMBER DOWN  
+  new Trigger(m_operator1Controller.button(7)) 
     .whileTrue(new LeftClimberDownCommand(climberSubsystem))
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
-    new Trigger(m_operator1Controller.button(8))
+  // MOVE TO THE PRECLIMB POSITION
+  new Trigger(m_operator1Controller.button(8))
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PRECLIMB));
 
-
+  // MOVE THE RIGHT CLIMBER UP
   new Trigger(m_operator1Controller.button(4)) 
     .whileTrue(new RightClimberUpCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
+  // MOVE THE RIGHT CLIMBER DOWN
   new Trigger(m_operator1Controller.button(5)) 
     .whileTrue(new RightClimberDownCommand(climberSubsystem))
     .onFalse(new RightClimberStopCommand(climberSubsystem));
 
-
-
-    //zero robot yaw (new forward) = button 10
-    new Trigger(m_operator2Controller.button(10))
+  // SWITCH DRIVING TO BE FIELD ORIENTED
+  new Trigger(m_operator2Controller.button(10))
     .onTrue(new InstantCommand(()->RobotContainer.imuSubsystem.zeroYaw()));  
 
-  //Orientation Bindings
-  //PID TUNING TEMPORARY FOR THESE TWO BUTTONS
-  /* 
-  new Trigger(m_operator1Controller.button(11))
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID1));
-    
-  new Trigger(m_operator1Controller.button(2)) 
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.LEAD_PID2));
- */
-
+  // ORIENT TO THE SUBWOOFER POSITION
   new Trigger(m_operator2Controller.button(6)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.SUBWOOFER));
 
+  // ORIENT TO THE PODIUM POSITION
   new Trigger(m_operator2Controller.button(7)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PODIUM));
-    
+  
+  // ORIENT TO THE AMP POSITION
   new Trigger(m_operator2Controller.button(8)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.AMP));
 
-    
-
+  // ORIENT TO THE HOME POSITION
   new Trigger(m_operator2Controller.button(1)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.HOME));
 
+  // ORIENT TO THE TRAVEL POSITION
   new Trigger(m_operator2Controller.button(2)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
+  // REVERSE THE INTAKE TO SPIT OUT A NOTE
   new Trigger(m_operator2Controller.button(4))
-     .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
+    .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
     .onFalse(new IntakeStopCommand(intakeSubsystem));
 
-  // Intake Bindings
+  // ORIENT TO THE INTAKE POSITION
   new Trigger(m_operator2Controller.button(3))  
-  .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
-
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
+  
+  // ORIENT TO THE TRAP_SCORE POSITION
   new Trigger(m_operator2Controller.button(5)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
 
-  
-
   // DRIVER QUICK ANGLE BINDINGS
-  // Turn exactly right
- new JoystickButton(xboxController, 2)
+  
+  // ROTATE THE BOT TO FACE RIGHT
+  new JoystickButton(xboxController, 2)
     .onTrue(new TurnToDegreeIMU( -90, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
-  // Turn exactly left
+  // ROTATE THE BOT TO FACE LEFT
   new JoystickButton(xboxController, 3)
     .onTrue(new TurnToDegreeIMU( 90, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
@@ -362,7 +358,7 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // Face exactly forward
+  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
     .onTrue(new TurnToDegreeIMU( -120, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
@@ -371,7 +367,7 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // Face exactly backward
+  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
     .onTrue(new TurnToDegreeIMU( 120, driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
@@ -381,11 +377,9 @@ private void configureBindings() {
                         () -> getDriverFieldCentric()));
   
   // Feed the note from the intake to the shooter to shoot - uses the intake to move the note and waits for the shooter to be at speed
-  // When finished stop the intake (will be replaced when we can do note detection w/ IR sensor)
   // When finished orient to TRAVEL position for safe movement
   new JoystickButton(xboxController, 6)
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
-    .onFalse(new IntakeStopCommand(intakeSubsystem))
     .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
   /* 
@@ -399,14 +393,10 @@ private void configureBindings() {
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
-            */    
+  */    
 }
 
-/**
-* Bindings to test simple swerve trajectories done in PathPlanner
-*/
-// to use these make sure you comment out the other uses of buttons before!!!!
-
+  // GET THE AUTO COMMAND FROM THE CHOOSER
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);

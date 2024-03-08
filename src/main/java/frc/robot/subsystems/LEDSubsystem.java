@@ -6,10 +6,9 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.DriverStation;
+//import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import frc.robot.Constants;
 
 /** Control REV Robotics Blinkin LED controller */
 public class LEDSubsystem {
@@ -183,35 +182,35 @@ public class LEDSubsystem {
    * Set LEDs alliance color solid pattern
    */
   public void setAllianceColorSolid() {
-    setPattern(m_allianceColors.get(DriverStation.getAlliance())[0]);
+    //setPattern(m_allianceColors.get(DriverStation.getAlliance())[0]);
   }
 
   /**
    * Set LEDs to alliance color breath pattern
    */
   public void setAllianceColorBreath() {
-    setPattern(m_allianceColors.get(DriverStation.getAlliance())[1]);
+    //setPattern(m_allianceColors.get(DriverStation.getAlliance())[1]);
   }
 
   /**
    * Set LEDs to alliance color chase pattern
    */
   public void setAllianceColorChase() {
-    setPattern(m_allianceColors.get(DriverStation.getAlliance())[2]);
+    //setPattern(m_allianceColors.get(DriverStation.getAlliance())[2]);
   }
 
   /**
    * Set LEDs to alliance color shot pattern
    */
   public void setAllianceColorShot() {
-    setPattern(m_allianceColors.get(DriverStation.getAlliance())[3]);
+    //setPattern(m_allianceColors.get(DriverStation.getAlliance())[3]);
   }
 
   /**
    * Set LEDs to alliance color strobe pattern
    */
   public void setAllianceColorStrobe() {
-    setPattern(m_allianceColors.get(DriverStation.getAlliance())[4]);
+    //setPattern(m_allianceColors.get(DriverStation.getAlliance())[4]);
   }
 
   /**

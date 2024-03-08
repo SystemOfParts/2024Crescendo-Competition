@@ -1,7 +1,6 @@
 package frc.robot.commands;
 import java.util.Objects;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ArmSubsystem;
 public class LeadScrewSetPositionCommand extends SequentialCommandGroup{

@@ -32,6 +32,8 @@ public class DetectNoteCommand extends Command{
       //System.out.println("::::::::::NOTE YAW: "+phtn.getNoteYaw());
       //System.out.println("::::::IS NOTE VISIBLE?: "+phtn.isNoteVisible());
       if (phtn.isNoteVisible()){
+        // UNCOMMENT TO TEST ROTATING TO THE ANGLE
+        //new TurnToDegreeIMU( phtn.getNoteYaw(), RobotContainer.driveSubsystem, false);
         //System.out.println("::::::::::NOTE YAW: "+phtn.getNoteYaw());
         double visibleYaw = phtn.getNoteYaw()-60;
         if ((visibleYaw>-1)&&(visibleYaw<1)){
@@ -61,23 +63,23 @@ public class DetectNoteCommand extends Command{
           RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
           recentDetection = false;
 
-         }
-      }  else {
-        // no April tag is visible so turn off rumble
+         } 
+      } else {
+        // no note is visible so turn off rumble
         RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
         RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
         RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-                  recentDetection = false;
+        recentDetection = false;
 
       }
     } else {
-      // no April tag is visible so turn off rumble
+      // no note is visible so turn off rumble
 
       if (recentDetection) {
         RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
         RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
         RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
-                  recentDetection = false;
+        recentDetection = false;
       }
     }
   }

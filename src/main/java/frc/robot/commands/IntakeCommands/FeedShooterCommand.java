@@ -4,7 +4,6 @@
 
 package frc.robot.commands.IntakeCommands;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -24,16 +23,17 @@ public class FeedShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("-- || || [ FEED SHOOTER STARTED ] || || --");
+    System.out.println("-- || || [ TRYING TO SHOOT - ARE WE AT SPEED  ????  ] || || --");
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("-- || || [ "+RobotContainer.shooterSubsystem.areShootersAtSpeed()+"] || || --");
     if(RobotContainer.shooterSubsystem.areShootersAtSpeed()) {
-      System.out.println("-- || || [ RUNNING INTAKE BECAUSE AT SPEED ] || || --");
+      System.out.println("-- || || [   ''                                    ''   ] || || --");
+      System.out.println("-- || || [       SHOOTERS AT SPEED: SHOOOOOT!!!!!!      ] || || --");
+      System.out.println("-- || || [   ''                                    ''   ] || || --");
       RobotContainer.intakeSubsystem.runIntake(true);
     }
   }
