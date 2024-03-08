@@ -52,7 +52,7 @@ public class AutoRedCenterThreeNote extends SequentialCommandGroup {
         new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNotePart2")
       ),
       
-      // Make sure the shooter is still at speed
+      // Make sure the shooter is still at speed ---- Put into parallel command group?
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)

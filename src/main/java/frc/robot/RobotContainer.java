@@ -122,7 +122,7 @@ public class RobotContainer {
           () -> getRightTrigger()));
 
 
-    trajectoryCalibration();
+  //  trajectoryCalibration();
   }
 
   public void trajectoryCalibration() {
@@ -267,7 +267,15 @@ private void configureBindings() {
   .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
 
 
- 
+
+  new Trigger(m_operator1Controller.button(11)) //button 6 = left climber up
+    .whileTrue(new LeadScrewForwardCommand(armSubsystem))
+    .onFalse(new LeadScrewStopCommand(armSubsystem));
+
+    new Trigger(m_operator1Controller.button(2)) //button 6 = left climber up
+      .whileTrue(new LeadScrewBackwardCommand(armSubsystem))
+    .onFalse(new LeadScrewStopCommand(armSubsystem));
+
     //Independent Climber Controls
     
   new Trigger(m_operator1Controller.button(6)) //button 6 = left climber up
@@ -279,7 +287,7 @@ private void configureBindings() {
     .onFalse(new LeftClimberStopCommand(climberSubsystem));
 
     new Trigger(m_operator1Controller.button(8))
-        .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PRECLIMB));
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.PRECLIMB));
 
 
   new Trigger(m_operator1Controller.button(4)) 
@@ -376,11 +384,11 @@ private void configureBindings() {
   // When finished stop the intake (will be replaced when we can do note detection w/ IR sensor)
   // When finished orient to TRAVEL position for safe movement
   new JoystickButton(xboxController, 6)
-    .whileTrue(new FeedShooterCommand(intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
+    .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
     .onFalse(new IntakeStopCommand(intakeSubsystem))
     .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
 
-  // 
+  /* 
   new JoystickButton(xboxController, 5)
     .onTrue(
         new TurnToDegreeIMU((180 - (phtnVisionSubsystem.getAprilTagZAngle())), driveSubsystem, false)) 
@@ -391,6 +399,7 @@ private void configureBindings() {
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
+            */    
 }
 
 /**

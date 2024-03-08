@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -15,6 +17,7 @@ public class IntakeSubsystem extends SubsystemBase {
 private final CANSparkMax intakeMotor = new CANSparkMax(12, MotorType.kBrushless);
 public static DigitalInput noteSensor;
 public boolean isShooting = false;
+public boolean isEjecting = false;
 //public boolean hasNote;
 
   /** Creates a new IntakeSubsystem. */
@@ -41,11 +44,13 @@ public boolean isShooting = false;
 
     // stop the intake by setting the speed to 0
     public void stopIntake(){
+      isEjecting = false;
       intakeMotor.set(0);
     }
 
     // eject from the intake by reversing its direction
     public void reverseIntake() {
+      isEjecting = true;
       intakeMotor.set(-1);
     }
 
@@ -55,12 +60,14 @@ public boolean isShooting = false;
     }
 
   @Override
-  public void periodic() {
+  public void periodic() {    
+    SmartDashboard.putNumber("Intake Motor Temp", intakeMotor.getMotorTemperature());
+
     // This method will be called once per scheduler run
     //System.out.println("************************************************ !isNoteInIntake?  ***: "+!isNoteInIntake());
     //System.out.println("************************************************ !isShooting?  ***: "+!isShooting);
     if (!isNoteInIntake()){
-      if (!isShooting){
+      if ((!isShooting)&&(!isEjecting)){
         //System.out.println("************************************************ stopping intake  ***");
         stopIntake();
       }

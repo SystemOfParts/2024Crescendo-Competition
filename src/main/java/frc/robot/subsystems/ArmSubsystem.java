@@ -25,7 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     private static final String printLocation = "ArmSubsystem: ";
     private long startMovementTime;
-
+    private boolean CONTROL_MANUALLY = false;
     // declare the arm motors
     private final static CANSparkMax leftArmMotor = new CANSparkMax(10, MotorType.kBrushless);
     private final CANSparkMax rightArmMotor = new CANSparkMax(11, MotorType.kBrushless);
@@ -64,7 +64,7 @@ public class ArmSubsystem extends SubsystemBase {
     //double LeadMaxVelocity = 10;
 
     public float kLeadFarLimit = 255;
-    public float kLeadHomeLimit = 0;
+    public float kLeadHomeLimit = -1;
 
     public float kArmUpLimit = 52;
     public float kArmDownLimit = 0;
@@ -77,12 +77,12 @@ public class ArmSubsystem extends SubsystemBase {
     // Gear reduction and encoder conversion factor - NEEDS UPDATE
     private static final double gearReduction = 197.142857143; // 197.142857143:1 Gear reduction (Not taking chain & Sprocket into account)
     private static final double encoderConversionFactor = 360.0 / gearReduction;
-    private ScheduledExecutorService taskExecutor;
+    //private ScheduledExecutorService taskExecutor;
 
     public ArmSubsystem() {
       // WHY ARE WE NOT SETTING FACTORY DEFAULTS FOR ARM MOTORS?
       // When your program starts up
-      taskExecutor = Executors.newSingleThreadScheduledExecutor();
+      //taskExecutor = Executors.newSingleThreadScheduledExecutor();
 
       // rightArmMotor follows left and inverts output to the same axle (SUPER IMPORTANT)
       rightArmMotor.follow(leftArmMotor, true);
@@ -111,21 +111,24 @@ public class ArmSubsystem extends SubsystemBase {
 
       // Arm Encoder setup
       leftArmEncoder.setPosition(0);
-
-
         //Lead Screw
-        
-
         leadScrewMotor.restoreFactoryDefaults();
 
-        leadScrewMotor.setSmartCurrentLimit(30);
+        leadScrewMotor.setSmartCurrentLimit(30, 30);
         leadScrewMotor.setInverted(true);
         leadScrewEncoder.setPosition(0);
-        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-        leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+        if (CONTROL_MANUALLY){
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+        } else {
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+          leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
+          leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -1);
+        
+        }
+
     
-        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
-        leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 1);
         leadScrewMotor.setIdleMode(IdleMode.kCoast);
 
 
@@ -136,8 +139,17 @@ public class ArmSubsystem extends SubsystemBase {
         leadController.setFF(LeadkFF);
         leadController.setOutputRange(LeadkMinOutput, LeadkMaxOutput);
 
-        leadScrewMotor.burnFlash();
+        /* // display PID coefficients on SmartDashboard
+        SmartDashboard.putNumber("P Gain", LeadkP);
+        SmartDashboard.putNumber("I Gain", LeadkI);
+        SmartDashboard.putNumber("D Gain", LeadkD);
+        SmartDashboard.putNumber("I Zone", LeadkIz);
+        SmartDashboard.putNumber("Feed Forward", LeadkFF);
+        SmartDashboard.putNumber("Max Output", LeadkMaxOutput);
+        SmartDashboard.putNumber("Min Output", LeadkMinOutput);
+        SmartDashboard.putNumber("Set Rotations", 0); */
 
+        leadScrewMotor.burnFlash();
 
 
     }
@@ -159,11 +171,12 @@ public class ArmSubsystem extends SubsystemBase {
       if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
         leadSetpoint = position;
 
-        /* // This is a simple delay task that stops the motor after a 5 second delay in case the PID is working overtimme
+         // This is a simple delay task that stops the motor after a 5 second delay in case the PID is working overtimme
         // PREVENT LEAD SCREW MOTOR BURNOUT:
-        Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
+        //Runnable checkMotorTask = () -> leadScrewStopMotor(orientation);
         //run this task after 5 seconds, nonblock for task3
-        taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); */
+        //taskExecutor.schedule(checkMotorTask, 5, TimeUnit.SECONDS); 
+
       }
     }
 
@@ -178,16 +191,57 @@ public class ArmSubsystem extends SubsystemBase {
         leadSetpoint = position;
       }
     }
+
+    public void leadScrewForward(){
+      leadScrewMotor.set(.2);
+    }
+
+    public void leadScrewStop(){
+
+      leadScrewMotor.set(0);
+    }
   
+  
+    public void leadScrewBackward() {
+        leadScrewMotor.set(-.2);
+    }
+    
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 //System.out.print(encoder.getPosition());
 
     //System.out.println("encoder position: ");
+    
+    SmartDashboard.putNumber("Lead Motor Temp", leadScrewMotor.getMotorTemperature());
+    SmartDashboard.putNumber("Output voltage", leadScrewMotor.getOutputCurrent());
+    SmartDashboard.putNumber("AppliedOutput", leadScrewMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Lead Screw Encoder", leadScrewEncoder.getPosition());
 
+    /* // read PID coefficients from SmartDashboard
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    double iz = SmartDashboard.getNumber("I Zone", 0);
+    double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Max Output", 0);
+    double min = SmartDashboard.getNumber("Min Output", 0);
+    double rotations = SmartDashboard.getNumber("Set Rotations", 0);
+
+    // if PID coefficients on SmartDashboard have changed, write new values to controller
+    if((p != LeadkP)) { leadController.setP(p); LeadkP = p; }
+    if((i != LeadkI)) { leadController.setI(i); LeadkI = i; }
+    if((d != LeadkD)) { leadController.setD(d); LeadkD = d; }
+    if((iz != LeadkIz)) { leadController.setIZone(iz); LeadkIz = iz; }
+    if((ff != LeadkFF)) { leadController.setFF(ff); LeadkFF = ff; }
+    if((max != LeadkMaxOutput) || (min != LeadkMinOutput)) { 
+      leadController.setOutputRange(min, max); 
+      LeadkMinOutput = min; LeadkMaxOutput = max; 
+    }
+     */
     armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
-    leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
-
+    if (!CONTROL_MANUALLY){
+      leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
+    }
   }
 }

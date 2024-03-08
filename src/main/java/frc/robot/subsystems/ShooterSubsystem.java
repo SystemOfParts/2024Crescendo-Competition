@@ -43,7 +43,7 @@ public class ShooterSubsystem extends SubsystemBase {
   double requestedSetpoint = 0;
   double humSpeed = 500;
   double setpoint = 0;
-  double setpointTolerance = 100;
+  double setpointTolerance = 250;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -156,7 +156,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean isTopShooterAtSpeed(){
     double encoderValue = topShooterEncoder.getVelocity();
-   // System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
+    //System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
     double tolerance = setpointTolerance;
     double topSetpoint = requestedSetpoint;
     //System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
@@ -176,14 +176,14 @@ public class ShooterSubsystem extends SubsystemBase {
     double minLimit = setpoint - tolerance;
     double maxLimit = setpoint + tolerance;
     boolean isWithinTolerance = bottomSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
-   // System.out.println("-- || || || BOTTOM SHOOTER isWithinTolerance: " + isWithinTolerance);
+    //System.out.println("-- || || || BOTTOM SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
   }
 
   public boolean areShootersAtSpeed(){
-    //System.out.println("-- || || CHECKING SHOOTERS ARE WITHIN "+setpointTolerance+" OF SPEED || || --");
+    System.out.println("-- || || CHECKING SHOOTERS ARE WITHIN "+setpointTolerance+" OF SPEED || || --");
     boolean bothWithinTolerances = (isTopShooterAtSpeed() && isBottomShooterAtSpeed());
-    //System.out.println("-- || || || || ARE BOTH SHOOTERS WITHIN TOLERANCES?: " + bothWithinTolerances);
+    System.out.println("-- || || || || ARE BOTH SHOOTERS WITHIN TOLERANCES?: " + bothWithinTolerances);
     return bothWithinTolerances;
   }
 

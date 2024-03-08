@@ -86,17 +86,7 @@ public class LeadScrewSubsystem extends SubsystemBase {
     }
   }
 
-  public void leadScrewForward(){
-    leadScrewMotor.set(.8);
-  }
-
-  public void leadScrewStop(){
-    leadScrewMotor.set(0);  
-  }
-
-  public void leadScrewBackward() {
-      leadScrewMotor.set(-.8);
-  }
+ 
 
 
   @Override
