@@ -27,7 +27,9 @@ public class AutoOneNoteSolo extends SequentialCommandGroup {
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true)),
       new WaitCommand(1),
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL),
+      new WaitCommand(1),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1")
     );
   }
 }

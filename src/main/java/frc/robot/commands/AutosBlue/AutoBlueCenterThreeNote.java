@@ -43,36 +43,34 @@ public class AutoBlueCenterThreeNote extends SequentialCommandGroup {
         new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1")
       ),
 
-      // with the shooter running, the intake off, and a note loaded, orient arm to the intake position AND starting to move to pick up the 3rd note
-      // but STOP before just before we get to the 3rd note so we can shoot the 2nd note
-      new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
-        // this trajectory was modified slightly to stop in front of the note w/ room for the intake
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart2")
-      ),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterTwoNotePart2"),
+
+      // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
       
       // Make sure the shooter is still at speed
       new CheckToShoot(m_shooter, m_intake),
-      
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
       new InstantCommand(() -> m_intake.runIntake(true)),
-
+      
       // move the arm down to intake position
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-      
+      new WaitCommand(1),
+
       // path the robot backwards through the 3rd note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3"),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3Complete"),
 
       // move back to PODIUM orientation w/ shooter 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
 
       // make sure the shooter is up to speed
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)));
-      
+      new InstantCommand(() -> m_intake.runIntake(true)),
+      new WaitCommand(1),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL));
       // END AUTO
   }
 }
