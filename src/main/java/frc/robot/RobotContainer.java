@@ -380,8 +380,7 @@ private void configureBindings() {
   // Feed the note from the intake to the shooter to shoot - uses the intake to move the note and waits for the shooter to be at speed
   // When finished orient to TRAVEL position for safe movement
   new JoystickButton(xboxController, 6)
-    .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
-    .onFalse(new MoveToOrientationCommand(armSubsystem, shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+    .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)); //driver's right bumper intakes to shoot, and then goes to travel position on release
 
   /* 
   new JoystickButton(xboxController, 5)
