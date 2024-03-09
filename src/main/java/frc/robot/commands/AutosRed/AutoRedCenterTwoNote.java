@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.OrientationConstants.Orientations;
+import frc.robot.RobotContainer;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -31,6 +32,7 @@ public class AutoRedCenterTwoNote extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(180)), // set yaw to the one in the initial pose
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
       new AutoOneNote(m_arm, m_shooter, m_intake),
