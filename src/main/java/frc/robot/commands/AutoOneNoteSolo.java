@@ -29,7 +29,7 @@ public class AutoOneNoteSolo extends SequentialCommandGroup {
       new WaitCommand(1),
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL),
       new WaitCommand(1)
-      //new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1")
+      //new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1")//for center only
     );
   }
 }
