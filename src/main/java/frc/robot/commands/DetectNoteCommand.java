@@ -30,6 +30,7 @@ public class DetectNoteCommand extends Command{
     if (m_triggerValue.getAsDouble() > .1){
       phtn.getPHTNData();
       //System.out.println("::::::::::NOTE YAW: "+phtn.getNoteYaw());
+      //System.out.println("::::::::::ROBOT YAW: "+RobotContainer.imuSubsystem.getYaw());
       //System.out.println("::::::IS NOTE VISIBLE?: "+phtn.isNoteVisible());
       if (phtn.isNoteVisible()){
         // UNCOMMENT TO TEST ROTATING TO THE ANGLE

@@ -84,11 +84,12 @@ public class ClimberSubsystem extends SubsystemBase {
     
 
   public void climber1Down(double speed) {
-      if (ClimbingModeOn){
-
+      if (ClimbingModeOn){{}
+          
         if (climberEncoder1.getPosition() < MIN_POSITION) {
             climberMotor1.set(speed);
-        } else {
+        } 
+        else {
             climberMotor1.set(0);
         }
       }

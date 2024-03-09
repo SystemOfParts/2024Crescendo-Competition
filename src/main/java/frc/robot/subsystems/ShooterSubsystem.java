@@ -30,18 +30,18 @@ public class ShooterSubsystem extends SubsystemBase {
   //private boolean runOnce = true;
 
 // PID constant for tuning
-  double kP = 0.0004; // Proportional term - make lower tommorow
+  double kP = 0.00045; // Proportional term - make lower tommorow
   double kI = 0.001; // Integral term
-  double kD = 0.0; // Derivative term
+  double kD = 0.008; // Derivative term
   double kIz = 10; // Integral zone
-  double kFF = 0.0002; // Feed-forward
+  double kFF = 0.00025; // Feed-forward
   double kMaxOutput = 1; // Change these later
   double kMinOutput = -1;
   //private double stopSpeed = 0;
   double requestedSetpoint = 0;
   double humSpeed = 500;
   double setpoint = 0;
-  double setpointTolerance = 250;
+  double setpointTolerance = 100;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -180,7 +180,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double topSetpoint = requestedSetpoint;
     //System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
     double minLimit = setpoint - tolerance;
-    double maxLimit = setpoint + tolerance;
+    double maxLimit = setpoint + tolerance*2;
     boolean isWithinTolerance = topSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
     //System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
@@ -193,7 +193,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double bottomSetpoint = requestedSetpoint;
     //System.out.println("-- || || || BOTTOM SHOOTER REQUESTED VELOCITY: " + bottomSetpoint);
     double minLimit = setpoint - tolerance;
-    double maxLimit = setpoint + tolerance;
+    double maxLimit = setpoint + tolerance*2;
     boolean isWithinTolerance = bottomSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
     //System.out.println("-- || || || BOTTOM SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;

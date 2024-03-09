@@ -95,12 +95,12 @@ public class RobotContainer {
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private final Command m_AutoShootOnly = new AutoOneNote(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoShootOnly = new AutoOneNoteSolo(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueNorthTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueSouthThreeNoteMid4 = new AutoBlueSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueSouthThreeNoteMid5 = new AutoBlueSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
@@ -109,7 +109,7 @@ public class RobotContainer {
   private final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
   //final Command m_AutoRedSouthThreeNoteMid4 = new AutoRedSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
   //final Command m_AutoRedSouthThreeNoteMid5 = new AutoRedSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
@@ -138,6 +138,7 @@ public class RobotContainer {
     // SET THE DEFAULT COMMAND ON XBOX RIGHT TRIGGER TO DETECT THE ANGLE OF A DETECTED NOTE WITH PHOTONVISION
     noteDetectionPhtnVisionSubsystem.setDefaultCommand(
       new DetectNoteCommand(
+      //new OrientToNoteCommand(
         () -> getRightTrigger()));
 
   // UNCOMMENT TO TEST TRAJECTORIES
@@ -186,7 +187,7 @@ public class RobotContainer {
     m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
     m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
     m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
-    m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
+    //m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
     //m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
     //m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
@@ -194,7 +195,7 @@ public class RobotContainer {
     m_chooser.addOption("RED Center 3", m_AutoRedCenterThreeNote);
     m_chooser.addOption("RED Center 4", m_AutoRedCenterFourNote);
     m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
-    m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
+    //m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
     m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
     //m_chooser.addOption("RED South 3 Mid4", m_AutoRedSouthThreeNoteMid4);
     //m_chooser.addOption("RED South 3 Mid5", m_AutoRedSouthThreeNoteMid5);

@@ -27,7 +27,7 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                             new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
                             new InstantCommand(() -> m_shooter.stopShooter(orientation)),
                             new InstantCommand(m_intake::stopIntake),
-                            new WaitCommand(1), // adds a wait command to allow lead screw to get somewhere
+                            new WaitCommand(2), // adds a wait command to allow lead screw to get somewhere
                             new InstantCommand(() -> m_arm.moveToPosition(orientation)),
                             new WaitCommand(1)));
             } else {

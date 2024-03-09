@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -21,7 +23,7 @@ public class TurnToDegreeIMU extends PIDCommand {
     private boolean m_relative;
     private double m_degree;
 
-    static double kP = 2;
+    static double kP = 2.125;
     static double kI = 0;
     static double kD = 0;
 
@@ -46,6 +48,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         m_drive = drive;
         m_relative = relative;
         m_degree = zAngle;
+	
         System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         addRequirements(m_drive);
         // Set the controller to be continuous (because it is an angle controller)
@@ -54,7 +57,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         // stationary at the setpoint before it is considered as having reached the
         // reference
         getController()
-                .setTolerance(2, 8); // figure these out, they are in degrees
+                .setTolerance(.5,2); // figure these out, they are in degrees
        //}
     }
 
@@ -95,9 +98,11 @@ public class TurnToDegreeIMU extends PIDCommand {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        RobotContainer.imuSubsystem.restoreYawAfterTrajectory();
+        if (m_relative){
+            RobotContainer.imuSubsystem.restoreYawAfterTrajectory();
+            System.out.println("YAW RESET TO: "+ RobotContainer.imuSubsystem.getYaw());
+        }
         System.out.println("                                           ----->>> [  FINISHED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree);
-        System.out.println("YAW RESET TO: "+ RobotContainer.imuSubsystem.getYaw());
         return getController().atSetpoint();
     }
 }

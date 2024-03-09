@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase {
     //double LeadMaxAccel = 10;
     //double LeadMaxVelocity = 10;
 
-    public float kLeadFarLimit = 255;
+    public float kLeadFarLimit = 581;
     public float kLeadHomeLimit = -1;
 
     public float kArmUpLimit = 52;
@@ -119,7 +119,7 @@ public class ArmSubsystem extends SubsystemBase {
         } else {
           leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
           leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
-          leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 255);
+          leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 581);
           leadScrewMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, -1);
         
         }

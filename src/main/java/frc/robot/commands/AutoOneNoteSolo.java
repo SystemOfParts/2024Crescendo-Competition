@@ -12,8 +12,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoOneNote extends SequentialCommandGroup {
-  public AutoOneNote( 
+public class AutoOneNoteSolo extends SequentialCommandGroup {
+  public AutoOneNoteSolo( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake
@@ -26,7 +26,8 @@ public class AutoOneNote extends SequentialCommandGroup {
       new WaitCommand(2.5),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true)),
-      new WaitCommand(1)
+      new WaitCommand(1),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
     );
   }
 }

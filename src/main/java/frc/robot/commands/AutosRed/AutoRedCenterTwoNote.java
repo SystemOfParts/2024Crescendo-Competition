@@ -42,14 +42,18 @@ public class AutoRedCenterTwoNote extends SequentialCommandGroup {
         new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNotePart1")
       ),
 
+      new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNotePart2"),
+
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
       
       // Make sure the shooter is still at speed
       new CheckToShoot(m_shooter, m_intake),
 
       // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true))
+      new InstantCommand(() -> m_intake.runIntake(true)),
+      new WaitCommand(1),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
       
       // END AUTO
     );
