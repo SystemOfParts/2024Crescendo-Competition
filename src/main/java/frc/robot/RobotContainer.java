@@ -94,8 +94,11 @@ public class RobotContainer {
 
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
-
+  
   private final Command m_AutoShootOnly = new AutoOneNoteSolo(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueCenterOneAndLeave = new AutoBlueCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
@@ -183,11 +186,14 @@ public class RobotContainer {
     }
      */
     m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
+    m_chooser.addOption("BLUE Center 1 leave", m_AutoBlueCenterOneAndLeave);
     m_chooser.addOption("BLUE Center 2", m_AutoBlueCenterTwoNote);
     m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
     m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
+    m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
     m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
     //m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
+    m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
     //m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
     //m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
