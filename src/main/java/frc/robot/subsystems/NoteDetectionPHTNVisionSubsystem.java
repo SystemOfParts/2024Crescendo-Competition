@@ -42,7 +42,7 @@ public class NoteDetectionPHTNVisionSubsystem extends SubsystemBase implements V
 
     // Check if we have PV installed
     if (!PhotonVisionConstants.NOTE_PV_PRESENT) {
-        System.out.println("----=======> Note PV Not Working");
+        //System.out.println("----=======> Note PV Not Working");
       return;
     }
 
@@ -50,7 +50,7 @@ public class NoteDetectionPHTNVisionSubsystem extends SubsystemBase implements V
     camera = new PhotonCamera("NoteCamera");
     noteResult = new PhotonPipelineResult();
     noteHasTargets = false;
-    System.out.println("----=======> PV Working");
+    //System.out.println("----=======> PV Working");
   }
   public Pose2d getRobotFieldPosePV() {
 

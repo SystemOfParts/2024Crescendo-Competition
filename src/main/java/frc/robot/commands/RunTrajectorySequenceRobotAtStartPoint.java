@@ -37,7 +37,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
     
     addCommands(
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
-      new PrintCommand("****Starting trajectory****"),
+      //new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
       new InstantCommand( () -> RobotContainer.imuSubsystem.setYawForTrajectory(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
       new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ), 
@@ -47,15 +47,15 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //  " IA:" + trajectoryPath.getInitialPose().getRotation().getDegrees()
       //  ),  // Set the initial pose of the robot to the one in a trajectory
       new AutonomousTrajectoryRioCommand(trajectoryPath), // Run a trajectory
-      new InstantCommand( () -> RobotContainer.imuSubsystem.restoreYawAfterTrajectory()),
-      new PrintCommand("****End trajectory****")
+      new InstantCommand( () -> RobotContainer.imuSubsystem.restoreYawAfterTrajectory())
+      //new PrintCommand("****End trajectory****")
     );
   }
 
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory) {
 
     this(trajectory, false);
-    System.out.println("*** Run trajectory non-reversed"+ trajectory);
+    //System.out.println("*** Run trajectory non-reversed"+ trajectory);
   }
 
   /**
@@ -68,7 +68,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
 
     //this(trajectory, 0.5, 0.05, reversed);
     this(trajectory, Constants.SwerveChassis.MAX_VELOCITY, Constants.SwerveChassis.MAX_ACCELERATION, reversed);
-    System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed+" with max velocity and acceleration");
+    //System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed+" with max velocity and acceleration");
   }
 
 }

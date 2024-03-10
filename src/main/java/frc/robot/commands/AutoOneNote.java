@@ -23,7 +23,7 @@ public class AutoOneNote extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
-      new WaitCommand(2.5),
+      new WaitCommand(.5),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true)),
       new WaitCommand(1)

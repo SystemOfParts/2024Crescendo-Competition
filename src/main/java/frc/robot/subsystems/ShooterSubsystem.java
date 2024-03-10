@@ -200,9 +200,9 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public boolean areShootersAtSpeed(){
-    System.out.println("-- || || CHECKING SHOOTERS ARE WITHIN "+setpointTolerance+" OF SPEED || || --");
+    //System.out.println("-- || || CHECKING SHOOTERS ARE WITHIN "+setpointTolerance+" OF SPEED || || --");
     boolean bothWithinTolerances = (isTopShooterAtSpeed() && isBottomShooterAtSpeed());
-    System.out.println("-- || || || || ARE BOTH SHOOTERS WITHIN TOLERANCES?: " + bothWithinTolerances);
+    //System.out.println("-- || || || || ARE BOTH SHOOTERS WITHIN TOLERANCES?: " + bothWithinTolerances);
     return bothWithinTolerances;
   }
 

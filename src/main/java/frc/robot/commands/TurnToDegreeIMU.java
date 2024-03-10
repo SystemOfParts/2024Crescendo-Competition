@@ -49,7 +49,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         m_relative = relative;
         m_degree = zAngle;
 	
-        System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         addRequirements(m_drive);
         // Set the controller to be continuous (because it is an angle controller)
         getController().enableContinuousInput(-180, 180);
@@ -63,13 +63,13 @@ public class TurnToDegreeIMU extends PIDCommand {
 
     @Override
     public void execute() {
-        System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        //System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         super.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("                                           ----->>> [  INTERRUPTED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree+ " [ INTERRUPTED ]: "+interrupted);
+        //System.out.println("                                           ----->>> [  INTERRUPTED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree+ " [ INTERRUPTED ]: "+interrupted);
         super.end(interrupted);
         // if the command finished properly
         if (!interrupted){
@@ -90,7 +90,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         // my current position). Do not zero it if turning absolute (e.g., turn TO 55       // we are in absolute?
         // degrees)
         if (m_relative) {
-            System.out.println("YAW WAS: "+ RobotContainer.imuSubsystem.getYaw());
+            //System.out.println("YAW WAS: "+ RobotContainer.imuSubsystem.getYaw());
             RobotContainer.imuSubsystem.setYawForTrajectory(RobotContainer.imuSubsystem.getYaw());
         }
     }
@@ -100,9 +100,9 @@ public class TurnToDegreeIMU extends PIDCommand {
     public boolean isFinished() {
         if (m_relative){
             RobotContainer.imuSubsystem.restoreYawAfterTrajectory();
-            System.out.println("YAW RESET TO: "+ RobotContainer.imuSubsystem.getYaw());
+            //System.out.println("YAW RESET TO: "+ RobotContainer.imuSubsystem.getYaw());
         }
-        System.out.println("                                           ----->>> [  FINISHED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree);
+        //System.out.println("                                           ----->>> [  FINISHED  ]: TurnToDegreeIMU: [ ANGLE ]: " + m_degree);
         return getController().atSetpoint();
     }
 }

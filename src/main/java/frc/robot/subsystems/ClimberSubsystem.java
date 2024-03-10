@@ -24,6 +24,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public boolean ClimbingModeOn = false;
 
+  public boolean manualModeOn = false;
+
   private final RelativeEncoder climberEncoder1;
   private final RelativeEncoder climberEncoder2;
 
@@ -84,9 +86,13 @@ public class ClimberSubsystem extends SubsystemBase {
     
 
   public void climber1Down(double speed) {
-      if (ClimbingModeOn){{}
-          
-        if (climberEncoder1.getPosition() < MIN_POSITION) {
+      if (ClimbingModeOn){
+          if (manualModeOn) {
+
+                climberMotor1.set(speed);
+
+          }
+        else if (climberEncoder1.getPosition() < MIN_POSITION) { //true)
             climberMotor1.set(speed);
         } 
         else {
@@ -97,8 +103,12 @@ public class ClimberSubsystem extends SubsystemBase {
   public void climber2Down(double speed) {
       if (ClimbingModeOn){
 
-        if (climberEncoder2.getPosition() < MIN_POSITION) {
+        if (manualModeOn){
+          climberMotor2.set(speed);
+        }
+        else if (climberEncoder2.getPosition() < MIN_POSITION) {
             climberMotor2.set(speed);
+
         } else {
             climberMotor2.set(0);
         }
@@ -170,29 +180,49 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void ClimberModeTurnOn() {
-    System.out.println("Turned on climber mode");
+    //System.out.println("Turned on climber mode");
   
     ClimbingModeOn = true;
   }
   
   
   public void ClimberModeTurnOff() {
-    System.out.println("Turned off climber mode");
+    //System.out.println("Turned off climber mode");
   
     ClimbingModeOn = false;
   }
   
   public boolean getClimberMode() {
   
-    System.out.println("Accessed Climbing Mode");
+    //System.out.println("Accessed Climbing Mode");
     
     return ClimbingModeOn;
   }
+  public void manualModeTurnOn() {
+    //System.out.println("Turned on climber mode");
+  
+    manualModeOn = true;
+  }
+  
+  
+  public void manualModeTurnOff() {
+    //System.out.println("Turned off climber mode");
+  
+    manualModeOn = false;
+  }
+  
+  public boolean getManualMode() {
+  
+    //System.out.println("Accessed Climbing Mode");
+    
+    return manualModeOn;
+  }
+  
   
   @Override
   public void periodic() {
     //System.out.println(climberEncoder2.getPosition());
-   // System.out.println(climberEncoder1.getPosition());
+    //System.out.println(climberEncoder1.getPosition());
 
     //System.out.println("Left:" + leftBrakeRelay.get());
     //System.out.println("Right:" + rightBrakeRelay.get());

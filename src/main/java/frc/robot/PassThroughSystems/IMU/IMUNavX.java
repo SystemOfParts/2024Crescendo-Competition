@@ -15,7 +15,7 @@ public class IMUNavX implements IMUInterface {
     */
     public IMUNavX() {
 
-        System.out.println("**** Activating NavX IMU");
+        //System.out.println("**** Activating NavX IMU");
 
             navX = new AHRS(SPI.Port.kMXP);
     

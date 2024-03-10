@@ -46,7 +46,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
     // Check if we have PV installed
     if (! PhotonVisionConstants.PV_PRESENT) {
-        System.out.println("----=======> PV Not Working");
+        //System.out.println("----=======> PV Not Working");
 
       return;
     }
@@ -55,7 +55,7 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     camera = new PhotonCamera("AprilTagCamera");
     aprilTagResult = new PhotonPipelineResult();
     aprilTagHasTargets = false;
-    System.out.println("----=======> PV Working");
+    //System.out.println("----=======> PV Working");
 
     // aprilTagFieldLayout = new
     // AprilTagFieldLayout(AprilTagFields.k2024Crescendo.m_resourceFile);

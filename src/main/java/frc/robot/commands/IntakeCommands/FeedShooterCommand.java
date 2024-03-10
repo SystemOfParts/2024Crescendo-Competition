@@ -23,7 +23,7 @@ public class FeedShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("-- || || [ TRYING TO SHOOT - ARE WE AT SPEED  ????  ] || || --");
+    //System.out.println("-- || || [ TRYING TO SHOOT - ARE WE AT SPEED  ????  ] || || --");
 
   }
 
@@ -31,9 +31,9 @@ public class FeedShooterCommand extends Command {
   @Override
   public void execute() {
     if(RobotContainer.shooterSubsystem.areShootersAtSpeed()) {
-      System.out.println("-- || || [   ''                                    ''   ] || || --");
-      System.out.println("-- || || [       SHOOTERS AT SPEED: SHOOOOOT!!!!!!      ] || || --");
-      System.out.println("-- || || [   ''                                    ''   ] || || --");
+      //System.out.println("-- || || [   ''                                    ''   ] || || --");
+      //System.out.println("-- || || [       SHOOTERS AT SPEED: SHOOOOOT!!!!!!      ] || || --");
+      //System.out.println("-- || || [   ''                                    ''   ] || || --");
       RobotContainer.intakeSubsystem.runIntake(true);
     }
   }
@@ -41,13 +41,13 @@ public class FeedShooterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-        System.out.println("-- || || [ FEED SHOOTER INTERUPTED ] || || --");
+        //System.out.println("-- || || [ FEED SHOOTER INTERUPTED ] || || --");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-        System.out.println("-- || || [ FEED SHOOTER FINISHED ] || || --");
+        //System.out.println("-- || || [ FEED SHOOTER FINISHED ] || || --");
     return false;
   }
 }

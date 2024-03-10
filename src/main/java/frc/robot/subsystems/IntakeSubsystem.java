@@ -28,9 +28,9 @@ public boolean isEjecting = false;
     
     try {
       noteSensor = new DigitalInput(0);
-      System.out.println("*** NOTE SENSOR INITIALIZED ***");
+      //System.out.println("*** NOTE SENSOR INITIALIZED ***");
     } catch (Exception e) {
-      System.out.println("*** NOTE SENSOR FAILED TO LOAD ***");
+      //System.out.println("*** NOTE SENSOR FAILED TO LOAD ***");
     }
   }
 
@@ -38,7 +38,7 @@ public boolean isEjecting = false;
     public void runIntake(Boolean bool){
       isShooting = bool;
       intakeMotor.set(1);      
-      System.out.println("Shooting");
+      //System.out.println("Shooting");
 
     }
 

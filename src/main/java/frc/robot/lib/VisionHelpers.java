@@ -36,7 +36,7 @@ public interface VisionHelpers {
     if (robotPose == null) {  // return NaN if the camera cannot determine the pose
       return Double.NaN;
     }
-    System.out.println(robotPose.getTranslation().getDistance(VisionConstants.blueAmpTranslation));
+    //System.out.println(robotPose.getTranslation().getDistance(VisionConstants.blueAmpTranslation));
     return robotPose.getTranslation().getDistance(VisionConstants.blueAmpTranslation);
   }
 

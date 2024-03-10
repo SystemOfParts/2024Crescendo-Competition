@@ -29,7 +29,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     private SparkPIDController pid;
 
     public BaseMotorNEO(int CANID) {
-        System.out.println("**** Activating SparkMAX NEO CANID:" + CANID);
+        //System.out.println("**** Activating SparkMAX NEO CANID:" + CANID);
 
         motorNEO = new CANSparkMax(CANID, MotorType.kBrushless);
 

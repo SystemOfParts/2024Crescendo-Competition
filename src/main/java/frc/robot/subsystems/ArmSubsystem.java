@@ -155,7 +155,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void setArmPosition(double armPosition) {
-      System.out.println("**ARM TRYING TO MOVE TO" + armPosition);
+      //System.out.println("**ARM TRYING TO MOVE TO" + armPosition);
         // move to the position dynamically
         // need method to VERIFY armPosition is SAFE (within bounds) before using!!!!
         armSetpoint = armPosition;
@@ -163,7 +163,7 @@ public class ArmSubsystem extends SubsystemBase {
 
      public void leadMoveToPosition(Orientations orientation) {
       double position = orientation.leadScrewPosition;
-      System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
+      //System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
       if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
         leadSetpoint = position;
 
@@ -179,12 +179,12 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void leadScrewStopMotor(Orientations orientation){
-      System.out.println(printLocation+"*** leadScrewPosition told to Stop called by: "+orientation.label);   
+      //System.out.println(printLocation+"*** leadScrewPosition told to Stop called by: "+orientation.label);   
 
     }
   
     public void leadScrewSetPosition(double position){
-      System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
+      //System.out.println(printLocation+"*** leadScrewPosition called to: "+position);   
       if ((position >= kLeadHomeLimit) && (position <= kLeadFarLimit)){
         leadSetpoint = position;
       }
@@ -202,6 +202,25 @@ public class ArmSubsystem extends SubsystemBase {
   
     public void leadScrewBackward() {
         leadScrewMotor.set(-.2);
+    }
+    public void manualModeTurnOn() {
+      //System.out.println("Turned on climber mode");
+    
+      CONTROL_MANUALLY = true;
+    }
+    
+    
+    public void manualModeTurnOff() {
+      //System.out.println("Turned off climber mode");
+    
+      CONTROL_MANUALLY = false;
+    }
+    
+    public boolean getManualMode() {
+    
+      //System.out.println("Accessed Climbing Mode");
+      
+      return CONTROL_MANUALLY;
     }
     
   @Override
@@ -240,6 +259,12 @@ public class ArmSubsystem extends SubsystemBase {
     armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
     if (!CONTROL_MANUALLY){
       leadController.setReference(leadSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
+
     }
+    else {
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, false);
+          leadScrewMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, false);
+        }
+    
   }
 }

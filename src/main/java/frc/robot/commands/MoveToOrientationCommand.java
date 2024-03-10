@@ -23,8 +23,8 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
             if (orientation.leadScrewFirst) {
                 addCommands(
                     new SequentialCommandGroup(
-                        new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
-                            new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
+                        //new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
+                           // new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
                             new InstantCommand(() -> m_shooter.stopShooter(orientation)),
                             new InstantCommand(m_intake::stopIntake),
                             new WaitCommand(1), // adds a wait command to allow lead screw to get somewhere
@@ -33,12 +33,12 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
             } else {
                 addCommands(
                     new ParallelCommandGroup(
-                        new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
+                        //new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
                         new InstantCommand(() -> m_arm.moveToPosition(orientation)),
-                        new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
-                        new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
+                       // new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
+                        //new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
                         new InstantCommand(() -> m_shooter.stopShooter(orientation)),
-                        new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
+                        //new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
                         new InstantCommand(m_intake::stopIntake),
                         new WaitCommand(1)));
             }
@@ -53,7 +53,7 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
         if (Objects.nonNull(m_intake)){
             if (orientation.intakeOn) {
                 addCommands(
-                    new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + orientation.label)),
+                    //new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + orientation.label)),
                     new InstantCommand(() -> m_intake.runIntake(false)));
                     
             }

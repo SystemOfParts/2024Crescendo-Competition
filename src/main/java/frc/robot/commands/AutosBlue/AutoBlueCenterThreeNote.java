@@ -55,8 +55,9 @@ public class AutoBlueCenterThreeNote extends SequentialCommandGroup {
       new InstantCommand(() -> m_intake.runIntake(true)),
       
       // move the arm down to intake position
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
       new WaitCommand(1),
+
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
 
       // path the robot backwards through the 3rd note to pick it up with the intake
       new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3Complete"),

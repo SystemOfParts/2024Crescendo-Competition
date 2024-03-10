@@ -274,6 +274,14 @@ private void configureBindings() {
   new Trigger (m_operator1Controller.button(9))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
+    //MANUAL RESET MODE
+
+      new Trigger (m_operator2Controller.button(12))
+    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
+    .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
+    .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
+    .onFalse(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOff()));
+
 
   // MANUALLY MOVE LEAD SCREW FORWARD
   new Trigger(m_operator1Controller.button(11)) 
@@ -416,10 +424,10 @@ private void configureBindings() {
   public static void setIfAllianceRed() {
     var alliance = DriverStation.getAlliance();
     if (! alliance.isPresent()) {
-        System.out.println("=== !!! Alliance not present !!! === Staying with the BLUE system");
+        //System.out.println("=== !!! Alliance not present !!! === Staying with the BLUE system");
     } else {
         isAlianceRed = alliance.get() == DriverStation.Alliance.Red;
-        System.out.println("*** RED Alliance: "+isAlianceRed);
+        //System.out.println("*** RED Alliance: "+isAlianceRed);
     }
   }
   public static void toggleReversingControllerAndIMUForRed() {

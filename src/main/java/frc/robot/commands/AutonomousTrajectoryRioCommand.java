@@ -68,7 +68,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
    */
   public AutonomousTrajectoryRioCommand(String trajectoryName, double maxVelocity, double maxAcceleration){
     this(PathPlanner.loadPath(trajectoryName, new PathConstraints(maxVelocity, maxAcceleration)));
-    System.out.println("initalized trajectory: "+ trajectoryName + "V:"+maxVelocity+" A:"+maxAcceleration);
+    //System.out.println("initalized trajectory: "+ trajectoryName + "V:"+maxVelocity+" A:"+maxAcceleration);
   }
 
   // Run trajectory with default maximum velocity and acceleration
@@ -85,7 +85,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
   @Override
   public void initialize() {
     super.initialize();
-    System.out.println("Auto trajectory initialized");
+    //System.out.println("Auto trajectory initialized");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -109,7 +109,7 @@ public class AutonomousTrajectoryRioCommand extends PPSwerveControllerCommand {
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
-    System.out.println("*** End trajectory command. Interrupted:"+interrupted);
+   // System.out.println("*** End trajectory command. Interrupted:"+interrupted);
   }
 
   // Returns true when the command should end.

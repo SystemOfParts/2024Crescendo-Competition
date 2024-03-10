@@ -44,8 +44,8 @@ public class OrientToNoteCommand extends Command{
           foundAngle = true;
           intendedDetection = true;
           // UNCOMMENT TO TEST ROTATING TO THE ANGLE
-          System.out.println("::::::::::NOTE YAW: "+phtn.getNoteYaw());
-          System.out.println("::::::::::ROBOT YAW: "+RobotContainer.imuSubsystem.getYaw());
+          //System.out.println("::::::::::NOTE YAW: "+phtn.getNoteYaw());
+          //System.out.println("::::::::::ROBOT YAW: "+RobotContainer.imuSubsystem.getYaw());
         }
       }
     }
@@ -54,7 +54,7 @@ public class OrientToNoteCommand extends Command{
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("::::::::::ORIENT TO NOTE ENDED WAS IT INTERRUPTED?: "+interrupted);
+    //System.out.println("::::::::::ORIENT TO NOTE ENDED WAS IT INTERRUPTED?: "+interrupted);
     if (!interrupted){
       if (intendedDetection){
         new InstantCommand(() -> new TurnToDegreeIMU(phtn.getNoteYaw(), RobotContainer.driveSubsystem, false));
