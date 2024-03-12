@@ -88,7 +88,7 @@ public class ShooterSubsystem extends SubsystemBase {
     bottomShooterPID.setFF(kFF);
     
     bottomShooterPID.setOutputRange(kMinOutput, kMaxOutput);
-    bottomShooterPID.setSmartMotionMaxVelocity(3000, 0);
+    bottomShooterPID.setSmartMotionMaxVelocity(5600, 0);
     bottomShooterPID.setSmartMotionMinOutputVelocity(500, 0);
     bottomShooterPID.setSmartMotionMaxAccel(3000, 0);
     bottomShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
@@ -193,7 +193,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double bottomSetpoint = requestedSetpoint;
     //System.out.println("-- || || || BOTTOM SHOOTER REQUESTED VELOCITY: " + bottomSetpoint);
     double minLimit = setpoint - tolerance;
-    double maxLimit = setpoint + tolerance*2;
+    double maxLimit = setpoint + tolerance+2000;
     boolean isWithinTolerance = bottomSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
     //System.out.println("-- || || || BOTTOM SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;

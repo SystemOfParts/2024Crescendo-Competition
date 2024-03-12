@@ -99,7 +99,7 @@ public final class Constants {
 			SUBWOOFER("Subwoofer",
 							-38.5, //11
 							580,
-							2000,
+							2500,
 							true,
 							false,
 							true,
@@ -115,7 +115,7 @@ public final class Constants {
 			AUTO_SUBWOOFER("AutoSubwoofer",
 							-38.5, //11
 							580,
-							2000,
+							2500,
 							true,
 							false,
 							false,
@@ -131,7 +131,7 @@ public final class Constants {
 			AUTO_INTAKE("AutoIntake",
 							-48,
 							580,
-							2000,
+							2500,
 							false,
 							true,
 							false,

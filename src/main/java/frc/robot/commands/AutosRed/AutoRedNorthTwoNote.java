@@ -54,7 +54,8 @@ public class AutoRedNorthTwoNote extends SequentialCommandGroup {
       // Feed the intake to actually shoot (still using Podium speed and orientation)
       new InstantCommand(() -> m_intake.runIntake(true)),
       new WaitCommand(1),
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL),
+      new RunTrajectorySequenceRobotAtStartPoint("RedNorthIMUReset")
       
       // END AUTO
     );
