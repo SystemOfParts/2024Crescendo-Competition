@@ -9,7 +9,8 @@ public class LeadScrewSetPositionCommand extends SequentialCommandGroup{
         if (Objects.nonNull(m_arm)){
             //System.out.println("*** m_leadscrew was not null");   
             addCommands(   
-                new InstantCommand(() -> m_arm.leadScrewSetPosition(position)));
+                //new InstantCommand(() -> m_arm.leadScrewSetPosition(position))
+                );
         }
     }
 }

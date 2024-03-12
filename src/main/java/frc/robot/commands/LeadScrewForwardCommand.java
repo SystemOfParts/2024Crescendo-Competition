@@ -7,7 +7,8 @@ public class LeadScrewForwardCommand extends SequentialCommandGroup{
     public LeadScrewForwardCommand(ArmSubsystem m_leadscrew){
         if (Objects.nonNull(m_leadscrew)){
             addCommands(
-                new InstantCommand(() -> m_leadscrew.leadScrewForward()));
+                //new InstantCommand(() -> m_leadscrew.leadScrewForward())
+                );
         }
     }
 }

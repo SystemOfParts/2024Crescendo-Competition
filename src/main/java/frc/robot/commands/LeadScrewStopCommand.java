@@ -11,7 +11,8 @@ public class LeadScrewStopCommand extends SequentialCommandGroup{
     public LeadScrewStopCommand(ArmSubsystem m_leadscrew){
         if (Objects.nonNull(m_leadscrew)){
             addCommands(
-                new InstantCommand(() -> m_leadscrew.leadScrewStop()));
+                //new InstantCommand(() -> m_leadscrew.leadScrewStop())
+                );
         }
     }
 }

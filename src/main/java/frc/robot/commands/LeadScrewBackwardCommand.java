@@ -8,7 +8,8 @@ public class LeadScrewBackwardCommand extends SequentialCommandGroup{
     public LeadScrewBackwardCommand(ArmSubsystem m_leadscrew){
         if (Objects.nonNull(m_leadscrew)){
             addCommands(
-                new RunCommand(() -> m_leadscrew.leadScrewBackward()));
+                //new RunCommand(() -> m_leadscrew.leadScrewBackward())
+                );
         }
     }
 }

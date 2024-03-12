@@ -35,7 +35,7 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                     new ParallelCommandGroup(
                         //new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + orientation.label)),
                         new InstantCommand(() -> m_arm.moveToPosition(orientation)),
-                       // new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
+                        // new InstantCommand(() -> m_arm.leadMoveToPosition(orientation)),
                         //new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
                         new InstantCommand(() -> m_shooter.stopShooter(orientation)),
                         //new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
