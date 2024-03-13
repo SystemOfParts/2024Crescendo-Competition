@@ -17,7 +17,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private boolean TUNING_MODE = false;
+  private boolean TUNING_MODE = true;
 
   private final CANSparkMax bottomShooterMotor = new CANSparkMax(15, MotorType.kBrushless);
   private final CANSparkMax topShooterMotor = new CANSparkMax(14, MotorType.kBrushless);
@@ -30,18 +30,18 @@ public class ShooterSubsystem extends SubsystemBase {
   //private boolean runOnce = true;
 
 // PID constant for tuning
-  double kP = 0.00045; // Proportional term - make lower tommorow
-  double kI = 0.001; // Integral term
-  double kD = 0.008; // Derivative term
-  double kIz = 10; // Integral zone
-  double kFF = 0.00025; // Feed-forward
-  double kMaxOutput = 1; // Change these later
-  double kMinOutput = -1;
+  double kP = 0; // Proportional term - Waterbury: .00045
+  double kI = 0; // Integral term - Waterbury: .001
+  double kD = 0; // Derivative term - Waterbury: .008
+  double kIz = 0; // Integral zone - Waterbury: 10
+  double kFF = 0.00025; // Feed-forward - Waterbury: .00025
+  double kMaxOutput = 1; // Change these later - Waterbury: 1
+  double kMinOutput = -1; //- Waterbury: -1
   //private double stopSpeed = 0;
-  double requestedSetpoint = 0;
-  double humSpeed = 500;
-  double setpoint = 0;
-  double setpointTolerance = 100;
+  double requestedSetpoint = 0; //- Waterbury: 0
+  double humSpeed = 500; //- Waterbury: 500
+  double setpoint = 0; //- Waterbury: 0
+  double setpointTolerance = 100; //- Waterbury: 100
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -88,7 +88,7 @@ public class ShooterSubsystem extends SubsystemBase {
     bottomShooterPID.setFF(kFF);
     
     bottomShooterPID.setOutputRange(kMinOutput, kMaxOutput);
-    bottomShooterPID.setSmartMotionMaxVelocity(3000, 0);
+    bottomShooterPID.setSmartMotionMaxVelocity(5600, 0);
     bottomShooterPID.setSmartMotionMinOutputVelocity(500, 0);
     bottomShooterPID.setSmartMotionMaxAccel(3000, 0);
     bottomShooterPID.setSmartMotionAllowedClosedLoopError(50, 0);
@@ -193,7 +193,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double bottomSetpoint = requestedSetpoint;
     //System.out.println("-- || || || BOTTOM SHOOTER REQUESTED VELOCITY: " + bottomSetpoint);
     double minLimit = setpoint - tolerance;
-    double maxLimit = setpoint + tolerance*2;
+    double maxLimit = setpoint + tolerance+2000;
     boolean isWithinTolerance = bottomSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
     //System.out.println("-- || || || BOTTOM SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
@@ -222,5 +222,9 @@ public class ShooterSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("BOTTOM Shooter getAppliedOutput: ", bottomShooterMotor.getAppliedOutput());
     SmartDashboard.putNumber("BOTTOM Shooter getPosition: ", bottomShooterEncoder.getPosition());
 
+    if (TUNING_MODE){
+      addPIDToDashboard();
+      tunePIDs();
+    }
   }
 }
