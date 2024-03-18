@@ -12,15 +12,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoShootFromPodium extends SequentialCommandGroup {
-  public AutoShootFromPodium( 
+public class AutoShootFromSubwoofer extends SequentialCommandGroup {
+  public AutoShootFromSubwoofer( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake
       )
     {
     addCommands(
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.PODIUM),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
       new WaitCommand(.5),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true)),

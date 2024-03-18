@@ -88,7 +88,7 @@ public final class Constants {
 							true),
 			SUBWOOFER("Subwoofer",
 							-38.5, //11
-							1000,
+							2500,
 							true,
 							false,
 							true),

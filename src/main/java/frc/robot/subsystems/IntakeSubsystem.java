@@ -39,7 +39,6 @@ public boolean isEjecting = false;
       isShooting = bool;
       intakeMotor.set(1);      
       //System.out.println("Shooting");
-
     }
 
     // stop the intake by setting the speed to 0

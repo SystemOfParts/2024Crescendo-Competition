@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.AutosBlue;
+package frc.robot.commands.AutosNeutral;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.CheckToShoot;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
@@ -14,8 +14,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoBlueCenterOneNoteLeave extends SequentialCommandGroup {
-  public AutoBlueCenterOneNoteLeave( 
+public class AutoEitherCenterOneNoteLeave extends SequentialCommandGroup {
+  public AutoEitherCenterOneNoteLeave( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake

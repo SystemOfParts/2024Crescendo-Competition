@@ -24,20 +24,18 @@ public class AutoMoveToOrientationCommand extends SequentialCommandGroup {
                         new InstantCommand(() -> m_shooter.runShooter(auto_orientation)));
             } 
         }
+        if ((Objects.nonNull(m_arm)) && (Objects.nonNull(m_shooter)) && (Objects.nonNull(m_intake))){
+            addCommands(
+                new ParallelCommandGroup(
+                    //new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + auto_orientation.label)),
+                    new InstantCommand(() -> m_arm.moveToPosition(auto_orientation))));
+        }
         if (Objects.nonNull(m_intake)){
             if (auto_orientation.intakeOn) { // NEED TO STOP INTAKE WHEN NOTE DETECTION IS ADDED
                 addCommands(
                     //new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + auto_orientation.label)),
                     new InstantCommand(() -> m_intake.runIntake(false)));
             }
-        }
-        if ((Objects.nonNull(m_arm)) && (Objects.nonNull(m_shooter)) && (Objects.nonNull(m_intake))){
-            addCommands(
-                new ParallelCommandGroup(
-                    //new InstantCommand(() -> System.out.println("----->>> ORIENTING TO: " + auto_orientation.label)),
-                    new InstantCommand(() -> m_arm.moveToPosition(auto_orientation)),
-                    //new InstantCommand(() -> m_arm.leadMoveToPosition(auto_orientation)),
-                    new WaitCommand(1)));
         }
     }
 }

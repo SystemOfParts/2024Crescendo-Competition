@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.AutoShootFromSpeaker;
+import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.CheckToShoot;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
@@ -21,9 +21,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class A_B_CenterMid3TwoNote extends SequentialCommandGroup {
+public class AutoBlueCenterMid4ToSubThreeNote extends SequentialCommandGroup {
   /** Creates a new TwoNoteAuto. */
-  public A_B_CenterMid3TwoNote(
+  public AutoBlueCenterMid4ToSubThreeNote(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -33,37 +33,30 @@ public class A_B_CenterMid3TwoNote extends SequentialCommandGroup {
     addCommands(
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new AutoShootFromSpeaker(m_arm, m_shooter, m_intake),
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-        // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeToMidline3Part1")
+        //start moving WHILE we move to intake (after a 5 second pause)
+        // begin moving to the next note
+        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeToMid4AndSub"),
+        new SequentialCommandGroup(
+          // wait half a second then put the intake down
+          new WaitCommand(.5),
+          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE)
+        )    
       ),
 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
-      
-      // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
-
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
-      new WaitCommand(1),
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
 
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-
       // path the robot backwards through the 3rd note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3Complete"),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1"),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterTwoNotePart2"),
 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
-
-      // make sure the shooter is up to speed
-      new CheckToShoot(m_shooter, m_intake),
-
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
-      new WaitCommand(1),
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
+      
+      new WaitCommand(.5),
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL));
       
       // END AUTO

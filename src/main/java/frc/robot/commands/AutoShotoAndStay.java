@@ -18,7 +18,7 @@ public class AutoShotoAndStay extends SequentialCommandGroup {
       )
     {
     addCommands(
-      new AutoShootFromSpeaker(m_arm, m_shooter, m_intake),
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
     );
   }

@@ -24,6 +24,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.commands.*;
 import frc.robot.commands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
+import frc.robot.commands.AutosNeutral.AutoEitherCenterTwoNote;
+import frc.robot.commands.AutosNeutral.AutoPIDAcrossUpDown;
+import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloInside;
+import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloOutside;
+import frc.robot.commands.AutosNeutral.AutoEitherCenterOneNoteLeave;
 import frc.robot.commands.AutosRed.*;
 import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
@@ -88,20 +93,38 @@ public class RobotContainer {
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   
+  // Neutral
   private final Command m_AutoShootOnly = new AutoShotoAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown();
+  private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
+  private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
+
+  // Blue
   private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoBlueCenterOneAndLeave = new AutoBlueCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueNorthTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterMid2And3ThreeNote = new AutoBlueCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterMid4And3ThreeNote = new AutoBlueCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterMid2ToSubThreeNote = new AutoBlueCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterMid3ToSubThreeNote = new AutoBlueCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterMid4ToSubThreeNote = new AutoBlueCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueNorthTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
-    
-  private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  
+  // Red
+  //private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterThreeNoteNorth = new AutoRedCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterThreeNoteSouth = new AutoRedCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterMid2And3ThreeNote = new AutoRedCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterMid4And3ThreeNote = new AutoRedCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterMid2ToSubThreeNote = new AutoRedCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterMid3ToSubThreeNote = new AutoRedCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedCenterMid4ToSubThreeNote = new AutoRedCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -168,26 +191,28 @@ public class RobotContainer {
       m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
     }
      */
-    m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
-    m_chooser.addOption("BLUE Center 1 leave", m_AutoBlueCenterOneAndLeave);
-    m_chooser.addOption("BLUE Center 2", m_AutoBlueCenterTwoNote);
-    m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
-    m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
+    m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
+    m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
+    m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
     m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
     m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
-    //m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
+    m_chooser.addOption("BLUE Center 3 North", m_AutoBlueCenterThreeNoteNorth);
+    m_chooser.addOption("BLUE Center 3 South", m_AutoBlueCenterThreeNoteSouth);
+    m_chooser.addOption("BLUE Center 3 - 2 AND 3", m_AutoBlueCenterMid2And3ThreeNote);
+    m_chooser.addOption("BLUE Center 3 - 4 AND 3", m_AutoBlueCenterMid4And3ThreeNote);
+    m_chooser.addOption("BLUE Center 3 - 2 AND Back", m_AutoBlueCenterMid2ToSubThreeNote);
+    m_chooser.addOption("BLUE Center 3 - 3 AND Back", m_AutoBlueCenterMid3ToSubThreeNote);
+    m_chooser.addOption("BLUE Center 3 - 4 AND Back", m_AutoBlueCenterMid4ToSubThreeNote);
     m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
-    //m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
-    //m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
-    m_chooser.addOption("RED Center 2", m_AutoRedCenterTwoNote);
-    m_chooser.addOption("RED Center 3", m_AutoRedCenterThreeNote);
-    m_chooser.addOption("RED Center 4", m_AutoRedCenterFourNote);
     m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
-    //m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
+    m_chooser.addOption("RED Center 3 South", m_AutoRedCenterThreeNoteSouth);
+    m_chooser.addOption("RED Center 3 - 2 AND 3", m_AutoRedCenterMid2And3ThreeNote);
+    m_chooser.addOption("RED Center 3 - 4 AND 3", m_AutoRedCenterMid4And3ThreeNote);
+    m_chooser.addOption("RED Center 3 - 2 AND Back", m_AutoRedCenterMid2ToSubThreeNote);
+    m_chooser.addOption("RED Center 3 - 3 AND Back", m_AutoRedCenterMid3ToSubThreeNote);
+    m_chooser.addOption("RED Center 3 - 4 AND Back", m_AutoRedCenterMid4ToSubThreeNote);
     m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
-    //m_chooser.addOption("RED South 3 Mid4", m_AutoRedSouthThreeNoteMid4);
-    //m_chooser.addOption("RED South 3 Mid5", m_AutoRedSouthThreeNoteMid5);
     SmartDashboard.putData(m_chooser);
   }
 

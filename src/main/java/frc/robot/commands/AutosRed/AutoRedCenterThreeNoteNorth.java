@@ -4,27 +4,29 @@
 
 package frc.robot.commands.AutosRed;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.RobotContainer;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.MoveToOrientationCommand;
+import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.CheckToShoot;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoRedSouthThreeNoteMid4 extends SequentialCommandGroup {
-  /** Creates a new TwoNoteAuto. */
-  public AutoRedSouthThreeNoteMid4(
+public class AutoRedCenterThreeNoteNorth extends SequentialCommandGroup {
+  /** Creates a new ThreeNoteAuto. */
+  public AutoRedCenterThreeNoteNorth(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -32,7 +34,7 @@ public class AutoRedSouthThreeNoteMid4 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(-120)), // set yaw to the one in the initial pose
+
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
       new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       
@@ -40,32 +42,23 @@ public class AutoRedSouthThreeNoteMid4 extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("RedSouthThreeNotePart1")
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNotePart1")
       ),
 
-      // with the shooter running, the intake off, and a note loaded, orient arm to the intake position
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
+      new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNotePart2"),
 
-      // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
+      // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
 
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
-    
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-        new RunTrajectorySequenceRobotAtStartPoint("RedSouthThreeNotePart2-Mid4")
+        // path the robot backwards through the 3rd note to pick it up with the intake
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNoteNorthComplete")
       ),
+      // move back to PODIUM orientation w/ shooter 
+      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_SUBWOOFER),
-      
-      // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
-
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true))
-      
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL));
       // END AUTO
-    );
   }
 }

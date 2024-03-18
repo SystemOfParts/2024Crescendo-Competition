@@ -12,21 +12,18 @@ import frc.robot.subsystems.IntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class AutoShootFromSpeaker extends SequentialCommandGroup {
-  public AutoShootFromSpeaker( 
+public class AutoShootFromSubwooferNoWait extends SequentialCommandGroup {
+  public AutoShootFromSubwooferNoWait( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake
       )
     {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
       new WaitCommand(.5),
       new CheckToShoot(m_shooter, m_intake),
-      new InstantCommand(() -> m_intake.runIntake(true)),
-      new WaitCommand(.5)
+      new InstantCommand(() -> m_intake.runIntake(true))
     );
   }
 }
