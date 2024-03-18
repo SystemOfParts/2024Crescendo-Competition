@@ -13,7 +13,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.AutoOneNote;
+import frc.robot.commands.AutoShootFromSpeaker;
 import frc.robot.commands.CheckToShoot;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -34,7 +34,7 @@ public class AutoBlueCenterThreeNote extends SequentialCommandGroup {
     addCommands(
 
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new AutoOneNote(m_arm, m_shooter, m_intake),
+      new AutoShootFromSpeaker(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(

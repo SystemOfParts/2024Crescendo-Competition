@@ -11,6 +11,7 @@ import frc.robot.Devices.Controller;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 //import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -24,33 +25,23 @@ import frc.robot.commands.*;
 import frc.robot.commands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosRed.*;
-//import frc.robot.commands.ClimberCommands.ClimbersDownCommand;
-//import frc.robot.commands.ClimberCommands.ClimbersStopCommand;
-//import frc.robot.commands.ClimberCommands.ClimbersUpCommand;
-//import frc.robot.commands.ClimberCommands.LeftBrakeOnCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberUpCommand;
-//import frc.robot.commands.ClimberCommands.RightBrakeOnCommand;
 import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-
-//import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-//import edu.wpi.first.wpilibj2.command.RunCommand;
-//import edu.wpi.first.wpilibj2.command.WaitCommand;
-//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
-//import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.LEDSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -64,6 +55,7 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
+  public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -71,6 +63,7 @@ public class RobotContainer {
   public static final PHTNVisionSubsystem phtnVisionSubsystem = new PHTNVisionSubsystem("AprilTagCamera");
   public static final NoteDetectionPHTNVisionSubsystem noteDetectionPhtnVisionSubsystem = new NoteDetectionPHTNVisionSubsystem("NoteCamera");
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
+ 
   
   //Define Controllers
   public static Controller xboxController;
@@ -95,7 +88,7 @@ public class RobotContainer {
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   
-  private final Command m_AutoShootOnly = new AutoOneNoteSolo(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoShootOnly = new AutoShotoAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueCenterOneAndLeave = new AutoBlueCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
@@ -103,18 +96,12 @@ public class RobotContainer {
   private final Command m_AutoBlueCenterThreeNote = new AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueNorthTwoNote = new AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueNorthTwoNoteTRAP = new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueSouthThreeNoteMid4 = new AutoBlueSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueSouthThreeNoteMid5 = new AutoBlueSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
     
   private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedCenterThreeNote = new AutoRedCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedCenterTwoNote = new AutoRedCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedNorthTwoNoteTRAP = new AutoRedNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //final Command m_AutoRedSouthThreeNoteMid4 = new AutoRedSouthThreeNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //final Command m_AutoRedSouthThreeNoteMid5 = new AutoRedSouthThreeNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -150,10 +137,6 @@ public class RobotContainer {
 
   // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
-    new Trigger(m_operator1Controller.button(11))
-        .whileTrue(new AutoBlueNorthTwoNoteTRAP(armSubsystem, intakeSubsystem, shooterSubsystem))
-        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-    
     new Trigger(m_operator1Controller.button(2))
         .whileTrue(new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
@@ -281,17 +264,6 @@ private void configureBindings() {
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
     .onFalse(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOff()));
-
-
-  // MANUALLY MOVE LEAD SCREW FORWARD
-  new Trigger(m_operator1Controller.button(11)) 
-    .whileTrue(new LeadScrewForwardCommand(armSubsystem))
-    .onFalse(new LeadScrewStopCommand(armSubsystem));
-
-  // MANUALLY MOVE LEAD SCREW BACKWARD
-  new Trigger(m_operator1Controller.button(2)) 
-    .whileTrue(new LeadScrewBackwardCommand(armSubsystem))
-    .onFalse(new LeadScrewStopCommand(armSubsystem));
   
   // MOVE THE LEFT CLIMBER UP
   new Trigger(m_operator1Controller.button(6)) 

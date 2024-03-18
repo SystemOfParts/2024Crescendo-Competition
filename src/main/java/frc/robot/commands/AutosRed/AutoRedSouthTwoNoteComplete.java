@@ -16,7 +16,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.AutoOneNote;
+import frc.robot.commands.AutoShootFromSpeaker;
 import frc.robot.commands.CheckToShoot;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -35,7 +35,7 @@ public class AutoRedSouthTwoNoteComplete extends SequentialCommandGroup {
 
       new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(-120)), // set yaw to the one in the initial pose
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new AutoOneNote(m_arm, m_shooter, m_intake),
+      new AutoShootFromSpeaker(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
       new ParallelCommandGroup(

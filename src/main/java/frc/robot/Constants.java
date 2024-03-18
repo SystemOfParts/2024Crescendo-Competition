@@ -59,125 +59,95 @@ public final class Constants {
 			HOME("Home",
 							-47,
 							0,
-							0,
-							false,
 							false,
 							false,
 							false),
 			TRAVEL("Travel",
 							-38.5,
-							100,
 							0,
-							false,
 							false,
 							false,
 							false),
 			INTAKE("Intake",
 							-48,
-							580,
 							0,
 							false,
 							true,
-							true,
-							false),
+							true),
 			AMP("Amp",
 							0, //try -3 //90
-							580,
 							1200,
 							true,
 							false, 
-							true,
-							false),
+							true),
 			PODIUM("Podium",
 							-34,//18
-							580, 
 							3000, 
 							true,
 							false,
-							true,
-							false),
+							true),
 			SUBWOOFER("Subwoofer",
 							-38.5, //11
-							580,
 							1000,
 							true,
 							false,
-							true,
-							false),
+							true),
 			PRECLIMB("Preclimb",
 							-49,
-							400,
 							0,
-							false,
 							false,
 							false,
 							false),
 			AUTO_SUBWOOFER("AutoSubwoofer",
 							-38.5, //11
-							580,
 							2500,
 							true,
-							false,
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",
 							-34, 
-							580, 
 							3000, 
 							true,
-							false,
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
 							-48,
-							580,
 							2500,
 							false,
 							true,
-							false,
 							false),
 			AUTO_FAR_SHOT("AutoFarShot",
 							21,
-							580,
 							3000,
 							true,
-							false,
 							false,
 							false),
 			TRAP_SCORE("Trap Score",
 							-11,
-							580,
 							1450,
 							true,
 							false,
-							true,
-							false);
+							true);
 
 			public final String label;
 			public final double armPosition;
-			public final double leadScrewPosition;
 			public final double shooterSpeed;
 			public final boolean shooterOn;
 			public final boolean intakeOn;
 			public final boolean maintainHumSpeed;
-			public final boolean leadScrewFirst;
 
 			private Orientations(String label,
 							double armPosition,
-							double leadScrewPosition,
 							double shooterSpeed,
 							boolean shooterOn,
 							boolean intakeOn,
-							boolean maintainHumSpeed,
-							boolean leadScrewFirst) {
+							boolean maintainHumSpeed) {
 					this.label = label;
 					this.armPosition = armPosition;
-					this.leadScrewPosition = leadScrewPosition;
 					this.shooterSpeed = shooterSpeed;
 					this.shooterOn = shooterOn;
 					this.intakeOn = intakeOn;
 					this.maintainHumSpeed = maintainHumSpeed;
-					this.leadScrewFirst = leadScrewFirst;
 			}
 
 		}

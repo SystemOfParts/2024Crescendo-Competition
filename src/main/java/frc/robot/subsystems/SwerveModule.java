@@ -117,23 +117,18 @@ public class SwerveModule extends SubsystemBase {
 
         // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
         // reversing power to negative value if necessary
-        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        System.out.print(" DESIRED STATE ANGLE CLEAR: ");
+        System.out.print(" CURRENT ANGLE of this swerve module:        "+getState().angle);
+        System.out.print(" DESIRED STATE ANGLE:                        "+desiredState.angle);
+        System.out.print(" DESIRED STATE ANGLE .getDegrees():          "+desiredState.angle.getDegrees());
+        System.out.print(" DESIRED STATE ANGLE .getDegrees()+360:      "+desiredState.angle.getDegrees()+360);
+        System.out.print(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+(desiredState.angle.getDegrees()+360)%360);
+        System.out.print(" END");
+        //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
         // This is the code that makes the robot move by applying the power to the 
-        /* 
-        
-        SwerveModuleState correctedDesiredState = new SwerveModuleState();
-        correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
-        correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
-    
-        SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
-            new Rotation2d(getState().angle));
-
-        */
         switch (SwerveTelemetry.swerveDriveOrTelemetry) {
             case DRIVE_ONLY:
-                 
-
                 driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
                 angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()+360.0)%360.0); // Rotation2d angle does not give degrees
                 break;
@@ -153,7 +148,9 @@ public class SwerveModule extends SubsystemBase {
 
         // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
         // reversing power to negative value if necessary
-        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        System.out.print(" DESIRED STATE ANGLE CLEAR: ");
+        System.out.print(" DESIRED STATE ANGLE: "+getState().angle);
+        //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
         // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
         // instead of actually moving the robot
@@ -161,9 +158,9 @@ public class SwerveModule extends SubsystemBase {
     }
 
     public void printSwerveModuleState(SwerveModuleState moduleState) {
-       // System.out.print(" SM: "+moduleNumber);
-       // System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-       // System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
+        // System.out.print(" SM: "+moduleNumber);
+        // System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
+        System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
     }
 
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.

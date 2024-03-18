@@ -155,7 +155,7 @@ public class LEDSubsystem {
   };
 
   private LEDSubsystem() {
-    m_blinkin = new Spark(999);
+    m_blinkin = new Spark(0);
     m_allianceColors.put(Alliance.Red, RED_ALLIANCE_PATTERNS);
     m_allianceColors.put(Alliance.Blue, BLUE_ALLIANCE_PATTERNS);
   }

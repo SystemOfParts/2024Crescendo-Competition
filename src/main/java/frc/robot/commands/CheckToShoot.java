@@ -28,7 +28,7 @@ public class CheckToShoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("Checking to Shoot");
+    //System.out.println("Checking to Shoot");
 
     
   }
