@@ -44,13 +44,13 @@ public final class Constants {
 	}
 
 	public static final class IntakeConstants {
-		public static final double kSpeed = .9;
-		public static final double kEjectSpeed = -.75;
+		//public static final double kSpeed = .9;
+		//public static final double kEjectSpeed = -.75;
 	}
 
 	public static final class ShooterConstants {
-        public static double kShooter1SetPoint = 4800;
-        public static double kShooter2SetPoint = 3850;
+        //public static double kShooter1SetPoint = 4800;
+        //public static double kShooter2SetPoint = 3850;
     }
 
 	public static final class OrientationConstants {
@@ -80,8 +80,14 @@ public final class Constants {
 							true,
 							false, 
 							true),
-			PODIUM("Podium",
+			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
 							-27,//18
+							1500, 
+							true,
+							false,
+							true),
+			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
+							-32,//18
 							1500, 
 							true,
 							false,
@@ -97,15 +103,21 @@ public final class Constants {
 							0,
 							false,
 							false,
-							false),
+							true),
 			AUTO_SUBWOOFER("AutoSubwoofer",
 							-38.5, //11
 							1500,
 							true,
 							false,
 							false),
-			AUTO_PODIUM("AutoPodium",
+			AUTO_PODIUM("AutoPodium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE PODIUM
 							-27, 
+							1500, 
+							true,
+							false,
+							false),
+			AUTO_STARTLINE("AutoStartline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
+							-32,//18
 							1500, 
 							true,
 							false,

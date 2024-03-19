@@ -21,7 +21,7 @@ public class AutoShootFromSubwooferNoWait extends SequentialCommandGroup {
     {
     addCommands(
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER),
-      new WaitCommand(.5),
+      new WaitCommand(.25),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true))
     );

@@ -5,18 +5,14 @@
 package frc.robot.commands.AutosBlue;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
-import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
-import frc.robot.commands.CheckToShoot;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.AutoShootFromDistance;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -31,58 +27,49 @@ public class AutoBlueCenterFourNote extends SequentialCommandGroup {
   ) {
     addCommands(
 
-      // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
-      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
+
+    // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
+    new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       
-      // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
-      new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart1")
-      ),
-
-      // with the second note loaded, orient to podium and move to position 2
-      new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
-        // this trajectory was modified slightly to stop in front of the note w/ room for the intake
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart2")
-      ),
-      
-      // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
-
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
-
-      // move the arm down to intake position
+    // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note
+    new ParallelCommandGroup(
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-      
-      // path the robot backwards through the 3rd note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart3"),
-      
-      // with the 3rd note, orient to podium and move to position 4
-      new ParallelCommandGroup(
-        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
-        // this trajectory was modified slightly to stop in front of the note w/ room for the intake
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart4")
-      ),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart1")
+    ),
 
-      // make sure the shooter is up to speed
-      new CheckToShoot(m_shooter, m_intake),
+    // with the second note loaded, orient to podium and move to position 2
+    new ParallelCommandGroup(
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_STARTLINE),
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart2")
+    ),
 
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true)),
+    // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
+    new AutoShootFromDistance(m_arm, m_shooter, m_intake),
 
-      // Move to intake position to get the last note
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+    // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 3rd note
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+    new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart3"),
 
-      // path the robot backwards through the 4th note to pick it up with the intake
-      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart5"),
-      
-      // Make sure the shooter is still at speed
-      new CheckToShoot(m_shooter, m_intake),
+    // with the second note loaded, orient to podium and move to position 3
+    new ParallelCommandGroup(
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_STARTLINE),
+      // this trajectory was modified slightly to stop in front of the note w/ room for the intake
+      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart4")
+    ),
 
-      // Feed the intake to actually shoot (still using Podium speed and orientation)
-      new InstantCommand(() -> m_intake.runIntake(true))
-      );
+    // move back to PODIUM orientation w/ shooter 
+    new AutoShootFromDistance(m_arm, m_shooter, m_intake),
+
+    // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 4th note
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+    new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart5"),
+    // move back to PODIUM orientation w/ shooter 
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
+    // shoot
+    new AutoShootFromDistance(m_arm, m_shooter, m_intake),
+
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+    // END AUTO
+    );
   }
 }

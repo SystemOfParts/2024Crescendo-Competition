@@ -12,7 +12,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.RobotContainer;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
-import frc.robot.commands.AutoShootFromPodium;
+import frc.robot.commands.AutoShootFromDistance;
 import frc.robot.commands.CheckToShoot;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.subsystems.ArmSubsystem;
@@ -44,7 +44,7 @@ public class AutoRedCenterMid2And3ThreeNote extends SequentialCommandGroup {
       // could potentially speed this up by doing this WHILE moving
       // Turn on the shooter, orient to PODIUM, check that shooter is at speed, feed intake to shoot, wait .5 seconds
       // SHOOTING SEQUENCE PODIUM
-      new AutoShootFromPodium(m_arm, m_shooter, m_intake),
+      new AutoShootFromDistance(m_arm, m_shooter, m_intake),
       // SHOOTING SEQUENCE PODIUM COMPLETE
 
       new ParallelCommandGroup(
@@ -59,7 +59,7 @@ public class AutoRedCenterMid2And3ThreeNote extends SequentialCommandGroup {
       ),
       
       // SHOOTING SEQUENCE PODIUM 
-      new AutoShootFromPodium(m_arm, m_shooter, m_intake));
+      new AutoShootFromDistance(m_arm, m_shooter, m_intake));
       // SHOOTING SEQUENCE PODIUM COMPLETE
 
       // END AUTO

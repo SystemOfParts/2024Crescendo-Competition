@@ -29,6 +29,8 @@ import frc.robot.commands.AutosNeutral.AutoPIDAcrossUpDown;
 import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloInside;
 import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloOutside;
 import frc.robot.commands.AutosNeutral.AutoEitherCenterOneNoteLeave;
+import frc.robot.commands.AutosNeutral.AutoTrapFromEitherSpeaker;
+import frc.robot.commands.AutosNeutral.AutoTrapFromEitherAMP;
 import frc.robot.commands.AutosRed.*;
 import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
@@ -98,6 +100,8 @@ public class RobotContainer {
   private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown();
   private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
   private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
@@ -157,16 +161,17 @@ public class RobotContainer {
 
   // UNCOMMENT TO TEST TRAJECTORIES
   //  trajectoryCalibration();
+    setIfAllianceRed();
   }
 
   // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
     new Trigger(m_operator1Controller.button(2))
-        .whileTrue(new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .whileTrue(new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     
     new Trigger(m_operator1Controller.button(3))
-        .whileTrue(new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
@@ -214,6 +219,8 @@ public class RobotContainer {
     m_chooser.addOption("RED Center 3 - 3 AND Back", m_AutoRedCenterMid3ToSubThreeNote);
     m_chooser.addOption("RED Center 3 - 4 AND Back", m_AutoRedCenterMid4ToSubThreeNote);
     m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
+    m_chooser.addOption("BLUE/RED TRAP from Center", m_AutoTrapEitherSub);
+    m_chooser.addOption("BLUE/RED TRAP from AMP", m_AutoTrapEitherAMP);
     SmartDashboard.putData(m_chooser);
   }
 
