@@ -246,9 +246,9 @@ public final class Constants {
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
-		public static final double ANGLE_CHASSIS_KP = 3.0; // 6.25
-		public static final double ANGLE_CHASSIS_KI = 0.0; // 0.04
-		public static final double ANGLE_CHASSIS_KD = 0.0; // 0.07
+		public static final double ANGLE_CHASSIS_KP = (11 * Math.PI) / 12;
+		public static final double ANGLE_CHASSIS_KI = 0.0;
+		public static final double ANGLE_CHASSIS_KD = 0.0;
 
 		public static final double ANGLE_MOTOR_MIN_OUTPUT = -1;
 		public static final double ANGLE_MOTOR_MAX_OUTPUT = 1;
