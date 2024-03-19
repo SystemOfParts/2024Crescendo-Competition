@@ -117,15 +117,21 @@ public class SwerveModule extends SubsystemBase {
 
         // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
         // reversing power to negative value if necessary
-        System.out.print(" DESIRED STATE ANGLE CLEAR: ");
-        System.out.print(" CURRENT ANGLE of this swerve module:        "+getState().angle);
-        System.out.print(" DESIRED STATE ANGLE:                        "+desiredState.angle);
-        System.out.print(" DESIRED STATE ANGLE .getDegrees():          "+desiredState.angle.getDegrees());
-        System.out.print(" DESIRED STATE ANGLE .getDegrees()+360:      "+desiredState.angle.getDegrees()+360);
-        System.out.print(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+(desiredState.angle.getDegrees()+360)%360);
-        System.out.print(" END");
+        //double tempDegrees = desiredState.angle.getDegrees();
+        //double tempDegrees360 = tempDegrees+360;
+        //double tempDegreesMod360 = tempDegrees360%360;
+        //System.out.println(" DESIRED STATE ANGLE: ");
+        //System.out.println(" DESIRED STATE ANGLE:                        "+desiredState.angle);
+        //System.out.println(" DESIRED STATE ANGLE .getDegrees():          "+tempDegrees);
+        //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360:      "+tempDegrees360);
+        //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+tempDegreesMod360);
+        //System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle);
         //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
-
+        //System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
+        //System.out.println(" END");
+        //System.out.println(" ");
+        //System.out.println(" ");
+        
         // This is the code that makes the robot move by applying the power to the 
         switch (SwerveTelemetry.swerveDriveOrTelemetry) {
             case DRIVE_ONLY:
@@ -148,8 +154,8 @@ public class SwerveModule extends SubsystemBase {
 
         // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
         // reversing power to negative value if necessary
-        System.out.print(" DESIRED STATE ANGLE CLEAR: ");
-        System.out.print(" DESIRED STATE ANGLE: "+getState().angle);
+        //System.out.print(" DESIRED STATE ANGLE CLEAR: ");
+        //System.out.print(" DESIRED STATE ANGLE: "+getState().angle);
         //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
 
         // Use this flag for chassis testing, if you want to see the angle and power numbers provided by the Swerve calculations
@@ -160,7 +166,7 @@ public class SwerveModule extends SubsystemBase {
     public void printSwerveModuleState(SwerveModuleState moduleState) {
         // System.out.print(" SM: "+moduleNumber);
         // System.out.print(" P: "+moduleState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-        System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
+        //System.out.println(" A: "+((moduleState.angle.getDegrees()+360.0)%360.0));
     }
 
     //TODO: This position is currently set in the encoder units. This may need to change to the SI units. Investigate.

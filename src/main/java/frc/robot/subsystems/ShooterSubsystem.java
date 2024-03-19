@@ -61,8 +61,8 @@ public class ShooterSubsystem extends SubsystemBase {
     //topShooterPID.setFeedbackDevice(topShooterEncoder);
     topShooterMotor.setIdleMode(IdleMode.kBrake);
     topShooterMotor.setSmartCurrentLimit(40);
-    topShooterEncoder.setPositionConversionFactor(2*Math.PI);
-    topShooterEncoder.setVelocityConversionFactor(2*Math.PI/60);
+    //topShooterEncoder.setPositionConversionFactor(2*Math.PI);
+    //topShooterEncoder.setVelocityConversionFactor(2*Math.PI/60);
     topShooterMotor.setCANTimeout(0);
     topShooterMotor.enableVoltageCompensation(12.0);
     topShooterMotor.setOpenLoopRampRate(.25);
@@ -176,14 +176,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean isTopShooterAtSpeed(){
     double encoderValue = topShooterEncoder.getVelocity();
-    //System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
+    System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
     double tolerance = setpointTolerance;
     double topSetpoint = requestedSetpoint;
-    //System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
+    System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
     double minLimit = setpoint - tolerance;
     double maxLimit = setpoint + tolerance+2000;
     boolean isWithinTolerance = topSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
-    //System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
+    System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
   }
 
@@ -201,13 +201,13 @@ public class ShooterSubsystem extends SubsystemBase {
     
 
     if (TUNING_MODE){
-      final InstantCommand runShooterCmd = new InstantCommand(()->runShooterSmartDashboard());
-      final InstantCommand stopShooterCmd = new InstantCommand(()->stopShooterSmartDashboard());
+      //final InstantCommand runShooterCmd = new InstantCommand(()->runShooterSmartDashboard());
+      //final InstantCommand stopShooterCmd = new InstantCommand(()->stopShooterSmartDashboard());
     
-      SmartDashboard.putData(CommandScheduler.getInstance());
-      SmartDashboard.putData(RobotContainer.shooterSubsystem);
-      SmartDashboard.putData("Run Shooter", runShooterCmd);
-      SmartDashboard.putData("Stop Shooter", stopShooterCmd);
+      //SmartDashboard.putData(CommandScheduler.getInstance());
+      //SmartDashboard.putData(RobotContainer.shooterSubsystem);
+      //SmartDashboard.putData("Run Shooter", runShooterCmd);
+      //SmartDashboard.putData("Stop Shooter", stopShooterCmd);
 
       addPIDToDashboard();
       tunePIDs();

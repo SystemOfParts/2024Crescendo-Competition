@@ -37,6 +37,7 @@ import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
+import frc.robot.commands.IntakeCommands.IntakeOnCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -60,7 +61,7 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
+  //public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -94,7 +95,7 @@ public class RobotContainer {
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   
   // Neutral
-  private final Command m_AutoShootOnly = new AutoShotoAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown();
@@ -392,6 +393,8 @@ private void configureBindings() {
   // When finished orient to TRAVEL position for safe movement
   new JoystickButton(xboxController, 6)
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)); //driver's right bumper intakes to shoot, and then goes to travel position on release
+    //.onTrue(new IntakeOnCommand(intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
+    //.onFalse(new IntakeStopCommand(intakeSubsystem));
 
   /* 
   new JoystickButton(xboxController, 5)

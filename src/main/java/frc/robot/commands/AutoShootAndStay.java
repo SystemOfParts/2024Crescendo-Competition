@@ -10,8 +10,8 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class AutoShotoAndStay extends SequentialCommandGroup {
-  public AutoShotoAndStay( 
+public class AutoShootAndStay extends SequentialCommandGroup {
+  public AutoShootAndStay( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake

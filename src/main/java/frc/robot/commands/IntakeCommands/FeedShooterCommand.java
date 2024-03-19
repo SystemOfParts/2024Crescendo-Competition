@@ -23,17 +23,19 @@ public class FeedShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //System.out.println("-- || || [ TRYING TO SHOOT - ARE WE AT SPEED  ????  ] || || --");
+    System.out.println("-- || || [ TRYING TO SHOOT - ARE WE AT SPEED  ????  ] || || --");
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
+    System.out.println("-- || || [       CHECKING TO SHOOT        ] || || --");
     if(RobotContainer.shooterSubsystem.areShootersAtSpeed()) {
-      //System.out.println("-- || || [   ''                                    ''   ] || || --");
-      //System.out.println("-- || || [       SHOOTERS AT SPEED: SHOOOOOT!!!!!!      ] || || --");
-      //System.out.println("-- || || [   ''                                    ''   ] || || --");
+      System.out.println("-- || || [   ''                                    ''   ] || || --");
+      System.out.println("-- || || [       SHOOTERS AT SPEED: SHOOOOOT!!!!!!      ] || || --");
+      System.out.println("-- || || [   ''                                    ''   ] || || --");
       RobotContainer.intakeSubsystem.runIntake(true);
     }
   }
