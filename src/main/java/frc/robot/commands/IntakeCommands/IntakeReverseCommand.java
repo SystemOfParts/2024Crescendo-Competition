@@ -11,6 +11,5 @@ public class IntakeReverseCommand extends SequentialCommandGroup{
     ){
     addCommands(
         new RunCommand(() -> m_intake.reverseIntake()));
- 
     }
 }

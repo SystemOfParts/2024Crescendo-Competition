@@ -2,40 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.25,
-        "y": 5.55
+        "x": 0.7973071659458492,
+        "y": 4.561969054140571
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.431691410693413,
-        "y": 4.804527735955815
+        "x": 4.146482811010195,
+        "y": 0.15859606118689024
       },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 5.583176541762031,
-        "y": 4.49666479365185
-      },
-      "prevControl": {
-        "x": 5.303689497674164,
-        "y": 4.81556667729057
-      },
-      "nextControl": {
-        "x": 6.310852587207766,
-        "y": 3.6663677674381265
-      },
-      "holonomicAngle": 0,
+      "holonomicAngle": -60.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -74,16 +49,16 @@
     },
     {
       "anchorPoint": {
-        "x": 8.11,
-        "y": 2.43
+        "x": 8.102055160612652,
+        "y": 2.42558681815245
       },
       "prevControl": {
-        "x": 7.671528536718594,
-        "y": 2.4299999999999637
+        "x": 7.663583697331247,
+        "y": 2.4255868181524134
       },
       "nextControl": {
-        "x": 8.548471463281405,
-        "y": 2.4299999999999637
+        "x": 8.540526623894058,
+        "y": 2.4255868181524134
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -128,7 +103,7 @@
         "y": 4.89
       },
       "prevControl": {
-        "x": 4.41797305819747,
+        "x": 4.417973058197472,
         "y": 4.730068316532094
       },
       "nextControl": null,
@@ -145,8 +120,8 @@
       }
     }
   ],
-  "maxVelocity": 5.0,
-  "maxAcceleration": 5.0,
+  "maxVelocity": 4.0,
+  "maxAcceleration": 4.0,
   "isReversed": null,
   "markers": []
 }

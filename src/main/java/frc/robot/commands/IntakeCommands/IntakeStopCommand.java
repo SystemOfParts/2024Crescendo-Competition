@@ -10,7 +10,7 @@ public class IntakeStopCommand extends SequentialCommandGroup{
 
     ){
     addCommands(
-        new InstantCommand(() -> m_intake.stopIntake()));
+        new InstantCommand(() -> m_intake.stopIntake(false)));
  
     }
 }
