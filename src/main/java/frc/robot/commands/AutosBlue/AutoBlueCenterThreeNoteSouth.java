@@ -56,7 +56,7 @@ public class AutoBlueCenterThreeNoteSouth extends SequentialCommandGroup {
       // move back to PODIUM orientation w/ shooter 
       new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
 
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL));
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.HOME));
       // END AUTO
   }
 }
