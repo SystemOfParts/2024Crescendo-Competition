@@ -32,7 +32,7 @@ public boolean isIntaking = false;
     
     try {
       noteSensorRight = new DigitalInput(0);
-      //noteSensorLeft = new DigitalInput(1);
+      noteSensorLeft = new DigitalInput(1);
       //System.out.println("*** NOTE SENSOR INITIALIZED ***");
     } catch (Exception e) {
       //System.out.println("*** NOTE SENSOR FAILED TO LOAD ***");
@@ -69,8 +69,7 @@ public boolean isIntaking = false;
 
     // tell us if a note has been detected
     public boolean isNoteInIntake() {
-      return  !noteSensorRight.get();
-      //return  (!noteSensorRight.get() || !noteSensorLeft.get())
+      return  (!noteSensorRight.get() || !noteSensorLeft.get());
     }
 
   @Override
