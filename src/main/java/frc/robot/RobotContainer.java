@@ -102,7 +102,7 @@ public class RobotContainer {
   private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown();
+  private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
   private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
 
@@ -160,7 +160,7 @@ public class RobotContainer {
         () -> getRightTrigger()));
 
   // UNCOMMENT TO TEST TRAJECTORIES
-  //  trajectoryCalibration();
+    trajectoryCalibration();
     setIfAllianceRed();
   }
 
@@ -172,6 +172,10 @@ public class RobotContainer {
     
     new Trigger(m_operator1Controller.button(3))
         .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+
+    new Trigger(m_operator1Controller.button(11))
+        .whileTrue(new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
@@ -357,7 +361,7 @@ private void configureBindings() {
   
   // ORIENT TO THE TRAP_SCORE POSITION
   new Trigger(m_operator2Controller.button(5)) 
-    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAP_SCORE));
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.STARTLINE));
 
   // DRIVER QUICK ANGLE BINDINGS
   

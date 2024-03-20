@@ -93,7 +93,7 @@ public final class Constants {
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-37.5, //11
+							-35.5, //11
 							1500,
 							true,
 							false,
@@ -105,7 +105,7 @@ public final class Constants {
 							false,
 							true),
 			AUTO_SUBWOOFER("AutoSubwoofer",
-							-38.5, //11
+							-35.5, //11
 							1500,
 							true,
 							false,
