@@ -13,6 +13,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
+import frc.robot.commands.AutoShootAtCurrentTarget;
 import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.CheckToShoot;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
@@ -42,19 +43,24 @@ public class AutoBlueCenterThreeNoteNorth extends SequentialCommandGroup {
         // this trajectory was modified slightly to move through the note to intake it
         new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart1")
       ),
-
-      new RunTrajectorySequenceRobotAtStartPoint("BlueCenterTwoNotePart2"),
-
+      new ParallelCommandGroup(
+        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterTwoNotePart2"),
+        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER)
+      ),
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
-      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
+      new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
 
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // path the robot backwards through the 3rd note to pick it up with the intake
-        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3Complete")
+        new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNotePart3Complete"),
+        new SequentialCommandGroup(
+          new WaitCommand(2.5),
+          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER)
+        )
       ),
-      // move back to PODIUM orientation w/ shooter 
-      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
+      // move back to SUBWOOFER orientation w/ shooter 
+      new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
 
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.HOME));
       // END AUTO

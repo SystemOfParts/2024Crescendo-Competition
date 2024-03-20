@@ -27,7 +27,9 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                     //new InstantCommand(() -> System.out.println("**TURN OFF SHOOTER" + orientation.label)),
                     new InstantCommand(() -> m_shooter.stopShooter(orientation)),
                     //new InstantCommand(() -> System.out.println("**TURN OFF INTAKE" + orientation.label)),
-                    new InstantCommand(m_intake::stopIntake),
+                    //new InstantCommand(m_intake::stopIntake),
+                    // CHANGE TO DELAY INTAKE
+                    new InstantCommand(() -> m_intake.stopIntake(false)),
                     new WaitCommand(1)));
         }
         if (Objects.nonNull(m_shooter)){
