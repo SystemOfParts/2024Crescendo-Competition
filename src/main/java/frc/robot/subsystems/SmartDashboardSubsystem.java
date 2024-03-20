@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class SmartDashboardSubsystem extends SubsystemBase {
@@ -53,7 +54,8 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Note Visibility", RobotContainer.noteDetectionPhtnVisionSubsystem.isNoteVisible());
     SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
     SmartDashboard.putNumber("April Y in M", RobotContainer.phtnVisionSubsystem.getAprilTagY());
-    SmartDashboard.putBoolean("NOTE INTAKE SENSOR", RobotContainer.intakeSubsystem.isNoteInIntake());
+    SmartDashboard.putBoolean("NOTE INTAKE LEFT SENSOR", RobotContainer.intakeSubsystem.isNoteInIntake());
+
 
 //    SmartDashboard.putString("PV Robot Pose", RobotContainer.phtnVisionSubsystem.getRobotFieldPosePV().toString());
 

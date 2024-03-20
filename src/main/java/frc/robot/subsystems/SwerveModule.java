@@ -126,7 +126,7 @@ public class SwerveModule extends SubsystemBase {
         //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360:      "+tempDegrees360);
         //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+tempDegreesMod360);
         //System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle);
-        //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
         //System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
         //System.out.println(" END");
         //System.out.println(" ");
