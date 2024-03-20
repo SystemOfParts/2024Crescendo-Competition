@@ -9,7 +9,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SwerveChassis;
-import frc.robot.Constants.VisionConstants.LimeLightConstants;
 import frc.robot.lib.LimelightHelpers;
 import frc.robot.lib.VisionHelpers;
 
@@ -26,12 +25,12 @@ public class LLVisionSubsystem extends SubsystemBase implements VisionHelpers {
   public LLVisionSubsystem() {}
 
   public Pose2d getRobotFieldPoseLL() {
-    if (LimelightHelpers.getTV(LimeLightConstants.LLAprilTagName)) { // LL target visible - meaning - see an Apriltag
+    if (LimelightHelpers.getTV(frc.robot.Constants.VisionConstants.LimeLightConstants.LLAprilTagName)) { // LL target visible - meaning - see an Apriltag
 
 
       //System.out.println("TESTPOSE:"+LimelightHelpers.getBotPose2d_wpiBlue(LimeLightConstants.LLAprilTagName).transformBy(cameraPoseInRobotSpace));
       // We need to transform the camera pose to the chassis pose
-      return LimelightHelpers.getBotPose2d_wpiBlue(LimeLightConstants.LLAprilTagName).transformBy(cameraPoseInRobotSpace); //TODO: Check if the coordinates need to be translated to 0,0 of the blue lower corner
+      return LimelightHelpers.getBotPose2d_wpiBlue(frc.robot.Constants.VisionConstants.LimeLightConstants.LLAprilTagName).transformBy(cameraPoseInRobotSpace); //TODO: Check if the coordinates need to be translated to 0,0 of the blue lower corner
       // return LimelightHelpers.getBotPose2d_wpiBlue(LimeLightConstants.LLAprilTagName).relativeTo(LimeLightConstants.centerFieldPose); // check if this returns the right pose from 0,0
     } else {
       return null; //TODO: Consider changing this class to return Optional<Pose2d>
@@ -39,7 +38,7 @@ public class LLVisionSubsystem extends SubsystemBase implements VisionHelpers {
   } 
 
   public boolean isApriltagVisible() {
-    return LimelightHelpers.getTV(LimeLightConstants.LLAprilTagName);
+    return LimelightHelpers.getTV(frc.robot.Constants.VisionConstants.LimeLightConstants.LLAprilTagName);
   }
 
   @Override

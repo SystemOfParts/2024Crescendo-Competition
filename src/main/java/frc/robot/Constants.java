@@ -663,41 +663,97 @@ public final class Constants {
 		// Poses of important game elements
 		// Direction is - front of the robot faces the element
 		
-		public static final Pose2d redSpeakerPose = new Pose2d(8.308467, 1.442593, new Rotation2d(0)).relativeTo(LimeLightConstants.centerFieldPose) ;
+		public static final Pose2d redSpeakerPose = new Pose2d(8.308467, 1.442593, new Rotation2d(0)).relativeTo(frc.robot.Constants.VisionConstants.LimeLightConstants.centerFieldPose) ;
 		public static final Translation2d redSpeakerTranslation = redSpeakerPose.getTranslation();
 
-		public static final Pose2d blueSpeakerPose = new Pose2d(-8.308467, 1.442593, new Rotation2d(Math.PI)).relativeTo(LimeLightConstants.centerFieldPose) ;
+		public static final Pose2d blueSpeakerPose = new Pose2d(-8.308467, 1.442593, new Rotation2d(Math.PI)).relativeTo(frc.robot.Constants.VisionConstants.LimeLightConstants.centerFieldPose) ;
 		public static final Translation2d blueSpeakerTranslation = blueSpeakerPose.getTranslation();
 
-		public static final Pose2d redAmpPose = new Pose2d(6.429883, 4.098925, new Rotation2d(Math.PI/2)).relativeTo(LimeLightConstants.centerFieldPose) ;
+		public static final Pose2d redAmpPose = new Pose2d(6.429883, 4.098925, new Rotation2d(Math.PI/2)).relativeTo(frc.robot.Constants.VisionConstants.LimeLightConstants.centerFieldPose) ;
 		public static final Translation2d redAmpTranslation = redAmpPose.getTranslation();
 		// Facign down
-		public static final Pose2d blueAmpPose = new Pose2d(-6.429883, 4.098925, new Rotation2d(Math.PI/2)).relativeTo(LimeLightConstants.centerFieldPose) ;
+		public static final Pose2d blueAmpPose = new Pose2d(-6.429883, 4.098925, new Rotation2d(Math.PI/2)).relativeTo(frc.robot.Constants.VisionConstants.LimeLightConstants.centerFieldPose) ;
 		public static final Translation2d blueAmpTranslation = blueAmpPose.getTranslation();
 
-		// Ideal shooting poses - all of them - back to the target, hence Math.PI rotation transform is added to all
+		public static final class AutoConstants {
 
-		// WATCH OUT: FIX THIS 
-		// Facing backwards
-		//public static final Transform2d redSpeakerShootingTransform = new Transform2d(-1, 0, new Rotation2d(Math.PI));
-		//public static final Pose2d redSpeakerShootingPose = redSpeakerPose.transformBy(redSpeakerShootingTransform);
-		// Facing forward
-		//public static final Transform2d blueSpeakerShootingTransform = new Transform2d(2, 0, new Rotation2d(Math.PI));
-		//public static final Pose2d blueSpeakerShootingPose = blueSpeakerPose.transformBy(blueSpeakerShootingTransform);
-		// Facign down
-		//public static final Transform2d redAmpShootingTransform = new Transform2d(0, -1, new Rotation2d(Math.PI));
-		//public static final Pose2d redAmpShootingPose = redAmpPose.transformBy(redAmpShootingTransform);
-		// Facign down
-		//public static final Transform2d blueAmpShootingTransform = new Transform2d(2, 0, new Rotation2d(Math.PI));
-		//public static final Pose2d blueAmpShootingPose = blueAmpPose.transformBy(blueAmpShootingTransform);
+		// public static double armInPerimeterAngle = -15; // move arm into perimeter - Idk?
 
-		// All cameras, both LL and PhotonVision, must be properly calibrated for use
-		// per procedures indicated by the vendors.
-		// LL calibration involves special downloadable sheet with tags on it,
-		// while PhotonVision is calibrated via checkerboard.
-		// All calibration sheets must be printed to proper size as we try using built-in
-		// field pose estimators
+		private static final double fieldSizeX = 16.545814;
+		private static final double fieldSizeY = 8.212;
 
+		public static enum autoPoses {	// important poses
+
+			// SPEAKER TAGS
+
+			BLUE_SPEAKER_TAG (0, 4.986, 180),
+			RED_SPEAKER_TAG (16.545814, 4.986, 0),
+
+			// ========================================= AUTO POSES ======================================
+
+			BLUE_SPEAKER_HIGHER (0.765, 6.764, 60),
+			BLUE_SPEAKER_MID (1.346, 5.540, 0),
+			BLUE_SPEAKER_LOWER (0.765, 4.315, -60),
+
+			BLUE_HIGHER_POS_OUT(3.25, 7.1,0),
+			BLUE_MID_POS_OUT(3.25,5.540,0),
+			BLUE_LOWER_POS_OUT (3.25, 1.312, 0),
+
+			RED_SPEAKER_HIGHER(fieldSizeX-BLUE_SPEAKER_HIGHER.getPose().getX(), BLUE_SPEAKER_HIGHER.getPose().getY(), 120),
+			RED_SPEAKER_MID(fieldSizeX-BLUE_SPEAKER_MID.getPose().getX(), BLUE_SPEAKER_MID.getPose().getY(), 180),
+			RED_SPEAKER_LOWER(fieldSizeX-BLUE_SPEAKER_LOWER.getPose().getX(), BLUE_SPEAKER_LOWER.getPose().getY(), -120),
+
+			RED_HIGHER_POS_OUT(fieldSizeX-BLUE_HIGHER_POS_OUT.getPose().getX(), BLUE_HIGHER_POS_OUT.getPose().getY(), 180),
+			RED_MID_POS_OUT(fieldSizeX-BLUE_MID_POS_OUT.getPose().getX(), BLUE_MID_POS_OUT.getPose().getY(), 180),
+			RED_LOWER_POS_OUT(fieldSizeX-BLUE_LOWER_POS_OUT.getPose().getX(), BLUE_LOWER_POS_OUT.getPose().getY(), 180),
+
+			BLUE_HIGHER_RING(2.896,6.8515,0),
+			BLUE_MID_RING(2.896,5.5535,0),
+			BLUE_LOWER_RING(2.896,4.0055,0),
+
+			RED_HIGHER_RING(fieldSizeX-BLUE_HIGHER_RING.getPose().getX(), BLUE_HIGHER_RING.getPose().getY(),180),
+			RED_MID_RING(fieldSizeX-BLUE_MID_RING.getPose().getX(), BLUE_MID_RING.getPose().getY(),180),
+			RED_LOWER_RING(fieldSizeX-BLUE_LOWER_RING.getPose().getX(), BLUE_LOWER_RING.getPose().getY(),180),
+
+			BLUE_HIGHER_RING_TAKE_START(1.909,7.0115,0),
+			BLUE_MID_RING_TAKE_START(1.909,5.5535,0),
+			BLUE_LOWER_RING_TAKE_START(1.909,4.1055,0),
+
+			BLUE_HIGHER_RING_TAKE_END(2.465,7.0115,0),
+			BLUE_MID_RING_TAKE_END(2.465,5.5535,0),
+			BLUE_LOWER_RING_TAKE_END(2.465,4.0055,0),
+
+			RED_HIGHER_RING_TAKE_START(fieldSizeX-BLUE_HIGHER_RING_TAKE_START.getPose().getX(), BLUE_HIGHER_RING_TAKE_START.getPose().getY(),180),
+			RED_MID_RING_TAKE_START(fieldSizeX-BLUE_MID_RING_TAKE_START.getPose().getX(), BLUE_MID_RING_TAKE_START.getPose().getY(),180),
+			RED_LOWER_RING_TAKE_START(fieldSizeX-BLUE_LOWER_RING_TAKE_START.getPose().getX(), BLUE_LOWER_RING_TAKE_START.getPose().getY(),180),
+
+			RED_HIGHER_RING_TAKE_END(fieldSizeX-BLUE_HIGHER_RING_TAKE_END.getPose().getX(), BLUE_HIGHER_RING_TAKE_END.getPose().getY(),180),
+			RED_MID_RING_TAKE_END(fieldSizeX-BLUE_MID_RING_TAKE_END.getPose().getX(), BLUE_MID_RING_TAKE_END.getPose().getY(),180),
+			RED_LOWER_RING_TAKE_END(fieldSizeX-BLUE_LOWER_RING_TAKE_END.getPose().getX(), BLUE_LOWER_RING_TAKE_END.getPose().getY(),180),
+
+			//Constants to pick up far note
+			BLUE_FAR_DRIVE_W1(5.03, 0.453, 0),
+			BLUE_FAR_LOWER_TAKE_START(7.40, 0.453, 0),
+			BLUE_FAR_LOWER_TAKE_END(8.2, 0.453, 0),
+			BLUE_SPEAKER_LOWER_2(1.165, 4.315, -60),
+
+			RED_FAR_DRIVE_W1(fieldSizeX-BLUE_FAR_DRIVE_W1.getPose().getX(), BLUE_FAR_DRIVE_W1.getPose().getY(), 180),
+			RED_FAR_LOWER_TAKE_START(fieldSizeX-BLUE_FAR_LOWER_TAKE_START.getPose().getX(), BLUE_FAR_LOWER_TAKE_START.getPose().getY(), 180),
+			RED_FAR_LOWER_TAKE_END(fieldSizeX-BLUE_FAR_LOWER_TAKE_END.getPose().getX(), BLUE_FAR_LOWER_TAKE_END.getPose().getY(), 180),
+			RED_SPEAKER_LOWER_2(fieldSizeX-BLUE_SPEAKER_LOWER_2.getPose().getX(), BLUE_SPEAKER_LOWER_2.getPose().getY(), -120)
+
+		;
+		
+			private Pose2d pose;
+
+			autoPoses(double x, double y, double angle) {
+				this.pose = new Pose2d(x, y, Rotation2d.fromDegrees(angle));
+			}
+			public Pose2d getPose() {
+				return pose;
+			}
+		}
+	}
 		public static final class LimeLightConstants {
 
 			// If changing this value, do not forget to set it in LL
@@ -717,6 +773,6 @@ public final class Constants {
 			public static final Transform3d robotToNoteCam = new Transform3d(new Translation3d(0.2900, -1.9, 0.2000), new Rotation3d(0,0,Math.PI));
 
 		}
+	
 	}
-
 }
