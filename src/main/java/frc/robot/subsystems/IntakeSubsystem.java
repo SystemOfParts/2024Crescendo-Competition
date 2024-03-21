@@ -15,6 +15,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.CANSparkMax;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -74,7 +76,7 @@ public boolean isIntaking = false;
 
   @Override
   public void periodic() {    
-    SmartDashboard.putNumber("Intake Motor Temp", intakeMotor.getMotorTemperature());
+    //SmartDashboard.putNumber("Intake Motor Temp", intakeMotor.getMotorTemperature());
     // This method will be called once per scheduler run
     //System.out.println("************************************************ !isNoteInIntake?  ***: "+!isNoteInIntake());
     //System.out.println("************************************************ !isShooting?  ***: "+!isShooting);
