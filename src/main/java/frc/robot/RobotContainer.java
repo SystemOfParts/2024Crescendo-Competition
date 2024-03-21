@@ -170,12 +170,8 @@ public class RobotContainer {
         .whileTrue(new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     
-    new Trigger(m_operator1Controller.button(3))
-        .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
-        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
-
     new Trigger(m_operator1Controller.button(11))
-        .whileTrue(new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
@@ -350,6 +346,10 @@ private void configureBindings() {
   // ORIENT TO THE TRAVEL POSITION
   new Trigger(m_operator2Controller.button(2)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.TRAVEL));
+
+  // ORIENT TO THE TRAVEL POSITION
+  new Trigger(m_operator1Controller.button(3)) 
+    .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.FEEDER));
 
   // REVERSE THE INTAKE TO SPIT OUT A NOTE
   new Trigger(m_operator2Controller.button(4))

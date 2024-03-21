@@ -98,6 +98,12 @@ public final class Constants {
 							true,
 							false,
 							true),
+			FEEDER("Feeder",
+							-33, //11
+							900,
+							true,
+							false,
+							true),
 			PRECLIMB("Preclimb",
 							-46,
 							0,
