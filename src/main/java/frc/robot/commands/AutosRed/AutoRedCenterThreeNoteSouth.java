@@ -13,6 +13,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.RobotContainer;
 import frc.robot.commands.MoveToOrientationCommand;
 import frc.robot.commands.AutoMoveToOrientationCommand;
+import frc.robot.commands.AutoShootAtCurrentTarget;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
@@ -45,20 +46,28 @@ public class AutoRedCenterThreeNoteSouth extends SequentialCommandGroup {
         new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNotePart1")
       ),
 
-      new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNotePart2"),
-
+      new ParallelCommandGroup(
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNotePart2"),
+        new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER)
+      ),
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
-      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
+      new ParallelCommandGroup(
+        new WaitCommand(.3),
+        new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake)),
 
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
         // path the robot backwards through the 3rd note to pick it up with the intake
-        new RunTrajectorySequenceRobotAtStartPoint("RedCenterTwoNoteSouthComplete")
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeNoteSouthCompleteStartline"),
+        new SequentialCommandGroup(
+          new WaitCommand(2.5),
+          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.STARTLINE)
+        )
       ),
-      // move back to PODIUM orientation w/ shooter 
-      new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
-
-      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL));
+      // move back to SUBWOOFER orientation w/ shooter 
+      new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
+      new WaitCommand(.3),
+      new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.HOME));
       // END AUTO
   }
 }
