@@ -22,7 +22,7 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-  private boolean TUNING_MODE = true;
+  private boolean TUNING_MODE = false;
 
   private final CANSparkMax bottomShooterMotor;
   private final CANSparkMax topShooterMotor;
@@ -176,14 +176,14 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean isTopShooterAtSpeed(){
     double encoderValue = topShooterEncoder.getVelocity();
-    System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
+    //System.out.println("-- || || || TOP SHOOTER VELOCITY: " + encoderValue);
     double tolerance = setpointTolerance;
     double topSetpoint = requestedSetpoint;
-    System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
+    //System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
     double minLimit = setpoint - tolerance;
     double maxLimit = setpoint + tolerance+2000;
     boolean isWithinTolerance = topSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
-    System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
+    //System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
   }
 

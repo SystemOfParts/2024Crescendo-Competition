@@ -93,14 +93,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public void moveToPosition(Orientations orientation) {
-        setArmPosition(orientation.armPosition);
-    }
-
-    public void setArmPosition(double armPosition) {
-      //System.out.println("**ARM TRYING TO MOVE TO" + armPosition);
-        // move to the position dynamically
-        // need method to VERIFY armPosition is SAFE (within bounds) before using!!!!
-        armSetpoint = armPosition;
+        armController.setReference(orientation.armPosition, CANSparkMax.ControlType.kPosition);
     }
 
     public void manualModeTurnOn() {
@@ -129,6 +122,6 @@ public class ArmSubsystem extends SubsystemBase {
     //System.out.print(encoder.getPosition());
     //System.out.println("encoder position: ");
     
-    armController.setReference(armSetpoint, CANSparkMax.ControlType.kPosition); //applies the chosen PID
+     //applies the chosen PID
   }
 }
