@@ -34,7 +34,7 @@ public class AutoRedCenterThreeNoteNorth extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-
+      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(180)),
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
       new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       

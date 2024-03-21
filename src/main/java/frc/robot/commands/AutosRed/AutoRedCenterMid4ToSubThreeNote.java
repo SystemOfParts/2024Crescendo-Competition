@@ -4,10 +4,12 @@
 
 package frc.robot.commands.AutosRed;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.OrientationConstants.Orientations;
+import frc.robot.RobotContainer;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
@@ -28,7 +30,7 @@ public class AutoRedCenterMid4ToSubThreeNote extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-
+      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(180)),
       // Turn on the shooter, orient to SUBWOOFER, check that shooter is at speed, feed intake to shoot, wait .5 seconds
       new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       
