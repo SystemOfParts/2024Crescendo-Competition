@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.RobotContainer;
+import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,8 +33,8 @@ public boolean isIntaking = false;
     intakeMotor.burnFlash();
     
     try {
-      noteSensorRight = new DigitalInput(0);
-      noteSensorLeft = new DigitalInput(1);
+      noteSensorRight = new DigitalInput(1);
+      noteSensorLeft = new DigitalInput(0);
       //System.out.println("*** NOTE SENSOR INITIALIZED ***");
     } catch (Exception e) {
       //System.out.println("*** NOTE SENSOR FAILED TO LOAD ***");
@@ -41,21 +43,19 @@ public boolean isIntaking = false;
 
     // run the intake at full speed
     public void runIntake(Boolean bool){
+      //System.out.println("RUNNING INTAKE");
       isShooting = bool;
       isIntaking = true;  
       isEjecting = false;
       intakeMotor.set(1);
-      //System.out.println("Shooting");
     }
 
     // stop the intake by setting the speed to 0
     public void stopIntake(Boolean delayStop){
+      //System.out.println("************************************************ stopIntake Called  ***");
       isEjecting = false;
       isIntaking = false;
       isShooting = false;
-      if (delayStop){
-        new WaitCommand(.25);
-      }
       intakeMotor.set(0);
     }
 
@@ -81,7 +81,9 @@ public boolean isIntaking = false;
     if (isNoteInIntake() && isIntaking){
       if ((!isShooting)&&(!isEjecting)){
         //System.out.println("************************************************ stopping intake  ***");
-        stopIntake(true);
+        isIntaking = false;
+        //new IntakeStopCommand(RobotContainer.intakeSubsystem, true);
+        stopIntake(false);
       }
     }
   }

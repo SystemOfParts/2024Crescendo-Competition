@@ -20,7 +20,7 @@ public class AutoShootAtCurrentTarget extends SequentialCommandGroup {
       )
     {
     addCommands(
-      //new WaitCommand(.25),
+      //new WaitCommand(.25)
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true))
     );

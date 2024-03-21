@@ -64,11 +64,11 @@ public class AutoBlueCenterFourNote extends SequentialCommandGroup {
     new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
     new RunTrajectorySequenceRobotAtStartPoint("BlueCenterFourNotePart5"),
     // move back to PODIUM orientation w/ shooter 
-    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_PODIUM),
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_STARTLINE),
     // shoot
     new AutoShootFromDistance(m_arm, m_shooter, m_intake),
 
-    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL)
+    new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.HOME)
     // END AUTO
     );
   }

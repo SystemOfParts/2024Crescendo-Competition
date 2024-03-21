@@ -24,7 +24,7 @@ public class AutoShootFromSubwoofer extends SequentialCommandGroup {
       new WaitCommand(.2),
       new CheckToShoot(m_shooter, m_intake),
       new InstantCommand(() -> m_intake.runIntake(true)),
-      new WaitCommand(.2)
+      new WaitCommand(.3)
     );
   }
 }

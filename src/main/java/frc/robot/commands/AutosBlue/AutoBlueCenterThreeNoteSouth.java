@@ -48,7 +48,9 @@ public class AutoBlueCenterThreeNoteSouth extends SequentialCommandGroup {
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER)
       ),
       // with the shooter running, the intake off, and a note loaded, orient arm to the AUTO_PODIUM position 
-      new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
+      new ParallelCommandGroup(
+        new WaitCommand(.3),
+        new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake)),
 
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
@@ -56,11 +58,12 @@ public class AutoBlueCenterThreeNoteSouth extends SequentialCommandGroup {
         new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNoteSouthComplete"),
         new SequentialCommandGroup(
           new WaitCommand(2.5),
-          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.SUBWOOFER)
+          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.STARTLINE)
         )
       ),
       // move back to SUBWOOFER orientation w/ shooter 
       new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
+      new WaitCommand(.3),
       new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.HOME));
       // END AUTO
   }

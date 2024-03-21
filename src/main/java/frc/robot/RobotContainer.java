@@ -109,7 +109,7 @@ public class RobotContainer {
   // Blue
   private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoBlueNorthTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterMid2And3ThreeNote = new AutoBlueCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
@@ -213,6 +213,7 @@ public class RobotContainer {
     m_chooser.addOption("BLUE Center 3 - 2 AND Back", m_AutoBlueCenterMid2ToSubThreeNote);
     m_chooser.addOption("BLUE Center 3 - 3 AND Back", m_AutoBlueCenterMid3ToSubThreeNote);
     m_chooser.addOption("BLUE Center 3 - 4 AND Back", m_AutoBlueCenterMid4ToSubThreeNote);
+    m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
     m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
     m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
@@ -353,7 +354,7 @@ private void configureBindings() {
   // REVERSE THE INTAKE TO SPIT OUT A NOTE
   new Trigger(m_operator2Controller.button(4))
     .onTrue(new InstantCommand(() -> intakeSubsystem.reverseIntake()))
-    .onFalse(new IntakeStopCommand(intakeSubsystem));
+    .onFalse(new IntakeStopCommand(intakeSubsystem, false));
 
   // ORIENT TO THE INTAKE POSITION
   new Trigger(m_operator2Controller.button(3))  
@@ -405,7 +406,7 @@ private void configureBindings() {
   new JoystickButton(xboxController, 6)
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)); //driver's right bumper intakes to shoot, and then goes to travel position on release
     //.onTrue(new IntakeOnCommand(intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
-    //.onFalse(new IntakeStopCommand(intakeSubsystem));
+    //.onFalse(new IntakeStopCommand(intakeSubsystem, false));
 
   /* 
   new JoystickButton(xboxController, 5)

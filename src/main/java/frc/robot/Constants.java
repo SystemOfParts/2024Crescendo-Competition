@@ -76,7 +76,7 @@ public final class Constants {
 							true),
 			AMP("Amp",
 							0, //try -3 //90
-							600,
+							750,
 							true,
 							false, 
 							true),

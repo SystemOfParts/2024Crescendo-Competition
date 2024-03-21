@@ -41,8 +41,8 @@ public class ArmSubsystem extends SubsystemBase {
     double ArmkD = 0.01; // Derivative term
     double ArmkIz = 0; // Integral zone
     double ArmkFF = 0.0; // Feed-forward
-    double ArmkMaxOutput = .5;
-    double ArmkMinOutput = -.3;
+    double ArmkMaxOutput = .6;
+    double ArmkMinOutput = -.5;
 
 
     public float kArmUpLimit = 52;
