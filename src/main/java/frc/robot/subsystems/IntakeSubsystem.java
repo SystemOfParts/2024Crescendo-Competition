@@ -5,18 +5,14 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
-import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -47,6 +43,9 @@ public boolean isIntaking = false;
     public void runIntake(Boolean bool){
       //System.out.println("RUNNING INTAKE");
       isShooting = bool;
+      if (isShooting){
+        RobotContainer.LEDs.setPattern(BlinkinPattern.CONFETTI);
+      }
       isIntaking = true;  
       isEjecting = false;
       intakeMotor.set(1);
@@ -59,6 +58,7 @@ public boolean isIntaking = false;
       isIntaking = false;
       isShooting = false;
       intakeMotor.set(0);
+      
     }
 
     // eject from the intake by reversing its direction
@@ -71,13 +71,14 @@ public boolean isIntaking = false;
 
     // tell us if a note has been detected
     public boolean isNoteInIntake() {
+      if (!noteSensorRight.get() || !noteSensorLeft.get()){
+        RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+      } 
       return  (!noteSensorRight.get() || !noteSensorLeft.get());
     }
 
   @Override
   public void periodic() {    
-    //SmartDashboard.putNumber("Intake Motor Temp", intakeMotor.getMotorTemperature());
-    // This method will be called once per scheduler run
     //System.out.println("************************************************ !isNoteInIntake?  ***: "+!isNoteInIntake());
     //System.out.println("************************************************ !isShooting?  ***: "+!isShooting);
     if (isNoteInIntake() && isIntaking){

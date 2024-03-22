@@ -7,8 +7,10 @@ import java.util.Objects;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants.OrientationConstants.Orientations;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class AutoMoveToOrientationCommand extends SequentialCommandGroup {
@@ -34,6 +36,7 @@ public class AutoMoveToOrientationCommand extends SequentialCommandGroup {
             if (auto_orientation.intakeOn) { // NEED TO STOP INTAKE WHEN NOTE DETECTION IS ADDED
                 addCommands(
                     //new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + auto_orientation.label)),
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.LAWN_GREEN)),            
                     new InstantCommand(() -> m_intake.runIntake(false)));
             }
         }

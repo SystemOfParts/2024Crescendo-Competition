@@ -6,9 +6,11 @@ import java.util.Objects;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class MoveToOrientationCommand extends SequentialCommandGroup {
@@ -43,10 +45,33 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
             if (orientation.intakeOn) {
                 addCommands(
                     //new InstantCommand(() -> System.out.println("**TURN ON INTAKE" + orientation.label)),
+                    //new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.LAWN_GREEN)),
                     new InstantCommand(() -> m_intake.runIntake(false)));
                     
             }
-            
+        }
+        if (!m_intake.isNoteInIntake()){
+            if (orientation.label == Orientations.TRAVEL.label){
+                addCommands(
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.WHITE))
+                );
+            } else if (orientation.label == Orientations.INTAKE.label){
+                addCommands(
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.LAWN_GREEN))
+                );
+            } else if (orientation.label == Orientations.PRECLIMB.label){
+                addCommands(
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED))
+                );
+            } else if (orientation.label == Orientations.HOME.label){
+                addCommands(
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.WHITE))
+                );
+            } 
+        } else {
+            addCommands(
+                new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE))
+            );
         }
     }
 }

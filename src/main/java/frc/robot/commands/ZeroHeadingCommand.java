@@ -9,9 +9,11 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPoint;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,7 +24,7 @@ public class ZeroHeadingCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-
+      new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.CP2_END_TO_END_BLEND_TO_BLACK)),            
       new AutonomousTrajectoryRioCommand(
         PathPlanner.generatePath(
           new PathConstraints(Constants.SwerveChassis.MAX_VELOCITY,Constants.SwerveChassis.MAX_ACCELERATION ), 

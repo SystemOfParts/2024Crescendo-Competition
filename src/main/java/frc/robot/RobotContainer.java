@@ -19,6 +19,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PHTNVisionSubsystem;
 import frc.robot.subsystems.NoteDetectionPHTNVisionSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
@@ -49,7 +50,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.LEDSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -63,7 +63,7 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  //public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
+  public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -225,6 +225,15 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
   }
 
+  public void setLEDPattern(BlinkinPattern pattern) {
+    LEDs.setPattern(pattern);
+  }
+  public void setStartPattern() {
+    LEDs.setAllianceColorBreath();
+  }
+  public void setAutoPattern() {
+    LEDs.setAllianceColorShot();
+  }
  // INSTANTIATE XBOX DRIVER CONTROLLER
   private void configureDriverInterface() {
       xboxController = new Controller(ControllerDevice.XBOX_CONTROLLER);
@@ -293,7 +302,7 @@ private void configureBindings() {
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
-      new Trigger (m_operator2Controller.button(12))
+  new Trigger (m_operator2Controller.button(12))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
@@ -360,7 +369,7 @@ private void configureBindings() {
   new Trigger(m_operator2Controller.button(3))  
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.INTAKE));
   
-  // ORIENT TO THE TRAP_SCORE POSITION
+  // ORIENT TO THE STARTLINE POSITION
   new Trigger(m_operator2Controller.button(5)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.STARTLINE));
 
