@@ -81,26 +81,26 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
-							-27,//18
-							1500, 
+							-26,//18
+							1700, 
 							true,
 							false,
 							true),
 			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-32,//18
+							-31,//18
 							1500, 
 							true,
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-35.5, //11
+							-36.5, //11
 							1500,
 							true,
 							false,
 							true),
 			FEEDER("Feeder",
 							-33, //11
-							900,
+							1200,
 							true,
 							false,
 							true),
