@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class AutoBlueNorthClear extends SequentialCommandGroup {
   public AutoBlueNorthClear( 
       ArmSubsystem m_arm,
-      ShooterSubsystem m_shooter,
-      IntakeSubsystem m_intake
+      IntakeSubsystem m_intake,
+      ShooterSubsystem m_shooter
       )
     {
     // Add your commands in the addCommands() call, e.g.

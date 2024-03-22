@@ -57,7 +57,7 @@ public class AutoBlueCenterThreeNoteSouth extends SequentialCommandGroup {
         // path the robot backwards through the 3rd note to pick it up with the intake
         new RunTrajectorySequenceRobotAtStartPoint("BlueCenterThreeNoteSouthComplete"),
         new SequentialCommandGroup(
-          new WaitCommand(2.5),
+          new WaitCommand(3.5),
           new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.STARTLINE)
         )
       ),

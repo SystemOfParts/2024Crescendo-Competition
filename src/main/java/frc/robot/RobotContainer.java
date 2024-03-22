@@ -19,18 +19,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.PHTNVisionSubsystem;
 import frc.robot.subsystems.NoteDetectionPHTNVisionSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
+import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 import frc.robot.commands.*;
 import frc.robot.commands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
-import frc.robot.commands.AutosNeutral.AutoEitherCenterTwoNote;
-import frc.robot.commands.AutosNeutral.AutoPIDAcrossUpDown;
-import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloInside;
-import frc.robot.commands.AutosNeutral.AutoPIDTuneHoloOutside;
-import frc.robot.commands.AutosNeutral.AutoEitherCenterOneNoteLeave;
-import frc.robot.commands.AutosNeutral.AutoTrapFromEitherSpeaker;
-import frc.robot.commands.AutosNeutral.AutoTrapFromEitherAMP;
+import frc.robot.commands.AutosNeutral.*;
 import frc.robot.commands.AutosRed.*;
 import frc.robot.commands.ClimberCommands.LeftClimberDownCommand;
 import frc.robot.commands.ClimberCommands.LeftClimberStopCommand;
@@ -63,7 +58,7 @@ public class RobotContainer {
   //Instantiate Subsystems
   public static final IMUSubsystem imuSubsystem = new IMUSubsystem();
   public static final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  //public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
+  public static final LEDSubsystem LEDs = LEDSubsystem.getInstance();
   public static final ClimberSubsystem climberSubsystem = new ClimberSubsystem();
   public static final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -102,6 +97,8 @@ public class RobotContainer {
   private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueNorthClear = new AutoBlueNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedNorthClear = new AutoRedNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
   private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
@@ -167,8 +164,9 @@ public class RobotContainer {
   // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
     new Trigger(m_operator1Controller.button(2))
-        .whileTrue(new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem))
-        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+        //.whileTrue(new AutoBlueCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .onTrue(new LEDChangePatternCommand(LEDs, BlinkinPattern.ORANGE));
+        //.onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     
     new Trigger(m_operator1Controller.button(11))
         .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
