@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants.VisionConstants.LimeLightConstants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -704,6 +705,49 @@ public final class Constants {
 		// All calibration sheets must be printed to proper size as we try using built-in
 		// field pose estimators
 
+		public static final class AutoConstants {
+
+		public static double armInPerimeterAngle = -15; // move arm into perimeter
+
+		private static final double fieldSizeX = 16.545814;
+		private static final double fieldSizeY = 8.212;
+
+		public static enum autoPoses {	// important poses
+
+			// SPEAKER TAGS
+
+			BLUE_SPEAKER_TAG (0, 4.986, 180),
+			RED_SPEAKER_TAG (16.545814, 4.986, 0);
+
+			private Pose2d pose;
+
+			autoPoses(double x, double y, double angle) {
+				this.pose = new Pose2d(x, y, Rotation2d.fromDegrees(angle));
+			}
+			public Pose2d getPose() {
+				return pose;
+			}
+		}
+
+		public static enum centerNotes {	// important poses
+			
+			LOW1 (8.272, 0.753),
+			LOW2 (8.272, 2.411),
+			MID3 (8.272, 4.106),
+			HIGH4 (8.272, 5.782),
+			HIGH5 (8.272, 7.458)
+			;
+
+			private Translation2d translation;
+
+			centerNotes(double x, double y) {
+				this.translation = new Translation2d(x, y);
+			}
+			public Translation2d getTranslation() {
+				return translation;
+			}
+		}
+	}
 		public static final class LimeLightConstants {
 
 			// If changing this value, do not forget to set it in LL

@@ -16,6 +16,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants.PhotonVisionConstants;
+import frc.robot.Constants.VisionConstants.AutoConstants.autoPoses;
+import frc.robot.RobotContainer;
 import frc.robot.lib.VisionHelpers;
 
 public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers {
@@ -39,6 +41,9 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
   private Pose2d globalPoseEstimate = new Pose2d();
   private Transform3d fieldToCamera;
   // private Field2d apriltaField2d = new Field2d();
+
+  public static double distanceToShoot = -1;
+
 
   /** Creates a new PhotonVisionSubsystem. */
   
@@ -204,6 +209,31 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
     return aprilTagYaw;
 
+  }
+
+   public double getShootingDistance(Pose2d pose) {
+    if (RobotContainer.isAlianceRed) {
+      
+      return autoPoses.RED_SPEAKER_TAG.getPose().getTranslation().getDistance(
+         pose.getTranslation()
+      );
+    } else {
+        return autoPoses.BLUE_SPEAKER_TAG.getPose().getTranslation().getDistance(
+         pose.getTranslation()
+      );
+    }
+  }
+
+  public double getShootingDistance() {
+    if (isApriltagVisible()) {
+      distanceToShoot = Math.abs(getShootingDistance(getRobotFieldPosePV())); // use absolute distance, so works on both RED and BLUE
+    } else {
+      distanceToShoot = -1;
+    }
+
+    // alex test
+    //System.out.println("ATV0-D:"+distanceToShoot);
+    return distanceToShoot;
   }
 
   @Override
