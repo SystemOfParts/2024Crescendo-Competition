@@ -1,0 +1,27 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 15.699238407816699,
+        "y": 6.527155259042838
+      },
+      "prevControl": null,
+      "nextControl": null,
+      "holonomicAngle": 120.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": 6.0,
+  "maxAcceleration": 4.0,
+  "isReversed": null,
+  "markers": []
+}

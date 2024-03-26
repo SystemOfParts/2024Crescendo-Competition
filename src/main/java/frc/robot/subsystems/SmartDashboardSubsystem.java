@@ -54,6 +54,11 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
     SmartDashboard.putNumber("April Y in M", RobotContainer.phtnVisionSubsystem.getAprilTagY());
     SmartDashboard.putBoolean("NOTE INTAKE SENSOR", RobotContainer.intakeSubsystem.isNoteInIntake());
+    SmartDashboard.putBoolean("NOTE LEFT", RobotContainer.intakeSubsystem.detectOnLeft());
+    SmartDashboard.putBoolean("NOTE RIGHT", RobotContainer.intakeSubsystem.detectOnRight());
+    SmartDashboard.putNumber("CLIMBER LEFT", RobotContainer.climberSubsystem.getClimber1Position());
+    SmartDashboard.putNumber("CLIMBER RIGHT", RobotContainer.climberSubsystem.getClimber2Position());
+    
 
 //    SmartDashboard.putString("PV Robot Pose", RobotContainer.phtnVisionSubsystem.getRobotFieldPosePV().toString());
 

@@ -50,7 +50,9 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                     
             }
         }
+        //System.out.println("MOVE TO ORIENTATION m_intake.isNoteinIntake: "+m_intake.isNoteInIntake());   
         if (!m_intake.isNoteInIntake()){
+            //System.out.println("MOVE TO ORIENTATION NOTE !SENSED TRUE -> OTHER COLORS: ");
             if (orientation.label == Orientations.TRAVEL.label){
                 addCommands(
                     new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.WHITE))
@@ -69,6 +71,7 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                 );
             } 
         } else {
+            //System.out.println("MOVE TO ORIENTATION NOTE !SENSED FALSE -> ORANGE: ");   
             addCommands(
                 new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE))
             );

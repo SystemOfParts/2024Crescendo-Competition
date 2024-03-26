@@ -29,8 +29,8 @@ public class DetectAprilTagCommand extends Command{
     if (RobotContainer.intakeSubsystem.isNoteInIntake()){
       if (m_triggerValue.getAsDouble() > .1){
         phtn.getPHTNData();
-        //System.out.println("::::::::::ATG YAW: "+phtn.getAprilTagYaw());
-        //System.out.println("::::::IS APRIL TAG VIS?: "+phtn.isApriltagVisible());
+        System.out.println("::::::::::ATG YAW: "+phtn.getAprilTagYaw());
+        System.out.println("::::::IS APRIL TAG VIS?: "+phtn.isApriltagVisible());
         if (phtn.isApriltagVisible()){
           //System.out.println("::::::::::ATG YAW: "+phtn.getAprilTagYaw());
           double visibleYaw = phtn.getAprilTagYaw();
@@ -42,21 +42,21 @@ public class DetectAprilTagCommand extends Command{
             recentDetection = true;
           } else if ((visibleYaw > -8)&&(visibleYaw <-3)){
             // TOO FAR LEFT, TURN ON RIGHT RUMBLE
-            RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+            //RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
             RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, .3);
             recentDetection = true;
           } else if ((visibleYaw < 8)&&(visibleYaw > 3)){
             // TOO FAR RIGHT, TURN ON LEFT RUMBLE
-            RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+            //RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
             RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, .3);
             recentDetection = true;
           } else {
             // TOO FAR OFF - TURN OFF ALL RUMBLE
-            RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+            //RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
             RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
             RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
@@ -64,7 +64,7 @@ public class DetectAprilTagCommand extends Command{
           }
         }  else {
           // no April tag is visible so turn off rumble
-          RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+          //RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
           RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
           RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
           RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
@@ -72,7 +72,7 @@ public class DetectAprilTagCommand extends Command{
         }
       } else {
         if (recentDetection) {
-          RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+          //RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
           RobotContainer.xboxController.setRumble(RumbleType.kBothRumble, 0); 
           RobotContainer.xboxController.setRumble(RumbleType.kLeftRumble, 0);
           RobotContainer.xboxController.setRumble(RumbleType.kRightRumble, 0);
