@@ -69,7 +69,7 @@ public final class Constants {
 							false,
 							false),
 			INTAKE("Intake",
-							-47,
+							-45.8,
 							0,
 							false,
 							true,
@@ -93,7 +93,7 @@ public final class Constants {
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-36.5, //11
+							-33, //11
 							1500,
 							true,
 							false,
@@ -129,7 +129,7 @@ public final class Constants {
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
-							-47,
+							-45.8,
 							1500,
 							false,
 							true,
@@ -285,6 +285,7 @@ public final class Constants {
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
 		public static final double MAX_VELOCITY = 3.0;
+		public static final double MAX_HIGH_VELOCITY = 5.0;
 
 		/**
 		 * Radians per second.
@@ -302,7 +303,7 @@ public final class Constants {
 
 		// For trajectory driving.
 		public static final double MAX_ACCELERATION = .9;
-
+		public static final double MAX_HIGH_ACCELERATION = 4.0;
 		/**
 		 * Parameters for BaseMotorTalonSRX class
 		 * This class is specific to the motors controlled by TalonSRX controller.

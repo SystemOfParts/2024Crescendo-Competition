@@ -6,7 +6,7 @@ package frc.robot.commands.AutosBlue;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.CheckToShoot;
-import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
+import frc.robot.commands.FASTRunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.ArmSubsystem;
@@ -32,7 +32,7 @@ public class AutoBlueNorthClear extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.TRAVEL),
         // this trajectory was modified slightly to move through the note to intake it
-        new RunTrajectorySequenceRobotAtStartPoint("BlueNorthCenterClear")
+        new FASTRunTrajectorySequenceRobotAtStartPoint("BlueNorthCenterClear")
       )
     );
   }

@@ -108,7 +108,7 @@ public class RobotContainer {
 
   // Blue
   private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoBlueNorthTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoBlueNorthTwoNote = new AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
@@ -118,6 +118,7 @@ public class RobotContainer {
   //private final Command m_AutoBlueCenterMid3ToSubThreeNote = new AutoBlueCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid4ToSubThreeNote = new AutoBlueCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  private final Command m_AutoBlueNorthClear = new AutoBlueNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   // Red
@@ -129,7 +130,7 @@ public class RobotContainer {
   //private final Command m_AutoRedCenterMid4And3ThreeNote = new AutoRedCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid2ToSubThreeNote = new AutoRedCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid3ToSubThreeNote = new AutoRedCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterMid4ToSubThreeNote = new AutoRedCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_AutoRedNorthClear = new AutoRedNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -148,7 +149,7 @@ public class RobotContainer {
         () -> getDriverOmegaAxis(),
         () -> getDriverFieldCentric()));
 
-    // SET THE DEFAULT COMMAND ON XBOX LEFT TRIGGER TO DETECT THE ANGLE OF AN APRIL TAG
+    /* // SET THE DEFAULT COMMAND ON XBOX LEFT TRIGGER TO DETECT THE ANGLE OF AN APRIL TAG
     phtnVisionSubsystem.setDefaultCommand(
       new DetectAprilTagCommand(
         () -> getLeftTrigger()));
@@ -157,7 +158,7 @@ public class RobotContainer {
     noteDetectionPhtnVisionSubsystem.setDefaultCommand(
       new DetectNoteCommand(
       //new OrientToNoteCommand(
-        () -> getRightTrigger()));
+        () -> getRightTrigger())); */
 
   // UNCOMMENT TO TEST TRAJECTORIES
     trajectoryCalibration();
@@ -212,6 +213,7 @@ public class RobotContainer {
     //m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
     m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
+    m_chooser.addOption("Red North Clear", m_AutoBlueSouthTwoNoteComplete);
     m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
     m_chooser.addOption("RED Center 3 North", m_AutoRedCenterThreeNoteNorth);
     m_chooser.addOption("RED Center 3 South", m_AutoRedCenterThreeNoteSouth);
@@ -221,6 +223,7 @@ public class RobotContainer {
     //m_chooser.addOption("RED Center 3 - 3 AND Back", m_AutoRedCenterMid3ToSubThreeNote);
    // m_chooser.addOption("RED Center 3 - 4 AND Back", m_AutoRedCenterMid4ToSubThreeNote);
     m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
+    m_chooser.addOption("RED North CLear", m_AutoRedNorthClear);
     m_chooser.addOption("BLUE/RED TRAP from Center", m_AutoTrapEitherSub);
     m_chooser.addOption("BLUE/RED TRAP from AMP", m_AutoTrapEitherAMP);
     SmartDashboard.putData(m_chooser);
@@ -230,10 +233,10 @@ public class RobotContainer {
     LEDs.setPattern(pattern);
   }
   public void setStartPattern() {
-    LEDs.setAllianceColorBreath();
+    //LEDs.setAllianceColorBreath();
   }
   public void setAutoPattern() {
-    LEDs.setAllianceColorShot();
+    //LEDs.setAllianceColorShot();
   }
  // INSTANTIATE XBOX DRIVER CONTROLLER
   private void configureDriverInterface() {
@@ -303,7 +306,7 @@ private void configureBindings() {
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
-  new Trigger (m_operator2Controller.button(12))
+  new Trigger (m_operator1Controller.button(10))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
