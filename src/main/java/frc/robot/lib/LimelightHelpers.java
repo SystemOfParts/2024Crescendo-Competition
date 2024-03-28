@@ -447,6 +447,9 @@ public class LimelightHelpers {
     }
     /////
     /////
+    public static double getThor(String limelightName) {
+        return getLimelightNTDouble(limelightName, "thor");
+    }
 
     public static double getTX(String limelightName) {
         return getLimelightNTDouble(limelightName, "tx");
@@ -766,16 +769,20 @@ public class LimelightHelpers {
         try {
             results = mapper.readValue(getJSONDump(limelightName), LimelightResults.class);
         } catch (JsonProcessingException e) {
-            //System.err.println("lljson error: " + e.getMessage());
+            System.err.println("lljson error: " + e.getMessage());
         }
 
         long end = System.nanoTime();
         double millis = (end - start) * .000001;
         results.targetingResults.latency_jsonParse = millis;
         if (profileJSON) {
-            //System.out.printf("lljson: %.2f\r\n", millis);
+            System.out.printf("lljson: %.2f\r\n", millis);
         }
 
         return results;
+    }
+
+    public static boolean isInRange(double value, double start, double end) {
+        return start<=value && value <= end;
     }
 }
