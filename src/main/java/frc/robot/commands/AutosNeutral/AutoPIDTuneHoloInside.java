@@ -3,9 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.AutosNeutral;
-import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 
 public class AutoPIDTuneHoloInside extends SequentialCommandGroup {
   public AutoPIDTuneHoloInside( 
