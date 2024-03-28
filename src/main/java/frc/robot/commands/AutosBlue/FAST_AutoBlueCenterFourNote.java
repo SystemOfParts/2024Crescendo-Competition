@@ -9,6 +9,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
+import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoStepDynCmd;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -25,6 +26,6 @@ public class FAST_AutoBlueCenterFourNote extends SequentialCommandGroup {
       new AutoStepDynCmd(true, Orientations.AUTO_STARTLINE, "a_b_center_2_SAN", null, 0.2, 0.1, m_a, m_s, m_i),
       new AutoStepDynCmd(true, Orientations.AUTO_STARTLINE, "a_b_2_to_3_SAN", null, 0.2, 0.1, m_a, m_s, m_i),
       new AutoStepDynCmd(true, Orientations.AUTO_STARTLINE, "a_b_3_to_1_SAN", null, 0.2, 0.3, m_a, m_s, m_i),
-      new InstantCommand(() -> m_s.stopShooter(Orientations.TRAVEL)));
+      new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.TRAVEL));
   }
 }

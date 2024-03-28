@@ -19,13 +19,9 @@ public class FAST_AutoMoveToOrientationCommand extends SequentialCommandGroup {
             ShooterSubsystem m_shooter,
             IntakeSubsystem m_intake,
             Orientations auto_orientation) {
-        if (Objects.nonNull(m_shooter)){
-            if (auto_orientation.shooterOn) {
-                    addCommands(
-                        ////new InstantCommand(() -> System.out.println("**CHANGING SHOOTER SPEED TO" + auto_orientation.label)),
-                        new InstantCommand(() -> m_shooter.runShooter(auto_orientation)));
-            } 
-        }
+        // -----------------------------------------
+        // SINCE THIS IS THE FAST AUTO VERSION, WE'VE REMOVED ANY SHOOTER SPEED CHANGES - THE SHOOTER IS ALWAYS ON AT 1500
+        // -----------------------------------------
         if ((Objects.nonNull(m_arm)) && (Objects.nonNull(m_shooter)) && (Objects.nonNull(m_intake))){
             addCommands(
                 new ParallelCommandGroup(
