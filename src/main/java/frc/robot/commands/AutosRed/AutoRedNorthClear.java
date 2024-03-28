@@ -3,9 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.AutosRed;
-import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.AutoShootFromSubwoofer;
-import frc.robot.commands.CheckToShoot;
+import frc.robot.commands.*;
 import frc.robot.commands.FASTRunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutonomousCommands.AutoShootFromSubwoofer;

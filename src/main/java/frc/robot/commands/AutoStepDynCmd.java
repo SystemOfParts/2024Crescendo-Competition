@@ -12,6 +12,7 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
+import frc.robot.commands.AutonomousCommands.AutoShootAtCurrentTarget;
 
 public class AutoStepDynCmd extends SequentialCommandGroup {
   public AutoStepDynCmd( 
