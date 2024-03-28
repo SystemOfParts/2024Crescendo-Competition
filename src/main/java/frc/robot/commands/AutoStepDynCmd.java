@@ -6,28 +6,29 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 
-public class AutoDynamicStepCommand extends SequentialCommandGroup {
-  public AutoDynamicStepCommand( 
+public class AutoStepDynCmd extends SequentialCommandGroup {
+  public AutoStepDynCmd( 
+      Boolean hasIntake,
+      Orientations shotOrientation,
+      String pre,
+      String post,
+      Double preDelay,
+      Double postDelay,
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
-      IntakeSubsystem m_intake,
-      Boolean hasIntake, 
-      Boolean hasPrePath,
-      Boolean hasPostPath,
-      Orientations shotOrientation,
-      String prePath,
-      String postPath
+      IntakeSubsystem m_intake
       )
     {
     Orientations lastOrientation = null;
     // IF we have a path to travel before we intake
-    if (hasPrePath){
+    if (pre != null){
       // There was a pre path
       if (hasIntake){
         // There is an intake task
@@ -35,8 +36,8 @@ public class AutoDynamicStepCommand extends SequentialCommandGroup {
       addCommands(
         // together orient to the intake position and start moving 
         new ParallelCommandGroup(
-          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-          new RunTrajectorySequenceRobotAtStartPoint(prePath)));
+          new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
+          new FASTRunTrajectorySequenceRobotAtStartPoint(pre)));
       }
     } 
     //PREPATH COMPLETED OR SKIPPED, WE'VE STOPPED MOVING, HOPEFULLY WE HAVE A NOTE
@@ -44,20 +45,22 @@ public class AutoDynamicStepCommand extends SequentialCommandGroup {
     if (m_intake.isNoteInIntake()){
       // WE HAVE A NOTE
       // ARE WE SUPPOSED TO MOVE TO A SHOOTING POSITION?
-      if (hasPostPath){
+      if (post != null){
         // YES - LETS ORIENT AND MOVE TOGETHER
         addCommands(
           new ParallelCommandGroup(
-            new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation),
-            new RunTrajectorySequenceRobotAtStartPoint(postPath)));
+            new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation),
+            new FASTRunTrajectorySequenceRobotAtStartPoint(post)));
       } else {
         // WE DON'T NEED TO MOVE, LET'S JUST ORIENT TO SHOOTING POSITION
         addCommands(
-          new AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation));
+          new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation));
       }
       // WE HAVE FINISHED ORIENTING AND MOVING AS NEEDED LETS USE THIS NOTE
       addCommands(
-        new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake));
+        new WaitCommand(preDelay),
+        new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
+        new WaitCommand(postDelay));
     }
   }
 }

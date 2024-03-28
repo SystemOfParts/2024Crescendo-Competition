@@ -285,7 +285,7 @@ public final class Constants {
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
 		public static final double MAX_VELOCITY = 3.0;
-		public static final double MAX_HIGH_VELOCITY = 5.0;
+		public static final double MAX_HIGH_VELOCITY = 6.0;
 
 		/**
 		 * Radians per second.
@@ -303,7 +303,7 @@ public final class Constants {
 
 		// For trajectory driving.
 		public static final double MAX_ACCELERATION = .9;
-		public static final double MAX_HIGH_ACCELERATION = 4.0;
+		public static final double MAX_HIGH_ACCELERATION = 3.0;
 		/**
 		 * Parameters for BaseMotorTalonSRX class
 		 * This class is specific to the motors controlled by TalonSRX controller.

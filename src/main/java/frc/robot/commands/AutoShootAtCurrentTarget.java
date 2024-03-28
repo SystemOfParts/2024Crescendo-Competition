@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoShootAtCurrentTarget extends SequentialCommandGroup {
-  public AutoShootAtCurrentTarget( 
+  public 
+  
+  AutoShootAtCurrentTarget( 
       ArmSubsystem m_arm,
       ShooterSubsystem m_shooter,
       IntakeSubsystem m_intake
