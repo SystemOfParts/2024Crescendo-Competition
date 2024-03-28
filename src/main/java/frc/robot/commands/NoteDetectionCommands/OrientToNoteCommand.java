@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.NoteDetectionCommands;
 
 import java.time.Instant;
 import java.util.function.DoubleSupplier;

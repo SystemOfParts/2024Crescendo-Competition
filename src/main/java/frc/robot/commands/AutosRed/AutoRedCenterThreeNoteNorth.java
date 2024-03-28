@@ -18,7 +18,12 @@ import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoShootFromSubwoofer;
 import frc.robot.commands.CheckToShoot;
+import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
+import frc.robot.commands.AutonomousCommands.AutoShootFromSubwoofer;
+import frc.robot.commands.GPMCommands.CheckToShoot;
+import frc.robot.commands.GPMCommands.MoveToOrientationCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 

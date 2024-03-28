@@ -9,10 +9,10 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
-import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
-import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.AutoShootFromSubwoofer;
-import frc.robot.commands.AutoShootFromDistance;
+import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
+import frc.robot.commands.AutonomousCommands.AutoShootFromDistance;
+import frc.robot.commands.AutonomousCommands.AutoShootFromSubwoofer;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
