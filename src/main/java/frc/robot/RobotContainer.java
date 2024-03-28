@@ -21,8 +21,10 @@ import frc.robot.subsystems.NoteDetectionPHTNVisionSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
+import frc.robot.lib.GPMHelpers;
+
 import frc.robot.commands.*;
-import frc.robot.commands.DetectAprilTagCommand;
+import frc.robot.commands.AprilTagCommands.DetectAprilTagCommand;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosNeutral.AutoEitherCenterTwoNote;
 import frc.robot.commands.AutosNeutral.AutoPIDAcrossUpDown;
@@ -70,9 +72,9 @@ public class RobotContainer {
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final PHTNVisionSubsystem phtnVisionSubsystem = new PHTNVisionSubsystem("AprilTagCamera");
   public static final NoteDetectionPHTNVisionSubsystem noteDetectionPhtnVisionSubsystem = new NoteDetectionPHTNVisionSubsystem("NoteCamera");
+  public final static GPMHelpers gpmHelpers = new GPMHelpers();
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
- 
-  
+
   //Define Controllers
   public static Controller xboxController;
   

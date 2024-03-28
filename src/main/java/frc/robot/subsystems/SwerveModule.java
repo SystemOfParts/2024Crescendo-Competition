@@ -59,7 +59,7 @@ public class SwerveModule extends SubsystemBase {
 
     public SwerveModuleState getState() {
         double velocity = driveMotor.getDriveEncoderVelocitySI();
-        Rotation2d angle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI());
+        Rotation2d angle = Rotation2d.fromDegrees(angleMotor.getAngleEncoderPositionSI()-180);
         return new SwerveModuleState(velocity, angle);
     }
 
@@ -115,28 +115,29 @@ public class SwerveModule extends SubsystemBase {
      */
     public void setDesiredState(SwerveModuleState desiredState) {
 
-        // Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
-        // reversing power to negative value if necessary
-        //double tempDegrees = desiredState.angle.getDegrees();
-        //double tempDegrees360 = tempDegrees+360;
-        //double tempDegreesMod360 = tempDegrees360%360;
-        //System.out.println(" DESIRED STATE ANGLE: ");
-        //System.out.println(" DESIRED STATE ANGLE:                        "+desiredState.angle);
-        //System.out.println(" DESIRED STATE ANGLE .getDegrees():          "+tempDegrees);
-        //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360:      "+tempDegrees360);
-        //System.out.println(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+tempDegreesMod360);
-        //System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle);
-        //desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
-        //System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
-        //System.out.println(" END");
-        //System.out.println(" ");
-        //System.out.println(" ");
+        //Minimizes angle movement of angle motor by limiting movement to 90 degrees and 
+        //reversing power to negative value if necessary
+        double tempDegrees = desiredState.angle.getDegrees();
+        double tempDegrees360 = tempDegrees+360;
+        double tempDegreesMod360 = tempDegrees360%360;
+        System.out.println(" DESIRED STATE ANGLE: ");
+        System.out.println(" DESIRED STATE ANGLE:                        "+desiredState.angle);
+        System.out.println(" DESIRED STATE ANGLE .getDegrees():          "+tempDegrees);
+        System.out.println(" DESIRED STATE ANGLE .getDegrees()+360:      "+tempDegrees360);
+        System.out.println(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+tempDegreesMod360);
+        System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle);
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
+        System.out.println(" END");
+        System.out.println(" ");
+        System.out.println(" ");
         
         // This is the code that makes the robot move by applying the power to the 
         switch (SwerveTelemetry.swerveDriveOrTelemetry) {
             case DRIVE_ONLY:
                 driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()+360.0)%360.0); // Rotation2d angle does not give degrees
+                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()));
+                //+360.0)%360.0); // Rotation2d angle does not give degrees
                 break;
             case TELEMETRY_ONLY:
                 printSwerveModuleState(desiredState);
@@ -145,7 +146,8 @@ public class SwerveModule extends SubsystemBase {
                 printSwerveModuleState(desiredState);
                 // This is the code that makes the robot move by applying the power to the motors
                 driveMotor.applyPower(desiredState.speedMetersPerSecond / SwerveChassis.MAX_VELOCITY);
-                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()+360.0)%360.0); // Rotation2d angle does not give degrees
+                angleMotor.setAngleMotorChassisAngleSI((desiredState.angle.getDegrees()));
+                //+360.0)%360.0); // Rotation2d angle does not give degrees
                 break;
         }            
     }

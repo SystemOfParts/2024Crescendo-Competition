@@ -159,6 +159,12 @@ public class ShooterSubsystem extends SubsystemBase {
     topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID     
   }
 
+  public void runShooterBasedOnDistance(double velocity){
+    requestedSetpoint = velocity;
+    setpoint = velocity;
+    topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID     
+  }
+
   public void stopShooterSmartDashboard(){
     topShooterMotor.set(0);
   }
