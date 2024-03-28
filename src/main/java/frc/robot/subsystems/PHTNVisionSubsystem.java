@@ -13,11 +13,14 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants.PhotonVisionConstants;
 import frc.robot.Constants.VisionConstants.AutoConstants.autoPoses;
 import frc.robot.RobotContainer;
+import frc.robot.lib.TrajectoryHelpers;
 import frc.robot.lib.VisionHelpers;
 
 public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers {
@@ -211,9 +214,11 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
 
   }
 
-   public double getShootingDistance(Pose2d pose) {
+  public double getShootingDistance(Pose2d pose) {
     if (RobotContainer.isAlianceRed) {
-      
+
+      // alex test
+      //System.out.println("RP:"+pose);
       return autoPoses.RED_SPEAKER_TAG.getPose().getTranslation().getDistance(
          pose.getTranslation()
       );
@@ -230,9 +235,6 @@ public class PHTNVisionSubsystem extends SubsystemBase implements VisionHelpers 
     } else {
       distanceToShoot = -1;
     }
-
-    // alex test
-    //System.out.println("ATV0-D:"+distanceToShoot);
     return distanceToShoot;
   }
 
