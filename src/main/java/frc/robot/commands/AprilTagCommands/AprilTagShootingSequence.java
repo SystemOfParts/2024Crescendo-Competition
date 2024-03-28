@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeOnCommand;
+import frc.robot.commands.IntakeCommands.ShootingPushNote;
 import frc.robot.lib.GPMHelpers;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -21,10 +22,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AprilTagShootingSequence extends SequentialCommandGroup {
-
+  IntakeSubsystem m_intake;
   
-  public AprilTagShootingSequence(ShooterSubsystem m_shooter,
-  IntakeSubsystem m_intake, double distance) {
+  public AprilTagShootingSequence(double distance) {
     addCommands(
 // Spin the shooter first
        new WaitCommand(1.5)
@@ -40,7 +40,7 @@ public class AprilTagShootingSequence extends SequentialCommandGroup {
 // push note to shooter after shooter rollers get up to speed
          new WaitCommand(0.75)
            .raceWith(
-              new FeedShooterCommand(m_shooter, m_intake))
+              new ShootingPushNote(distance))
 // after the note leaves the intake, wait to make sure it leaves the shooter as well
           .andThen(new WaitCommand(0.2))
           ,

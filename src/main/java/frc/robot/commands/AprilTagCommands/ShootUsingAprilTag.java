@@ -11,9 +11,8 @@ import edu.wpi.first.wpilibj2.command.DeferredCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.lib.VisionHelpers;
+import frc.robot.lib.LimelightHelpers;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PHTNVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -21,22 +20,22 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ShootUsingAprilTag extends SequentialCommandGroup {
   /** Creates a new ShootUsingLL. */
-  public ShootUsingAprilTag(ShooterSubsystem m_shooter,
-  IntakeSubsystem m_intake, double distance) {
+  public ShootUsingAprilTag() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-     addCommands(
-       new SequentialCommandGroup(
-        new PrintCommand("Shooting Distance : " + (RobotContainer.phtnVisionSubsystem.getShootingDistance() - 1.1)), 
-       new DeferredCommand(
+    addCommands(
+      new ConditionalCommand(
+       new DeferredCommand(() -> new PrintCommand("Shooting Distance : " + (RobotContainer.llVisionSubsystem.getShootingDistance() - 1.1)), 
+       Set.of()).andThen( 
+      new DeferredCommand(
 
-           () -> new AprilTagShootingSequence(m_shooter, m_intake, PHTNVisionSubsystem.distanceToShoot - 1.1), 
-           Set.of())),
+          () -> new AprilTagShootingSequence(RobotContainer.llVisionSubsystem.distanceToShoot - 1.1), 
+          Set.of())),
 
-           new PrintCommand("No AT Visible")
+          new PrintCommand("No AT Visible"),
 
-    //       () -> RobotContainer.llVisionSubsystem.isApriltagVisible() && LimelightHelpers.isInRange(RobotContainer.llVisionSubsystem.getShootingDistance(), 0.0, 4.0)
-    //   )
-     );
+          () -> RobotContainer.llVisionSubsystem.isApriltagVisible() && LimelightHelpers.isInRange(RobotContainer.llVisionSubsystem.getShootingDistance(), 0.0, 4.0)
+      )
+    );
   }
 }
