@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.SparkPIDController;
 
@@ -94,6 +95,10 @@ public class ArmSubsystem extends SubsystemBase {
 
     public void moveToPosition(Orientations orientation) {
         armController.setReference(orientation.armPosition, CANSparkMax.ControlType.kPosition);
+    }
+
+    public void moveToAngleBasedOnDistance(double angle) {
+      armController.setReference(angle, ControlType.kPosition);
     }
 
     public void manualModeTurnOn() {

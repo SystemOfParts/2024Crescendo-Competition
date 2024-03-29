@@ -4,8 +4,8 @@
 
 package frc.robot.commands.AutosNeutral;
 import frc.robot.Constants.OrientationConstants.Orientations;
-import frc.robot.commands.AutoMoveToOrientationCommand;
-import frc.robot.commands.RunTrajectorySequenceRobotAtStartPoint;
+import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;

@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -11,6 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.SwerveChassis;
+
+import java.util.function.DoubleSupplier;
 /**
  * Drive the given distance straight (negative values go backwards). Uses a
  * local PID controller to
@@ -19,6 +24,11 @@ import frc.robot.RobotContainer;
  * averaged values of the left and right encoders.
  */
 public class TurnToDegreeIMU extends PIDCommand {
+
+    
+    private DoubleSupplier mVxSupplier;
+	private DoubleSupplier mVySupplier;
+
     private final DriveSubsystem m_drive;
     private boolean m_relative;
     private double m_degree;
@@ -27,28 +37,39 @@ public class TurnToDegreeIMU extends PIDCommand {
     static double kI = 0;
     static double kD = 0;
 
+    double xInput = 0;
+    double yInput = 0;
+    static double x = 0;
+    static double y = 0;
+
     /**
      * Create a new TurnToDegreeGyro command.
      *
      * @param distance The distance to drive (inches)
      */
-    public TurnToDegreeIMU(double zAngle, DriveSubsystem drive, boolean relative) {
+    public TurnToDegreeIMU(double zAngle, DoubleSupplier JoystickX, DoubleSupplier JoyStickY, DriveSubsystem drive, boolean relative) {
 
-        super(new PIDController(kP, kI, kD),
+        super(
+        new PIDController(kP, kI, kD),
         
                 // Close loop on heading
                 RobotContainer.imuSubsystem::getYaw,
                 // Set reference to target
                 zAngle,
-                // Pipe output to turn robot
-                output -> drive.turn(output));
+                // Pipe output to turn robot, while still letting driver drive x and y
+                output -> drive.turn(x, y, output));
     
 
         // Require the drive
         m_drive = drive;
         m_relative = relative;
         m_degree = zAngle;
-	
+
+        mVxSupplier = JoystickX;
+        mVySupplier = JoyStickY;
+        
+        
+        
         //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         addRequirements(m_drive);
         // Set the controller to be continuous (because it is an angle controller)
@@ -63,8 +84,16 @@ public class TurnToDegreeIMU extends PIDCommand {
 
     @Override
     public void execute() {
-        //System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        //System.out.println("        
+
+       xInput = mVxSupplier.getAsDouble();
+	   yInput = mVySupplier.getAsDouble();                              //     ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        
+        x = xInput * SwerveChassis.MAX_VELOCITY;
+        y = yInput * SwerveChassis.MAX_VELOCITY;
+
         super.execute();
+        
     }
 
     @Override

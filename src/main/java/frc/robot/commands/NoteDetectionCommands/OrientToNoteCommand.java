@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.NoteDetectionCommands;
 
 import java.time.Instant;
 import java.util.function.DoubleSupplier;
@@ -55,11 +55,9 @@ public class OrientToNoteCommand extends Command{
   @Override
   public void end(boolean interrupted) {
     //System.out.println("::::::::::ORIENT TO NOTE ENDED WAS IT INTERRUPTED?: "+interrupted);
-    if (!interrupted){
-      if (intendedDetection){
-        new InstantCommand(() -> new TurnToDegreeIMU(phtn.getNoteYaw(), RobotContainer.driveSubsystem, false));
-      }
-    }
+ 
+      
+    
   }
 
   // Returns true when the command should end.

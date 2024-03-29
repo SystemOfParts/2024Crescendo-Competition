@@ -7,11 +7,14 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants.VisionConstants.LimeLightConstants;
+import frc.robot.lib.TrajectoryHelpers;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -67,7 +70,7 @@ public final class Constants {
 							0,
 							false,
 							false,
-							false),
+							true),
 			INTAKE("Intake",
 							-45.8,
 							0,
@@ -252,7 +255,7 @@ public final class Constants {
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
-		public static final double ANGLE_CHASSIS_KP = (11 * Math.PI) / 12;
+		public static final double ANGLE_CHASSIS_KP = 3.5;
 		public static final double ANGLE_CHASSIS_KI = 0.0;
 		public static final double ANGLE_CHASSIS_KD = 0.0;
 
@@ -284,7 +287,7 @@ public final class Constants {
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
-		public static final double MAX_VELOCITY = 3.0;
+		public static final double MAX_VELOCITY = 4.6;
 		public static final double MAX_HIGH_VELOCITY = 6.0;
 
 		/**
@@ -302,7 +305,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = .9;
+		public static final double MAX_ACCELERATION = 2.76;
 		public static final double MAX_HIGH_ACCELERATION = 3.0;
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -544,7 +547,7 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = .4; //.4
+			public static final double kP = .35; //.4
 			public static final double kI = 0;
 			public static final double kD = 2; //Changed from .8 2/27 - Jordan
 			public static final double kF = 0.0;
@@ -682,6 +685,9 @@ public final class Constants {
 		public static final Pose2d blueAmpPose = new Pose2d(-6.429883, 4.098925, new Rotation2d(Math.PI/2)).relativeTo(LimeLightConstants.centerFieldPose) ;
 		public static final Translation2d blueAmpTranslation = blueAmpPose.getTranslation();
 
+		//TODO: measure and verify this transform
+		public static final Transform2d cameraToRobotTransform = new Transform2d( new Translation2d(-0.30, -0.23), Rotation2d.fromDegrees(180));
+
 		// Ideal shooting poses - all of them - back to the target, hence Math.PI rotation transform is added to all
 
 		// WATCH OUT: FIX THIS 
@@ -705,6 +711,170 @@ public final class Constants {
 		// All calibration sheets must be printed to proper size as we try using built-in
 		// field pose estimators
 
+	public static final class AutoConstants {
+
+		public static double armInPerimeterAngle = -15; // move arm into perimeter
+
+		private static final double fieldSizeX = 16.545814;
+		private static final double fieldSizeY = 8.212;
+
+		public static enum autoPoses {	// important poses
+
+			// SPEAKER TAGS
+
+			BLUE_SPEAKER_TAG (0, 4.986, 180),
+			RED_SPEAKER_TAG (16.545814, 4.986, 0),
+
+			// ========================================= AUTO POSES ======================================
+
+			BLUE_SPEAKER_HIGHER (0.765, 6.764, 60),
+			BLUE_SPEAKER_MID (1.346, 5.540, 0),
+			BLUE_SPEAKER_LOWER (0.765, 4.315, -60),
+
+			BLUE_HIGHER_POS_OUT(3.25, 7.1,0),
+			BLUE_MID_POS_OUT(3.25,5.540,0),
+			BLUE_LOWER_POS_OUT (3.25, 1.312, 0),
+
+			RED_SPEAKER_HIGHER(fieldSizeX-BLUE_SPEAKER_HIGHER.getPose().getX(), BLUE_SPEAKER_HIGHER.getPose().getY(), 120),
+			RED_SPEAKER_MID(fieldSizeX-BLUE_SPEAKER_MID.getPose().getX(), BLUE_SPEAKER_MID.getPose().getY(), 180),
+			RED_SPEAKER_LOWER(fieldSizeX-BLUE_SPEAKER_LOWER.getPose().getX(), BLUE_SPEAKER_LOWER.getPose().getY(), -120),
+
+			RED_HIGHER_POS_OUT(fieldSizeX-BLUE_HIGHER_POS_OUT.getPose().getX(), BLUE_HIGHER_POS_OUT.getPose().getY(), 180),
+			RED_MID_POS_OUT(fieldSizeX-BLUE_MID_POS_OUT.getPose().getX(), BLUE_MID_POS_OUT.getPose().getY(), 180),
+			RED_LOWER_POS_OUT(fieldSizeX-BLUE_LOWER_POS_OUT.getPose().getX(), BLUE_LOWER_POS_OUT.getPose().getY(), 180),
+
+			BLUE_HIGHER_RING(2.896,7.015,0),
+			BLUE_MID_RING(2.896,5.5535,0),
+			BLUE_LOWER_RING(2.896,4.0055,0),
+
+			RED_HIGHER_RING(fieldSizeX-BLUE_HIGHER_RING.getPose().getX(), BLUE_HIGHER_RING.getPose().getY(),180),
+			RED_MID_RING(fieldSizeX-BLUE_MID_RING.getPose().getX(), BLUE_MID_RING.getPose().getY(),180),
+			RED_LOWER_RING(fieldSizeX-BLUE_LOWER_RING.getPose().getX(), BLUE_LOWER_RING.getPose().getY(),180),
+
+			BLUE_HIGHER_RING_TAKE_START(1.909,7.0115,0),
+			BLUE_MID_RING_TAKE_START(1.909,5.5535,0),
+			BLUE_LOWER_RING_TAKE_START(1.909,4.1055,0),
+
+			BLUE_HIGHER_RING_TAKE_END(2.465,7.0115,0),
+			BLUE_MID_RING_TAKE_END(2.465,5.5535,0),
+			BLUE_LOWER_RING_TAKE_END(2.465,4.0055,0),
+
+			// alex new
+
+			// TAKE_START pose rotated using the note center as origin, to the number of degrees - from the center of the speaker looking forward to point to the note
+			BLUE_HIGHER_RING_TAKE_START_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					BLUE_HIGHER_RING.getPose(),
+					BLUE_HIGHER_RING_TAKE_START.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(BLUE_SPEAKER_MID.getPose(), BLUE_HIGHER_RING.getPose()).getDegrees()  // angle to point from middle of the speaker to the ring
+				)
+			),
+			BLUE_HIGHER_RING_TAKE_END_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					BLUE_HIGHER_RING.getPose(),
+					BLUE_HIGHER_RING_TAKE_END.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(BLUE_SPEAKER_MID.getPose(), BLUE_HIGHER_RING.getPose()).getDegrees()
+				)
+			),
+			BLUE_LOWER_RING_TAKE_START_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					BLUE_LOWER_RING.getPose(),
+					BLUE_LOWER_RING_TAKE_START.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(BLUE_SPEAKER_MID.getPose(), BLUE_LOWER_RING.getPose()).getDegrees()  // angle to point from middle of the speaker to the ring
+				)
+			),
+			BLUE_LOWER_RING_TAKE_END_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					BLUE_LOWER_RING.getPose(),
+					BLUE_LOWER_RING_TAKE_END.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(BLUE_SPEAKER_MID.getPose(), BLUE_LOWER_RING.getPose()).getDegrees()
+				)
+			),
+
+			RED_HIGHER_RING_TAKE_START(fieldSizeX-BLUE_HIGHER_RING_TAKE_START.getPose().getX(), BLUE_HIGHER_RING_TAKE_START.getPose().getY(),180),
+			RED_MID_RING_TAKE_START(fieldSizeX-BLUE_MID_RING_TAKE_START.getPose().getX(), BLUE_MID_RING_TAKE_START.getPose().getY(),180),
+			RED_LOWER_RING_TAKE_START(fieldSizeX-BLUE_LOWER_RING_TAKE_START.getPose().getX(), BLUE_LOWER_RING_TAKE_START.getPose().getY(),180),
+
+			RED_HIGHER_RING_TAKE_END(fieldSizeX-BLUE_HIGHER_RING_TAKE_END.getPose().getX(), BLUE_HIGHER_RING_TAKE_END.getPose().getY(),180),
+			RED_MID_RING_TAKE_END(fieldSizeX-BLUE_MID_RING_TAKE_END.getPose().getX(), BLUE_MID_RING_TAKE_END.getPose().getY(),180),
+			RED_LOWER_RING_TAKE_END(fieldSizeX-BLUE_LOWER_RING_TAKE_END.getPose().getX(), BLUE_LOWER_RING_TAKE_END.getPose().getY(),180),
+
+			// TAKE_START pose rotated using the note center as origin, to the number of degrees - from the center of the speaker looking forward to point to the note
+			RED_HIGHER_RING_TAKE_START_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					RED_HIGHER_RING.getPose(),
+					RED_HIGHER_RING_TAKE_START.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(RED_SPEAKER_MID.getPose(), RED_HIGHER_RING.getPose()).getDegrees()  // angle to point from middle of the speaker to the ring
+				)
+			),
+			RED_HIGHER_RING_TAKE_END_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					RED_HIGHER_RING.getPose(),
+					RED_HIGHER_RING_TAKE_END.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(RED_SPEAKER_MID.getPose(), RED_HIGHER_RING.getPose()).getDegrees()
+				)
+			),
+			RED_LOWER_RING_TAKE_START_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					RED_LOWER_RING.getPose(),
+					RED_LOWER_RING_TAKE_START.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(RED_SPEAKER_MID.getPose(), RED_LOWER_RING.getPose()).getDegrees()  // angle to point from middle of the speaker to the ring
+				)
+			),
+			RED_LOWER_RING_TAKE_END_OPTIMIZED(
+				TrajectoryHelpers.correctEndingPoseBasedOnNoteLocation(
+					RED_LOWER_RING.getPose(),
+					RED_LOWER_RING_TAKE_END.getPose(),
+					TrajectoryHelpers.rotateToPointToSecondPose(RED_SPEAKER_MID.getPose(), RED_LOWER_RING.getPose()).getDegrees()
+				)
+			),
+
+			//Constants to pick up far note
+			BLUE_FAR_DRIVE_W1(5.03, 0.453, 0),
+			BLUE_FAR_LOWER_TAKE_START(7.40, 0.453, 0),
+			BLUE_FAR_LOWER_TAKE_END(8.2, 0.453, 0),
+			BLUE_SPEAKER_LOWER_2(1.265, 4.315, -60),
+
+			RED_FAR_DRIVE_W1(fieldSizeX-BLUE_FAR_DRIVE_W1.getPose().getX(), BLUE_FAR_DRIVE_W1.getPose().getY(), 180),
+			RED_FAR_LOWER_TAKE_START(fieldSizeX-BLUE_FAR_LOWER_TAKE_START.getPose().getX(), BLUE_FAR_LOWER_TAKE_START.getPose().getY(), 180),
+			RED_FAR_LOWER_TAKE_END(fieldSizeX-BLUE_FAR_LOWER_TAKE_END.getPose().getX(), BLUE_FAR_LOWER_TAKE_END.getPose().getY(), 180),
+			RED_SPEAKER_LOWER_2(fieldSizeX-BLUE_SPEAKER_LOWER_2.getPose().getX(), BLUE_SPEAKER_LOWER_2.getPose().getY(), -120)
+
+			;
+
+			private Pose2d pose;
+
+			autoPoses(double x, double y, double angle) {
+				this.pose = new Pose2d(x, y, Rotation2d.fromDegrees(angle));
+			}
+			autoPoses(Pose2d p) {
+				this.pose = p;
+			}
+			public Pose2d getPose() {
+				return pose;
+			}
+		}
+
+		public static enum centerNotes {	// important poses
+			
+			LOW1 (8.272, 0.753),
+			LOW2 (8.272, 2.411),
+			MID3 (8.272, 4.106),
+			HIGH4 (8.272, 5.782),
+			HIGH5 (8.272, 7.458)
+			;
+
+			private Translation2d translation;
+
+			centerNotes(double x, double y) {
+				this.translation = new Translation2d(x, y);
+			}
+			public Translation2d getTranslation() {
+				return translation;
+			}
+		}
+		
+	}
 		public static final class LimeLightConstants {
 
 			// If changing this value, do not forget to set it in LL

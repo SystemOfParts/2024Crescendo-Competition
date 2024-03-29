@@ -12,6 +12,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IMUSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LLVisionSubsystem;
 //import frc.robot.subsystems.LeadScrewSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -22,8 +23,13 @@ import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
+import frc.robot.lib.GPMHelpers;
+
 import frc.robot.commands.*;
-import frc.robot.commands.DetectAprilTagCommand;
+import frc.robot.commands.AprilTagCommands.AprilTagPrint;
+import frc.robot.commands.AprilTagCommands.DetectAprilTagCommand;
+import frc.robot.commands.AprilTagCommands.ShootUsingAprilTag;
+import frc.robot.commands.AutonomousCommands.AutoShootAndStay;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosNeutral.AutoEitherCenterTwoNote;
 import frc.robot.commands.AutosNeutral.AutoPIDAcrossUpDown;
@@ -39,9 +45,12 @@ import frc.robot.commands.ClimberCommands.LeftClimberUpCommand;
 import frc.robot.commands.ClimberCommands.RightClimberDownCommand;
 import frc.robot.commands.ClimberCommands.RightClimberStopCommand;
 import frc.robot.commands.ClimberCommands.RightClimberUpCommand;
+import frc.robot.commands.GPMCommands.MoveToOrientationCommand;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeOnCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
+import frc.robot.commands.NoteDetectionCommands.DetectNoteCommand;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -69,10 +78,11 @@ public class RobotContainer {
   public static final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   public static final ArmSubsystem armSubsystem = new ArmSubsystem();
   public static final PHTNVisionSubsystem phtnVisionSubsystem = new PHTNVisionSubsystem("AprilTagCamera");
+  public final static LLVisionSubsystem llVisionSubsystem = new LLVisionSubsystem();
   public static final NoteDetectionPHTNVisionSubsystem noteDetectionPhtnVisionSubsystem = new NoteDetectionPHTNVisionSubsystem("NoteCamera");
+  public final static GPMHelpers gpmHelpers = new GPMHelpers();
   public static final SmartDashboardSubsystem smartDashboardSubsystem = new SmartDashboardSubsystem();
- 
-  
+
   //Define Controllers
   public static Controller xboxController;
   
@@ -168,12 +178,12 @@ public class RobotContainer {
   // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
     new Trigger(m_operator1Controller.button(2))
-        .whileTrue(new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .whileTrue(new AprilTagPrint(llVisionSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     
-    new Trigger(m_operator1Controller.button(11))
-        .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
-        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    // new Trigger(m_operator1Controller.button(11))
+    //     .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
+    //     .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
   private void configureAutos(){
@@ -306,6 +316,11 @@ private void configureBindings() {
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
+  new Trigger (m_operator1Controller.button(11))
+    .onTrue(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOn()))
+    .onFalse(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOff())); // Stops humming for testing (annoying)
+    //MANUAL RESET MODE
+
   new Trigger (m_operator1Controller.button(10))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
@@ -377,19 +392,34 @@ private void configureBindings() {
   new Trigger(m_operator2Controller.button(5)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.STARTLINE));
 
+ 
   // DRIVER QUICK ANGLE BINDINGS
   
   // ROTATE THE BOT TO FACE RIGHT
   new JoystickButton(xboxController, 2)
-    .onTrue(new TurnToDegreeIMU( -90, driveSubsystem, false))
+    .onTrue(new TurnToDegreeIMU( 
+      -90,
+      () -> getDriverXAxis(),
+      () -> getDriverYAxis(),
+      driveSubsystem,  
+      false))
+
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
+
   // ROTATE THE BOT TO FACE LEFT
   new JoystickButton(xboxController, 3)
-    .onTrue(new TurnToDegreeIMU( 90, driveSubsystem, false))
+
+    .onTrue(new TurnToDegreeIMU( 
+      90, 
+      () -> getDriverXAxis(),
+      () -> getDriverYAxis(),
+      driveSubsystem, 
+      false))
+        
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -398,7 +428,11 @@ private void configureBindings() {
 
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
-    .onTrue(new TurnToDegreeIMU( -120, driveSubsystem, false))
+     .onTrue(new TurnToDegreeIMU( 
+      -120, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -407,12 +441,17 @@ private void configureBindings() {
 
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
-    .onTrue(new TurnToDegreeIMU( 120, driveSubsystem, false))
+ .onTrue(new TurnToDegreeIMU( 
+      120, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
+                        
   
   // Feed the note from the intake to the shooter to shoot - uses the intake to move the note and waits for the shooter to be at speed
   // When finished orient to TRAVEL position for safe movement

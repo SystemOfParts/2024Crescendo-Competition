@@ -25,6 +25,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
     //private int CANID;
     private SwerveModuleConstants cAngle;
     private RelativeEncoder driveEncoder;
+    private RelativeEncoder angleEncoderRel;
     private SparkAbsoluteEncoder angleEncoder;
     private SparkPIDController pid;
 
@@ -34,6 +35,7 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorNEO = new CANSparkMax(CANID, MotorType.kBrushless);
 
         driveEncoder = motorNEO.getEncoder();
+        angleEncoderRel = motorNEO.getEncoder();
         angleEncoder = motorNEO.getAbsoluteEncoder(Type.kDutyCycle);
 
         //this.CANID=CANID;
@@ -144,10 +146,8 @@ public class BaseMotorNEO implements BaseMotorInterface {
         
         motorBrakeMode();
 
-        // if (CANID == 1) {
-            //setAngleMotorChassisAngleSI(0);
-        // }
-        //setAngleMotorChassisAngleSI(0);
+        setEncoderforWheelCalibration(c);
+
     }
 
     public double getDriveEncoderPosition() {
@@ -216,6 +216,8 @@ public class BaseMotorNEO implements BaseMotorInterface {
         motorNEO.setIdleMode(IdleMode.kBrake);
     }
 
+    
+
     private double degreesToTicks(double degrees) {
         return ((degrees+cAngle.getAngleOffset()) / NEOSwerveConfiguration.degreePerTick)  
          % 
@@ -223,8 +225,29 @@ public class BaseMotorNEO implements BaseMotorInterface {
     }
 
      
+    public void setEncoderforWheelCalibration(SwerveModuleConstants c) {
+        double difference = (getAngleEncoderPosition() - c.getAngleOffset())
+                / NEOSwerveConfiguration.degreePerTick; // cancoder returns Abs value in Degrees
+        double encoderSetting = 0.0;
 
-    
+        //System.out.println(c.getAngleMotorID()+"#"+getCancoderAbsEncoderValue()+"#"+c.getAngleOffset()+"#");
+
+        if (difference < 0) {
+            difference += NEOSwerveConfiguration.ticksPerFullRotation;
+        }
+
+        if (difference <= NEOSwerveConfiguration.ticksPerFullRotation / 2) {
+            encoderSetting = difference;
+
+        } else {
+            encoderSetting = difference - NEOSwerveConfiguration.ticksPerFullRotation;
+        }
+
+        angleEncoderRel.setPosition(encoderSetting);
+
+        System.out.println("Set encoder for motor " + c.getAngleMotorID() + " to " + encoderSetting);
+
+    }
 
 
 }

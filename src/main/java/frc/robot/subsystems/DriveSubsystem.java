@@ -150,11 +150,11 @@ public class DriveSubsystem extends SubsystemBase {
 
   }
 
-  public void turn(double speed) {
+  public void turn(double x, double y, double speed) {
 
     double radianSpeed = speed*.01745329;
     
-    drive(0, 0, radianSpeed, true);
+    drive(x, y, radianSpeed, true);
   }
 
 
