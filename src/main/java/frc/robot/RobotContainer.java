@@ -105,7 +105,11 @@ public class RobotContainer {
 
   //Define the SendableChooser for autos
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
-  
+  // FAST
+
+  private final Command m_FASTBlueStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+
   // Neutral
   private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
   private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
@@ -209,33 +213,35 @@ public class RobotContainer {
     }
      */
     m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
-    m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
+    m_chooser.addOption("FAST STAY", m_FASTBlueStayShoot);
+    m_chooser.addOption("FAST FOUR", m_FASTBlueFourPiece);
+   /*  m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
     m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
     m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
     m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
     m_chooser.addOption("BLUE Center 3 North", m_AutoBlueCenterThreeNoteNorth);
-    m_chooser.addOption("BLUE Center 3 South", m_AutoBlueCenterThreeNoteSouth);
+    m_chooser.addOption("BLUE Center 3 South", m_AutoBlueCenterThreeNoteSouth); */
     //m_chooser.addOption("BLUE Center 3 - 2 AND 3", m_AutoBlueCenterMid2And3ThreeNote);
     //m_chooser.addOption("BLUE Center 3 - 4 AND 3", m_AutoBlueCenterMid4And3ThreeNote);
     //m_chooser.addOption("BLUE Center 3 - 2 AND Back", m_AutoBlueCenterMid2ToSubThreeNote);
     //m_chooser.addOption("BLUE Center 3 - 3 AND Back", m_AutoBlueCenterMid3ToSubThreeNote);
     //m_chooser.addOption("BLUE Center 3 - 4 AND Back", m_AutoBlueCenterMid4ToSubThreeNote);
     //m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
-    m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
+    /* m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
     m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
     m_chooser.addOption("Red North Clear", m_AutoBlueSouthTwoNoteComplete);
     m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
     m_chooser.addOption("RED Center 3 North", m_AutoRedCenterThreeNoteNorth);
-    m_chooser.addOption("RED Center 3 South", m_AutoRedCenterThreeNoteSouth);
+    m_chooser.addOption("RED Center 3 South", m_AutoRedCenterThreeNoteSouth); */
     //m_chooser.addOption("RED Center 3 - 2 AND 3", m_AutoRedCenterMid2And3ThreeNote);
     //m_chooser.addOption("RED Center 3 - 4 AND 3", m_AutoRedCenterMid4And3ThreeNote);
     //m_chooser.addOption("RED Center 3 - 2 AND Back", m_AutoRedCenterMid2ToSubThreeNote);
     //m_chooser.addOption("RED Center 3 - 3 AND Back", m_AutoRedCenterMid3ToSubThreeNote);
    // m_chooser.addOption("RED Center 3 - 4 AND Back", m_AutoRedCenterMid4ToSubThreeNote);
-    m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
+    /* m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
     m_chooser.addOption("RED North CLear", m_AutoRedNorthClear);
     m_chooser.addOption("BLUE/RED TRAP from Center", m_AutoTrapEitherSub);
-    m_chooser.addOption("BLUE/RED TRAP from AMP", m_AutoTrapEitherAMP);
+    m_chooser.addOption("BLUE/RED TRAP from AMP", m_AutoTrapEitherAMP); */
     SmartDashboard.putData(m_chooser);
   }
 
