@@ -26,7 +26,7 @@ public class ShootUsingAprilTag extends SequentialCommandGroup {
     addCommands(
       new ConditionalCommand(
        new DeferredCommand(() -> new PrintCommand("Shooting Distance : " + (RobotContainer.llVisionSubsystem.getShootingDistance() - 1.1)), 
-       Set.of()).andThen( 
+       Set.of()).andThen(
       new DeferredCommand(
 
           () -> new AprilTagShootingSequence(RobotContainer.llVisionSubsystem.distanceToShoot - 1.1), 

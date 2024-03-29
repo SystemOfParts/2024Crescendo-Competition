@@ -26,7 +26,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import frc.robot.lib.GPMHelpers;
 
 import frc.robot.commands.*;
+import frc.robot.commands.AprilTagCommands.AprilTagPrint;
 import frc.robot.commands.AprilTagCommands.DetectAprilTagCommand;
+import frc.robot.commands.AprilTagCommands.ShootUsingAprilTag;
 import frc.robot.commands.AutonomousCommands.AutoShootAndStay;
 import frc.robot.commands.AutosBlue.*;
 import frc.robot.commands.AutosNeutral.AutoEitherCenterTwoNote;
@@ -48,6 +50,7 @@ import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeOnCommand;
 import frc.robot.commands.IntakeCommands.IntakeStopCommand;
 import frc.robot.commands.NoteDetectionCommands.DetectNoteCommand;
+import frc.robot.commands.PathingCommands.RunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -175,12 +178,12 @@ public class RobotContainer {
   // USED ONLY FOR TESTING AUTOS USING UNUSED KEYS
   public void trajectoryCalibration() {
     new Trigger(m_operator1Controller.button(2))
-        .whileTrue(new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem))
+        .whileTrue(new AprilTagPrint(llVisionSubsystem))
         .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
     
-    new Trigger(m_operator1Controller.button(11))
-        .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
-        .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
+    // new Trigger(m_operator1Controller.button(11))
+    //     .whileTrue(new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem))
+    //     .onFalse(new InstantCommand(RobotContainer.driveSubsystem::stopRobot, RobotContainer.driveSubsystem));
   }
 
   private void configureAutos(){
@@ -384,11 +387,16 @@ private void configureBindings() {
   new Trigger(m_operator2Controller.button(5)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.STARTLINE));
 
+ 
   // DRIVER QUICK ANGLE BINDINGS
   
   // ROTATE THE BOT TO FACE RIGHT
   new JoystickButton(xboxController, 2)
-    .onTrue(new TurnToDegreeIMU( -90, driveSubsystem, false))
+    .onTrue(new TurnToDegreeIMU( 
+      -90,
+      () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem,  false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -396,7 +404,13 @@ private void configureBindings() {
                         () -> getDriverFieldCentric()));
   // ROTATE THE BOT TO FACE LEFT
   new JoystickButton(xboxController, 3)
-    .onTrue(new TurnToDegreeIMU( 90, driveSubsystem, false))
+
+    .onTrue(new TurnToDegreeIMU( 
+      90, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
+        
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -405,7 +419,11 @@ private void configureBindings() {
 
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
-    .onTrue(new TurnToDegreeIMU( -120, driveSubsystem, false))
+     .onTrue(new TurnToDegreeIMU( 
+      -120, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
@@ -414,12 +432,17 @@ private void configureBindings() {
 
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
-    .onTrue(new TurnToDegreeIMU( 120, driveSubsystem, false))
+ .onTrue(new TurnToDegreeIMU( 
+      120, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
+                        
   
   // Feed the note from the intake to the shooter to shoot - uses the intake to move the note and waits for the shooter to be at speed
   // When finished orient to TRAVEL position for safe movement

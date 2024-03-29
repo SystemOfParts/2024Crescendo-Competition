@@ -120,17 +120,17 @@ public class SwerveModule extends SubsystemBase {
         double tempDegrees = desiredState.angle.getDegrees();
         double tempDegrees360 = tempDegrees+360;
         double tempDegreesMod360 = tempDegrees360%360;
-        System.out.println(" DESIRED STATE ANGLE: ");
+        /* System.out.println(" DESIRED STATE ANGLE: ");
         System.out.println(" DESIRED STATE ANGLE:                        "+desiredState.angle);
         System.out.println(" DESIRED STATE ANGLE .getDegrees():          "+tempDegrees);
         System.out.println(" DESIRED STATE ANGLE .getDegrees()+360:      "+tempDegrees360);
         System.out.println(" DESIRED STATE ANGLE .getDegrees()+360 %360: "+tempDegreesMod360);
-        System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle);
+         System.out.println(" CURRENT ANGLE: ------------------------==============>>>>>>   "+getState().angle); */
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
-        System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
-        System.out.println(" END");
-        System.out.println(" ");
-        System.out.println(" ");
+        // System.out.println(" NEW DESIRED STATE ANGLE ===> :                        "+desiredState.angle);
+        // System.out.println(" END");
+        // System.out.println(" ");
+        // System.out.println(" ");
         
         // This is the code that makes the robot move by applying the power to the 
         switch (SwerveTelemetry.swerveDriveOrTelemetry) {

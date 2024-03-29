@@ -255,7 +255,7 @@ public final class Constants {
 		 * trajectory if it includes holonomic rotation.
 		 * Make sure to test the values and adjust them as needed for your robot.
 		 */
-		public static final double ANGLE_CHASSIS_KP = (11 * Math.PI) / 12;
+		public static final double ANGLE_CHASSIS_KP = 3.5;
 		public static final double ANGLE_CHASSIS_KI = 0.0;
 		public static final double ANGLE_CHASSIS_KD = 0.0;
 
@@ -287,7 +287,7 @@ public final class Constants {
 		 * as the teleop logic will simply use it as a point of reference.
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
-		public static final double MAX_VELOCITY = 3.0;
+		public static final double MAX_VELOCITY = 4.6;
 		public static final double MAX_HIGH_VELOCITY = 6.0;
 
 		/**
@@ -305,7 +305,7 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = .9;
+		public static final double MAX_ACCELERATION = 2.76;
 		public static final double MAX_HIGH_ACCELERATION = 3.0;
 		/**
 		 * Parameters for BaseMotorTalonSRX class
@@ -547,7 +547,7 @@ public final class Constants {
 		
 		public static final class NEOAngle {
 
-			public static final double kP = .4; //.4
+			public static final double kP = .35; //.4
 			public static final double kI = 0;
 			public static final double kD = 2; //Changed from .8 2/27 - Jordan
 			public static final double kF = 0.0;
