@@ -70,7 +70,7 @@ public final class Constants {
 							0,
 							false,
 							false,
-							false),
+							true),
 			INTAKE("Intake",
 							-45.8,
 							0,

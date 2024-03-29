@@ -316,6 +316,11 @@ private void configureBindings() {
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
+  new Trigger (m_operator1Controller.button(11))
+    .onTrue(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOn()))
+    .onFalse(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOff())); // Stops humming for testing (annoying)
+    //MANUAL RESET MODE
+
   new Trigger (m_operator1Controller.button(10))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
@@ -404,7 +409,7 @@ private void configureBindings() {
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
-                        
+
   // ROTATE THE BOT TO FACE LEFT
   new JoystickButton(xboxController, 3)
 

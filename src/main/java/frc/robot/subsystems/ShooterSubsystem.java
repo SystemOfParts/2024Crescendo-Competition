@@ -45,9 +45,11 @@ public class ShooterSubsystem extends SubsystemBase {
   double kMinOutput = 0; //- Waterbury: -1
   //private double stopSpeed = 0;
   double requestedSetpoint = 0; //- Waterbury: 0
-  double humSpeed = 500; //- Waterbury: 500
+  double humSpeed = 1200; //- Waterbury: 500
   double setpoint = 0; //- Waterbury: 0
   double setpointTolerance = 100; //- Waterbury: 100
+
+  boolean HumModeOff = false;
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
@@ -112,6 +114,17 @@ public class ShooterSubsystem extends SubsystemBase {
       addPIDToDashboard();
     }
   }
+  
+  public void HumModeTurnOff() {
+    //System.out.println("Turned on climber mode");
+  
+    HumModeOff = true;
+  }
+   public void HumModeTurnOn() {
+    //System.out.println("Turned on climber mode");
+  
+    HumModeOff = false;
+  }
 
   public void addPIDToDashboard() {
     SmartDashboard.putNumber("kShooterP", kP);
@@ -170,7 +183,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
   public void stopShooter(Orientations orientation){
     // humSpeed is the slow maintained hum of the shooter motors during the course of the game to allow faster spinup
-    if (orientation.maintainHumSpeed){
+    if ((orientation.maintainHumSpeed) && !HumModeOff){
       // when we want to stop the shooter but maintainHumSpeed is set, we set it to the humSpeed instead
       setpoint = humSpeed;
       topShooterPID.setReference(setpoint, CANSparkMax.ControlType.kVelocity); //applies the chosen PID
