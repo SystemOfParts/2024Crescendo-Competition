@@ -56,7 +56,7 @@ public class TurnToDegreeIMU extends PIDCommand {
                 RobotContainer.imuSubsystem::getYaw,
                 // Set reference to target
                 zAngle,
-                // Pipe output to turn robot
+                // Pipe output to turn robot, while still letting driver drive x and y
                 output -> drive.turn(x, y, output));
     
 
@@ -68,8 +68,7 @@ public class TurnToDegreeIMU extends PIDCommand {
         mVxSupplier = JoystickX;
         mVySupplier = JoyStickY;
         
-        double xInput = mVxSupplier.getAsDouble();
-		double yInput = mVySupplier.getAsDouble();
+        
         
         //System.out.println("                                           ----->>> [  STARTING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         addRequirements(m_drive);
@@ -85,7 +84,10 @@ public class TurnToDegreeIMU extends PIDCommand {
 
     @Override
     public void execute() {
-        //System.out.println("                                           ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
+        //System.out.println("        
+
+       xInput = mVxSupplier.getAsDouble();
+	   yInput = mVySupplier.getAsDouble();                              //     ----->>> [  MOVING  ]: TurnToDegreeIMU: ANGLE: " + m_degree);
         
         x = xInput * SwerveChassis.MAX_VELOCITY;
         y = yInput * SwerveChassis.MAX_VELOCITY;

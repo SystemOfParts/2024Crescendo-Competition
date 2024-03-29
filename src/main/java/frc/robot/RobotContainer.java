@@ -395,21 +395,25 @@ private void configureBindings() {
     .onTrue(new TurnToDegreeIMU( 
       -90,
       () -> getDriverXAxis(),
-        () -> getDriverYAxis(),
-        driveSubsystem,  false))
+      () -> getDriverYAxis(),
+      driveSubsystem,  
+      false))
+
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
                         () -> getDriverYAxis(),
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
+                        
   // ROTATE THE BOT TO FACE LEFT
   new JoystickButton(xboxController, 3)
 
     .onTrue(new TurnToDegreeIMU( 
       90, 
-        () -> getDriverXAxis(),
-        () -> getDriverYAxis(),
-        driveSubsystem, false))
+      () -> getDriverXAxis(),
+      () -> getDriverYAxis(),
+      driveSubsystem, 
+      false))
         
     .onFalse( new DriveManuallyCommand(
                         () -> getDriverXAxis(),
