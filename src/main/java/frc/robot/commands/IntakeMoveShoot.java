@@ -14,12 +14,12 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 import frc.robot.commands.AutonomousCommands.AutoShootAtCurrentTarget;
 
-public class AutoStepDynCmd extends SequentialCommandGroup {
-  public AutoStepDynCmd( 
+public class IntakeMoveShoot extends SequentialCommandGroup {
+  public IntakeMoveShoot( 
       Boolean hasIntake,
       Orientations shotOrientation,
-      String pre,
-      String post,
+      String prePath,
+      String postPath,
       Double preDelay,
       Double postDelay,
       ArmSubsystem m_arm,
@@ -29,7 +29,7 @@ public class AutoStepDynCmd extends SequentialCommandGroup {
     {
     Orientations lastOrientation = null;
     // IF we have a path to travel before we intake
-    if (pre != null){
+    if (prePath != null){
       // There was a pre path
       if (hasIntake){
         // There is an intake task
@@ -38,7 +38,7 @@ public class AutoStepDynCmd extends SequentialCommandGroup {
         // together orient to the intake position and start moving 
         new ParallelCommandGroup(
           new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, Orientations.AUTO_INTAKE),
-          new FASTRunTrajectorySequenceRobotAtStartPoint(pre)));
+          new FASTRunTrajectorySequenceRobotAtStartPoint(prePath)));
       }
     } 
     //PREPATH COMPLETED OR SKIPPED, WE'VE STOPPED MOVING, HOPEFULLY WE HAVE A NOTE
@@ -47,12 +47,12 @@ public class AutoStepDynCmd extends SequentialCommandGroup {
     if (m_intake.isNoteInIntake()){
       // WE HAVE A NOTE
       // ARE WE SUPPOSED TO MOVE TO A SHOOTING POSITION?
-      if (post != null){
+      if (postPath != null){
         // YES - LETS ORIENT AND MOVE TOGETHER
         addCommands(
           new ParallelCommandGroup(
             new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation),
-            new FASTRunTrajectorySequenceRobotAtStartPoint(post)));
+            new FASTRunTrajectorySequenceRobotAtStartPoint(postPath)));
       } else {
         // WE DON'T NEED TO MOVE, LET'S JUST ORIENT TO SHOOTING POSITION
         System.out.println("FAST AUTO ORIENT TO SHOOTING POSITION WITHOUT POST MOVEMENT");
