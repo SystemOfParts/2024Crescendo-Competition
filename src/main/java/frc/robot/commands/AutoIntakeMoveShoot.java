@@ -14,8 +14,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.commands.*;
 import frc.robot.commands.AutonomousCommands.AutoShootAtCurrentTarget;
 
-public class AutoStepDynCmd extends SequentialCommandGroup {
-  public AutoStepDynCmd( 
+public class AutoIntakeMoveShoot extends SequentialCommandGroup {
+  public AutoIntakeMoveShoot( 
       Boolean hasIntake,
       Orientations shotOrientation,
       String prePath,
