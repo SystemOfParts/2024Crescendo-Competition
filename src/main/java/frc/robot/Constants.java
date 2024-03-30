@@ -887,6 +887,9 @@ public final class Constants {
 			// NEW origin from the old origin point of view in the old coordiinate system
 			public static final Pose2d centerFieldPose = new Pose2d(-8.308467, -4.098925, new Rotation2d(0));
 
+			public static final Transform2d cameraToRobotTransform = new Transform2d(new Translation2d(0.0, -0.254), Rotation2d.fromDegrees(180));
+
+
 		}
 		public static final class PhotonVisionConstants {
 
