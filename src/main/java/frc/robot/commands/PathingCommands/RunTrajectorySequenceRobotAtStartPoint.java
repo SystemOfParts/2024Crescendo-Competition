@@ -67,7 +67,7 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
   public RunTrajectorySequenceRobotAtStartPoint(String trajectory, boolean reversed) {
 
     //this(trajectory, 0.5, 0.05, reversed);
-    this(trajectory, Constants.SwerveChassis.MAX_VELOCITY, Constants.SwerveChassis.MAX_ACCELERATION, reversed);
+    this(trajectory, Constants.SwerveChassis.MAX_AUTO_VELOCITY, Constants.SwerveChassis.MAX_ACCELERATION, reversed);
     //System.out.println("*** Run trajectory "+ trajectory+" reversed:"+reversed+" with max velocity and acceleration");
   }
 

@@ -33,7 +33,7 @@ public class TurnToDegreeIMU extends PIDCommand {
     private boolean m_relative;
     private double m_degree;
 
-    static double kP = 2.125;
+    static double kP = 3.5;
     static double kI = 0;
     static double kD = 0;
 

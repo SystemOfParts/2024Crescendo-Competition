@@ -88,7 +88,7 @@ public class ArmSubsystem extends SubsystemBase {
 
       // Arm Encoder setup
       leftArmEncoder.setPosition(0);
-        
+      armController.setReference(0, CANSparkMax.ControlType.kPosition); //sets to home on initialization
 
 
     }

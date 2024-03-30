@@ -14,9 +14,9 @@ import frc.robot.commands.AutoStepDynCmd;
 import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class FAST_AutoBlueCenterFourNote extends SequentialCommandGroup {
+public class FAST_AutoBlueCenterTwoNote extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */
-  public FAST_AutoBlueCenterFourNote(
+  public FAST_AutoBlueCenterTwoNote(
     ArmSubsystem m_a,
     IntakeSubsystem m_i,
     ShooterSubsystem m_s
@@ -25,8 +25,6 @@ public class FAST_AutoBlueCenterFourNote extends SequentialCommandGroup {
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),
       new AutoStepDynCmd(false, Orientations.AUTO_SUBWOOFER, null, null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoStepDynCmd(true, Orientations.AUTO_STARTLINE, "a_b_center_2_SAN", null, 0.5, 0.5, m_a, m_s, m_i),
-      new AutoStepDynCmd(true, Orientations.AUTO_PODIUM, "a_b_2_to_3_SAN", null, 0.5, 0.5, m_a, m_s, m_i),
-      new AutoStepDynCmd(true, Orientations.AUTO_PODIUM, "a_b_3_to_1_SAN", null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.HOME));
   }
 }

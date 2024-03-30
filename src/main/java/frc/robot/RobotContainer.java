@@ -109,6 +109,8 @@ public class RobotContainer {
 
   private final Command m_FASTBlueStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueThreePiece = new FAST_AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueTwoPiece = new FAST_AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
 
   // Neutral
   private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
@@ -214,9 +216,12 @@ public class RobotContainer {
      */
     m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
     m_chooser.addOption("FAST STAY", m_FASTBlueStayShoot);
+    m_chooser.addOption("FAST TWO", m_FASTBlueTwoPiece);
+    m_chooser.addOption("FAST THREE", m_FASTBlueThreePiece);
     m_chooser.addOption("FAST FOUR", m_FASTBlueFourPiece);
-   /*  m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
     m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
+   /*  m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
+   
     m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
     m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
     m_chooser.addOption("BLUE Center 3 North", m_AutoBlueCenterThreeNoteNorth);
@@ -322,9 +327,9 @@ private void configureBindings() {
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
-  new Trigger (m_operator1Controller.button(11))
-    .onTrue(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOn()))
-    .onFalse(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOff())); // Stops humming for testing (annoying)
+  new Trigger (m_operator2Controller.button(11))
+    .onTrue(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOff()))
+    .onFalse(new InstantCommand(()->RobotContainer.shooterSubsystem.HumModeTurnOn())); // Stops humming for testing (annoying)
     //MANUAL RESET MODE
 
   new Trigger (m_operator1Controller.button(10))
@@ -435,7 +440,7 @@ private void configureBindings() {
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
      .onTrue(new TurnToDegreeIMU( 
-      -120, 
+      0, 
         () -> getDriverXAxis(),
         () -> getDriverYAxis(),
         driveSubsystem, false))
@@ -448,7 +453,7 @@ private void configureBindings() {
   // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
  .onTrue(new TurnToDegreeIMU( 
-      120, 
+      180, 
         () -> getDriverXAxis(),
         () -> getDriverYAxis(),
         driveSubsystem, false))
@@ -465,6 +470,17 @@ private void configureBindings() {
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
     .onFalse(new IntakeStopCommand(intakeSubsystem, false));
 
+    new JoystickButton(xboxController, 5)
+    .onTrue(new TurnToDegreeIMU( 
+      -31, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
+    .onFalse( new DriveManuallyCommand(
+                        () -> getDriverXAxis(),
+                        () -> getDriverYAxis(),
+                        () -> getDriverOmegaAxis(),
+                        () -> getDriverFieldCentric()));
   /* 
   new JoystickButton(xboxController, 5)
     .onTrue(
@@ -482,6 +498,26 @@ private void configureBindings() {
   // GET THE AUTO COMMAND FROM THE CHOOSER
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    System.out.println("***************  **************    RUNNING AUTO    ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("*                                                                            *");
+    System.out.println("*                                                                            *");
+    System.out.println("*                                                                            *");
+    System.out.println("               INTAKE NULL?          "+intakeSubsystem);
+    System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
+    System.out.println("                  ARM NULL?          "+armSubsystem);
+    System.out.println("*                                                                            *");
+    System.out.println("*                                                                            *");
+    System.out.println("*                                                                            *");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
+    System.out.println("***************  ************** ****************** ************ **************");
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }
 

@@ -84,13 +84,13 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
-							-26,//18
+							-23,//18
 							1700, 
 							true,
 							false,
 							true),
 			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-31,//18
+							-26,//18
 							1500, 
 							true,
 							false,
@@ -120,13 +120,13 @@ public final class Constants {
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE PODIUM
-							-27, 
+							-23, 
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_STARTLINE("AutoStartline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-32,//18
+							-25,//18
 							1500, 
 							true,
 							false,
@@ -288,7 +288,10 @@ public final class Constants {
 		 * Changing this number will not require any other changes in the teleop code.
 		 */
 		public static final double MAX_VELOCITY = 4.6;
-		public static final double MAX_HIGH_VELOCITY = 6.0;
+
+		public static final double MAX_AUTO_VELOCITY = 3.0;
+
+		public static final double MAX_HIGH_VELOCITY = 4.6;
 
 		/**
 		 * Radians per second.
@@ -305,8 +308,9 @@ public final class Constants {
 				/ (Math.sqrt(TRACK_WIDTH * TRACK_WIDTH + WHEEL_BASE * WHEEL_BASE) / 2);
 
 		// For trajectory driving.
-		public static final double MAX_ACCELERATION = 2.76;
-		public static final double MAX_HIGH_ACCELERATION = 3.0;
+		public static final double MAX_ACCELERATION = .9; //2.76
+
+		public static final double MAX_HIGH_ACCELERATION = 2.76;
 		/**
 		 * Parameters for BaseMotorTalonSRX class
 		 * This class is specific to the motors controlled by TalonSRX controller.

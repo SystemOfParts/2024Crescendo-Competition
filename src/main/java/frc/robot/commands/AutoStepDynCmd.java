@@ -43,6 +43,7 @@ public class AutoStepDynCmd extends SequentialCommandGroup {
     } 
     //PREPATH COMPLETED OR SKIPPED, WE'VE STOPPED MOVING, HOPEFULLY WE HAVE A NOTE
     // LET'S CHECK FOR A NOTE
+    System.out.println("FAST AUTO : PRE FINISHED, IS NOTE IN INTAKE?: "+m_intake.isNoteInIntake());
     if (m_intake.isNoteInIntake()){
       // WE HAVE A NOTE
       // ARE WE SUPPOSED TO MOVE TO A SHOOTING POSITION?
@@ -54,14 +55,17 @@ public class AutoStepDynCmd extends SequentialCommandGroup {
             new FASTRunTrajectorySequenceRobotAtStartPoint(post)));
       } else {
         // WE DON'T NEED TO MOVE, LET'S JUST ORIENT TO SHOOTING POSITION
+        System.out.println("FAST AUTO ORIENT TO SHOOTING POSITION WITHOUT POST MOVEMENT");
         addCommands(
           new FAST_AutoMoveToOrientationCommand(m_arm, m_shooter, m_intake, shotOrientation));
       }
       // WE HAVE FINISHED ORIENTING AND MOVING AS NEEDED LETS USE THIS NOTE
+      System.out.println("SHOOTING WITH preDelay of: "+preDelay+" and postDelay of: "+postDelay);
+      
+    }
       addCommands(
         new WaitCommand(preDelay),
         new AutoShootAtCurrentTarget(m_arm, m_shooter, m_intake),
         new WaitCommand(postDelay));
-    }
   }
 }

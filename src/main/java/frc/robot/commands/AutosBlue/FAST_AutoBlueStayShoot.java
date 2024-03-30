@@ -22,7 +22,7 @@ public class FAST_AutoBlueStayShoot extends SequentialCommandGroup {
   ) {
     addCommands(
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),
-      new AutoStepDynCmd(false, Orientations.AUTO_SUBWOOFER, null, null, 0.2, 0.1, m_a, m_s, m_i),
-      new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.TRAVEL));
+      new AutoStepDynCmd(false, Orientations.AUTO_SUBWOOFER, null, null, 0.5, 0.5, m_a, m_s, m_i),
+      new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.HOME));
   }
 }

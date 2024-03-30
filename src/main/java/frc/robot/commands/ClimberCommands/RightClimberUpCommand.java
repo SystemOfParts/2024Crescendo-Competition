@@ -10,7 +10,7 @@ public class RightClimberUpCommand extends SequentialCommandGroup{
     ){
             
             addCommands(
-        new RunCommand(() -> m_climber.climber2Up(.5)));
+        new RunCommand(() -> m_climber.climber2Up(.667)));
         
     }
 }
