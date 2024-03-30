@@ -82,11 +82,11 @@ public boolean isBlack = false;
     public boolean isNoteInIntake() {
       if (!noteSensorRight.get() || !noteSensorLeft.get()){
         //System.out.println("isNoteInIntake was true: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
-        RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE);
+        RobotContainer.LEDs.setPattern(BlinkinPattern.GREEN);
         isBlack = false;
       } else {
         if (!isBlack){
-          RobotContainer.LEDs.setPattern(BlinkinPattern.BLACK);
+          RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED);
           isBlack = true;
         }
         //System.out.println("isNoteInIntake was FALSE: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
