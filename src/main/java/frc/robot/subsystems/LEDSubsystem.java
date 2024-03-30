@@ -137,6 +137,8 @@ public class LEDSubsystem {
 
   private static LEDSubsystem m_controller = null;
   private static Spark m_blinkin;
+  private static Spark m_blinkin2;
+
   private static BlinkinPattern m_currentPattern;
   private static HashMap<Alliance, BlinkinPattern[]> m_allianceColors = new HashMap<Alliance, BlinkinPattern[]>();
   private static final BlinkinPattern[] RED_ALLIANCE_PATTERNS = {
@@ -156,6 +158,8 @@ public class LEDSubsystem {
 
   private LEDSubsystem() {
     m_blinkin = new Spark(0);
+    m_blinkin2 = new Spark(1);
+
     m_allianceColors.put(Alliance.Red, RED_ALLIANCE_PATTERNS);
     m_allianceColors.put(Alliance.Blue, BLUE_ALLIANCE_PATTERNS);
   }
@@ -176,6 +180,8 @@ public class LEDSubsystem {
   public void setPattern(BlinkinPattern pattern) {
     m_currentPattern = pattern;
     m_blinkin.set(m_currentPattern.value);
+    m_blinkin2.set(m_currentPattern.value);
+
   }
 
   /**

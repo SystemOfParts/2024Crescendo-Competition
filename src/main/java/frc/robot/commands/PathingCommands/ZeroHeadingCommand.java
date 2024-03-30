@@ -24,7 +24,7 @@ public class ZeroHeadingCommand extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.CP2_END_TO_END_BLEND_TO_BLACK)),            
+      new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED)),            
       new AutonomousTrajectoryRioCommand(
         PathPlanner.generatePath(
           new PathConstraints(Constants.SwerveChassis.MAX_VELOCITY,Constants.SwerveChassis.MAX_ACCELERATION ), 

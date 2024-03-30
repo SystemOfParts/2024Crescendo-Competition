@@ -55,11 +55,11 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
             //System.out.println("MOVE TO ORIENTATION NOTE !SENSED TRUE -> OTHER COLORS: ");
             if (orientation.label == Orientations.TRAVEL.label){
                 addCommands(
-                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.WHITE))
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED))
                 );
             } else if (orientation.label == Orientations.INTAKE.label){
                 addCommands(
-                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.LAWN_GREEN))
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED))
                 );
             } else if (orientation.label == Orientations.PRECLIMB.label){
                 addCommands(
@@ -67,13 +67,13 @@ public class MoveToOrientationCommand extends SequentialCommandGroup {
                 );
             } else if (orientation.label == Orientations.HOME.label){
                 addCommands(
-                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.WHITE))
+                    new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED))
                 );
             } 
         } else {
             //System.out.println("MOVE TO ORIENTATION NOTE !SENSED FALSE -> ORANGE: ");   
             addCommands(
-                new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.ORANGE))
+                new InstantCommand(() -> RobotContainer.LEDs.setPattern(BlinkinPattern.GREEN))
             );
         }
     }

@@ -323,7 +323,7 @@ private void configureBindings() {
 
   // ENABLE CLIMBING MODE
   new Trigger (m_operator1Controller.button(9))
-    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn()))
+    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn())) //turns on the climbers
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOff()));
     //MANUAL RESET MODE
 
@@ -333,7 +333,7 @@ private void configureBindings() {
     //MANUAL RESET MODE
 
   new Trigger (m_operator1Controller.button(10))
-    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn()))
+    .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOn())) //allows you to reset climbers after a match when the relative encoders have been rezeroed
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
     .onFalse(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOff()));
