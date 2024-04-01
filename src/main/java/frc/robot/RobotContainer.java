@@ -191,7 +191,7 @@ public class RobotContainer {
         () -> getRightTrigger())); */
 
   // UNCOMMENT TO TEST TRAJECTORIES
-    trajectoryCalibration();
+  //  trajectoryCalibration();
     setIfAllianceRed();
   }
 
@@ -368,7 +368,12 @@ private void configureBindings() {
     .onTrue(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOn()))
     .onFalse(new InstantCommand(()->RobotContainer.climberSubsystem.manualModeTurnOff()))
     .onFalse(new InstantCommand(()->RobotContainer.armSubsystem.manualModeTurnOff()));
-  
+
+
+  // SHOOT USING LIMELIGHT POSITION TO APRILTAG
+  new Trigger(m_operator1Controller.button(2))
+      .onTrue(new ShootUsingAprilTag());
+
   // MOVE THE LEFT CLIMBER UP
   new Trigger(m_operator1Controller.button(6)) 
     .whileTrue(new LeftClimberUpCommand(climberSubsystem))
