@@ -19,6 +19,8 @@ import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.OrientationConstants.Orientations;
 
+import frc.robot.Constants.FreakyConstants;
+
 
 public class ShooterSubsystem extends SubsystemBase {
 
@@ -200,7 +202,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double topSetpoint = requestedSetpoint;
     //System.out.println("-- || || || TOP SHOOTER REQUESTED VELOCITY: " + topSetpoint);
     double minLimit = setpoint - tolerance;
-    double maxLimit = setpoint + tolerance+2000;
+    double maxLimit = setpoint + tolerance + 2000 + FreakyConstants.Freaky;
     boolean isWithinTolerance = topSetpoint != 0 && encoderValue >= minLimit && encoderValue <= maxLimit;
     //System.out.println("-- || || || TOP SHOOTER isWithinTolerance: " + isWithinTolerance);
     return isWithinTolerance;
