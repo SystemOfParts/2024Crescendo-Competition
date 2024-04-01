@@ -66,13 +66,13 @@ public final class Constants {
 							false,
 							false),
 			TRAVEL("Travel",
-							-42,
+							-38,//42
 							0,
 							false,
 							false,
 							true),
 			INTAKE("Intake",
-							-45.8,
+							-45.5,//45.8
 							0,
 							false,
 							true,
@@ -84,19 +84,19 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
-							-23,//18
+							-32,//18
 							1700, 
 							true,
 							false,
 							true),
 			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-26,//18
+							-34,//18
 							1500, 
 							true,
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-33, //11
+							-39.5, //11
 							1500,
 							true,
 							false,
@@ -108,31 +108,31 @@ public final class Constants {
 							false,
 							true),
 			PRECLIMB("Preclimb",
-							-46,
+							-40,//46
 							0,
 							false,
 							false,
 							true),
 			AUTO_SUBWOOFER("AutoSubwoofer",
-							-35.5, //11
+							-39.5, //11
 							1500,
 							true,
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE PODIUM
-							-23, 
+							-32, 
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_STARTLINE("AutoStartline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-25,//18
+							-34,//18
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
-							-45.8,
+							-45.5,//45.8
 							1500,
 							false,
 							true,

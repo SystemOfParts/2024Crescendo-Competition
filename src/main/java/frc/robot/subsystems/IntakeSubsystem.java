@@ -92,20 +92,22 @@ public boolean isBlack = false;
 
     // tell us if a note has been detected
     public boolean isNoteInIntake() {
-      if (!noteSensorRight.get() || !noteSensorLeft.get()){
+      if (noteSensorLeft != null && noteSensorRight !=null){
+        if (!noteSensorRight.get() || !noteSensorLeft.get()){
         //System.out.println("isNoteInIntake was true: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
         RobotContainer.LEDs.setPattern(BlinkinPattern.GREEN);
         isBlack = false;
-
-      } 
-      else {
-        if (!isBlack){
-          RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED);
-          isBlack = true;
+        } else {
+          if (!isBlack){
+            RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED);
+            isBlack = true;
+          }
+          //System.out.println("isNoteInIntake was FALSE: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
         }
-        //System.out.println("isNoteInIntake was FALSE: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
+        return  (!noteSensorRight.get() || !noteSensorLeft.get());
+      } else {
+        return false;
       }
-      return  (!noteSensorRight.get() || !noteSensorLeft.get());
     }
 
   @Override
