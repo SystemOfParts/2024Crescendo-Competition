@@ -350,6 +350,8 @@ public boolean getAButton() {
 
 private void configureBindings() {    
 
+
+
   // ENABLE CLIMBING MODE
   new Trigger (m_operator1Controller.button(9))
     .onTrue(new InstantCommand(()->RobotContainer.climberSubsystem.ClimberModeTurnOn())) //turns on the climbers

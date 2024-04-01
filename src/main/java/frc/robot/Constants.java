@@ -66,13 +66,13 @@ public final class Constants {
 							false,
 							false),
 			TRAVEL("Travel",
-							-42,
+							-36,//42
 							0,
 							false,
 							false,
 							true),
 			INTAKE("Intake",
-							-45.8,
+							-45.5,//45.8
 							0,
 							false,
 							true,
@@ -84,61 +84,61 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
-							-23,//18
+							-32,//18
 							1700, 
 							true,
 							false,
 							true),
 			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-26,//18
+							-34,//18
 							1500, 
 							true,
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-33, //11
+							-39.5, //11
 							1500,
 							true,
 							false,
 							true),
 			FEEDER("Feeder",
-							-33, //11
+							-39.5, //11
 							1200,
 							true,
 							false,
 							true),
 			PRECLIMB("Preclimb",
-							-46,
+							-46,//46
 							0,
 							false,
 							false,
 							true),
 			AUTO_SUBWOOFER("AutoSubwoofer",
-							-35.5, //11
+							-39.5, //11
 							1500,
 							true,
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE PODIUM
-							-23, 
+							-32, 
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_STARTLINE("AutoStartline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-25,//18
+							-34,//18
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
-							-45.8,
+							-45.5,//45.8
 							1500,
 							false,
 							true,
 							false),
 			AUTO_FAR_SHOT("AutoFarShot",
-							21,
+							-31,
 							1500,
 							true,
 							false,
@@ -886,6 +886,9 @@ public final class Constants {
 
 			// NEW origin from the old origin point of view in the old coordiinate system
 			public static final Pose2d centerFieldPose = new Pose2d(-8.308467, -4.098925, new Rotation2d(0));
+
+			public static final Transform2d cameraToRobotTransform = new Transform2d(new Translation2d(0.0, -0.254), Rotation2d.fromDegrees(180));
+
 
 		}
 		public static final class PhotonVisionConstants {
