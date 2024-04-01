@@ -4,13 +4,19 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
+import frc.robot.commands.XboxRumbleCommand;
 import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import java.util.function.BooleanSupplier;
 
 import com.revrobotics.CANSparkMax;
 
@@ -27,6 +33,11 @@ public boolean isBlack = false;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {    
+
+  new Trigger(() -> isNoteInIntake())
+  
+   .onTrue(new XboxRumbleCommand(0.25, .25, RumbleType.kBothRumble));
+
     
     intakeMotor.setIdleMode(IdleMode.kCoast);
     intakeMotor.burnFlash();
@@ -78,13 +89,16 @@ public boolean isBlack = false;
       return !noteSensorRight.get();
     }
 
+
     // tell us if a note has been detected
     public boolean isNoteInIntake() {
       if (!noteSensorRight.get() || !noteSensorLeft.get()){
         //System.out.println("isNoteInIntake was true: LEFT: "+noteSensorLeft.get()+" ----   RIGHT: "+noteSensorRight.get());
         RobotContainer.LEDs.setPattern(BlinkinPattern.GREEN);
         isBlack = false;
-      } else {
+
+      } 
+      else {
         if (!isBlack){
           RobotContainer.LEDs.setPattern(BlinkinPattern.DARK_RED);
           isBlack = true;
