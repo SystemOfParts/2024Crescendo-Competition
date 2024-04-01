@@ -27,7 +27,7 @@ public class AprilTagShootingSequence extends SequentialCommandGroup {
   public AprilTagShootingSequence(double distance) {
     addCommands(
 // Spin the shooter first
-       new WaitCommand(1.5)
+       new WaitCommand(1.0)
         .raceWith(
 // get shooter up to speed
            new RunShooterBasedOnDistanceCommand(RobotContainer.gpmHelpers.getGPM0ShooterPower(distance))

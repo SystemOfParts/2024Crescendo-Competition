@@ -16,6 +16,7 @@ import frc.robot.Constants.SwerveChassis;
 import frc.robot.Constants.PIDConstantsForSwerveModules.NEOAngle;
 import frc.robot.Constants.SwerveChassis.NEOSwerveConfiguration;
 import frc.robot.Constants.SwerveChassis.SwerveModuleConstants;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 /*
  * This is a specific base motor implementation for the motors connected to SparkMAX NEOs
@@ -130,6 +131,10 @@ public class BaseMotorNEO implements BaseMotorInterface {
         pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
         pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
 
+
+        motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20); // May remove, Possible faster angle motor updates?
+        // From five updates per second to fifty
+        
         // Configure PID values
 
         pid.setP(NEOAngle.kP);
