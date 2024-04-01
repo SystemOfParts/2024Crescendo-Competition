@@ -107,47 +107,61 @@ public class RobotContainer {
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   // FAST
 
-  private final Command m_FASTBlueStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueThreePiece = new FAST_AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueTwoPiece = new FAST_AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-
+  private final Command m_FASTStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueCenterTwoPiece = new FAST_AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueCenterThreePieceSouth = new FAST_AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueCenterThreePieceNorth = new FAST_AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueCenterFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthShootLeave = new FAST_AutoBlueNorthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthShootLeaveMid = new FAST_AutoBlueNorthShootLeaveToMid(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthTwoPiece = new FAST_AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthTwoPieceMid1 = new FAST_AutoBlueNorthTwoNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthTwoPieceMid1EndMid2 = new FAST_AutoBlueNorthTwoNoteMid1_EndMid2(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthThreePieceMid1 = new FAST_AutoBlueNorthThreeNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthThreePieceMid2 = new FAST_AutoBlueNorthThreeNoteMid2(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootLeave = new FAST_AutoBlueSouthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootLeaveMid = new FAST_AutoBlueSouthShootLeaveToMid(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootTwoPiece = new FAST_AutoBlueSouthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootTwoPieceEndMid5= new FAST_AutoBlueSouthTwoNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootThreePieceMid3= new FAST_AutoBlueSouthThreeNoteMid3(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootSweep= new FAST_AutoBlueSouthSweep(armSubsystem, intakeSubsystem, shooterSubsystem);
+  
   // Neutral
-  private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
+  //private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  //private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
   //private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
 
   // Blue
-  private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoBlueNorthTwoNote = new AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  //private final Command m_AutoBlueNorthTwoNote = new AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid2And3ThreeNote = new AutoBlueCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid4And3ThreeNote = new AutoBlueCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid2ToSubThreeNote = new AutoBlueCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid3ToSubThreeNote = new AutoBlueCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoBlueCenterMid4ToSubThreeNote = new AutoBlueCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  private final Command m_AutoBlueNorthClear = new AutoBlueNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
+  //private final Command m_AutoBlueNorthClear = new AutoBlueNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   // Red
   //private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedCenterThreeNoteNorth = new AutoRedCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedCenterThreeNoteSouth = new AutoRedCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedCenterThreeNoteNorth = new AutoRedCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedCenterThreeNoteSouth = new AutoRedCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid2And3ThreeNote = new AutoRedCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid4And3ThreeNote = new AutoRedCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid2ToSubThreeNote = new AutoRedCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   //private final Command m_AutoRedCenterMid3ToSubThreeNote = new AutoRedCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedNorthClear = new AutoRedNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedNorthClear = new AutoRedNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
+  //private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -214,12 +228,27 @@ public class RobotContainer {
       m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
     }
      */
-    m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
-    m_chooser.addOption("FAST STAY", m_FASTBlueStayShoot);
-    m_chooser.addOption("FAST TWO", m_FASTBlueTwoPiece);
-    m_chooser.addOption("FAST THREE", m_FASTBlueThreePiece);
-    m_chooser.addOption("FAST FOUR", m_FASTBlueFourPiece);
-    m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
+    //m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
+    m_chooser.addOption("FAST 1 ANY STAY", m_FASTStayShoot);
+    m_chooser.addOption("FAST CTR 2", m_FASTBlueCenterTwoPiece);
+    m_chooser.addOption("FAST CTR 3 TO SOUTH", m_FASTBlueCenterThreePieceSouth);
+    m_chooser.addOption("FAST CTR 3 TO NORTH", m_FASTBlueCenterThreePieceSouth);
+    m_chooser.addOption("FAST CTR 4", m_FASTBlueCenterFourPiece);
+    m_chooser.addOption("FAST BLUE NORTH LEAVE", m_FASTBlueNorthShootLeave);
+    m_chooser.addOption("FAST BLUE NORTH LEAVE to MID", m_FASTBlueNorthShootLeaveMid);
+    m_chooser.addOption("FAST BLUE NORTH 2", m_FASTBlueNorthTwoPiece);
+    m_chooser.addOption("FAST BLUE NORTH 2 MID1", m_FASTBlueNorthTwoPieceMid1);
+    m_chooser.addOption("FAST BLUE NORTH 2 MID1 STOP MID2", m_FASTBlueNorthTwoPieceMid1EndMid2);
+    m_chooser.addOption("FAST BLUE NORTH 3 MID1", m_FASTBlueNorthThreePieceMid1);
+    m_chooser.addOption("FAST BLUE NORTH 3 MID2", m_FASTBlueNorthThreePieceMid2);
+    m_chooser.addOption("FAST BLUE SOUTH LEAVE", m_FASTBlueSouthShootLeave);
+    m_chooser.addOption("FAST BLUE SOUTH LEAVE to MID", m_FASTBlueSouthShootLeaveMid);
+    m_chooser.addOption("FAST BLUE SOUTH 2", m_FASTBlueSouthShootTwoPiece);
+    m_chooser.addOption("FAST BLUE SOUTH 2 END MID5", m_FASTBlueSouthShootTwoPieceEndMid5);
+    m_chooser.addOption("FAST BLUE SOUTH 3 MID3", m_FASTBlueSouthShootThreePieceMid3);
+    m_chooser.addOption("FAST BLUE SOUTH 1 SWEEP", m_FASTBlueSouthShootSweep);
+    
+    //m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
    /*  m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
    
     m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
