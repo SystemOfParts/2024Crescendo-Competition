@@ -66,7 +66,7 @@ public final class Constants {
 							false,
 							false),
 			TRAVEL("Travel",
-							-38,//42
+							-36,//42
 							0,
 							false,
 							false,
@@ -102,13 +102,13 @@ public final class Constants {
 							false,
 							true),
 			FEEDER("Feeder",
-							-33, //11
+							-39.5, //11
 							1200,
 							true,
 							false,
 							true),
 			PRECLIMB("Preclimb",
-							-40,//46
+							-46,//46
 							0,
 							false,
 							false,
@@ -138,7 +138,7 @@ public final class Constants {
 							true,
 							false),
 			AUTO_FAR_SHOT("AutoFarShot",
-							21,
+							-31,
 							1500,
 							true,
 							false,
