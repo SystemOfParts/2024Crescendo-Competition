@@ -5,12 +5,13 @@
 package frc.robot.commands.AutosBlue;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
+import frc.robot.RobotContainer;
 import frc.robot.commands.*;
-import frc.robot.commands.AutoIntakeMoveShoot;
 import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -22,11 +23,14 @@ public class FAST_AutoBlueNorthThreeNoteMid1 extends SequentialCommandGroup {
     ShooterSubsystem m_s
   ) {
     addCommands(
+            new WaitCommand(.5),
+                        new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(60)), // set yaw to the one in the initial pose
+
+
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),
       new AutoIntakeMoveShoot(false, Orientations.AUTO_SUBWOOFER, null, null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoIntakeMoveShoot(true, Orientations.AUTO_PODIUM, "a_b_North_2Note_SAN", null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoIntakeMoveShoot(true, Orientations.AUTO_PODIUM, "a_b_North_3Note_North_Center_1", null, 0.5, 0.5, m_a, m_s, m_i),
-      new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.HOME),
-      new FASTRunTrajectorySequenceRobotAtStartPoint("a_b_North_2Note_SAN_EndMove"));
+      new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.HOME));
   }
 }

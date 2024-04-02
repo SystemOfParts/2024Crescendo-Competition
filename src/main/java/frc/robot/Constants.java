@@ -72,7 +72,7 @@ public final class Constants {
 							false,
 							true),
 			INTAKE("Intake",
-							-45.5,//45.8
+							-44.75,//45.8
 							0,
 							false,
 							true,
@@ -84,26 +84,26 @@ public final class Constants {
 							false, 
 							true),
 			PODIUM("Podium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN/PAST WITH THE PODIUM
-							-32,//18
+							-31,//18
 							1700, 
 							true,
 							false,
 							true),
 			STARTLINE("Startline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-34,//18
+							-33,//-34
 							1500, 
 							true,
 							false,
 							true),
 			SUBWOOFER("Subwoofer",
-							-39.5, //11
+							-40, //11
 							1500,
 							true,
 							false,
 							true),
 			FEEDER("Feeder",
 							-39.5, //11
-							1200,
+							1125,
 							true,
 							false,
 							true),
@@ -114,25 +114,25 @@ public final class Constants {
 							false,
 							true),
 			AUTO_SUBWOOFER("AutoSubwoofer",
-							-39.5, //11
+							-40, //11
 							1500,
 							true,
 							false,
 							false),
 			AUTO_PODIUM("AutoPodium",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE PODIUM
-							-32, 
+							-31, 
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_STARTLINE("AutoStartline",//SPEAKER SHOOTING CALIBRATION WHEN THE ROBOT IS EVEN WITH THE AMP
-							-34,//18
+							-32,//18
 							1500, 
 							true,
 							false,
 							false),
 			AUTO_INTAKE("AutoIntake",
-							-45.5,//45.8
+							-44.75,//45.8
 							1500,
 							false,
 							true,

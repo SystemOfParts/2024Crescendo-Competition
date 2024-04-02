@@ -36,7 +36,7 @@ public boolean isBlack = false;
 
   new Trigger(() -> isNoteInIntake())
   
-   .onTrue(new XboxRumbleCommand(0.25, .25, RumbleType.kBothRumble));
+   .onTrue(new XboxRumbleCommand(0.25, 1, RumbleType.kBothRumble));
 
     
     intakeMotor.setIdleMode(IdleMode.kCoast);

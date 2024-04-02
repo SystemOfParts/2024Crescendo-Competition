@@ -70,7 +70,6 @@ public class IMUNavX implements IMUInterface {
 
     public double setYaw(double y) {
         double previousYaw = navX.getYaw();
-        navX.zeroYaw();
         navX.setAngleAdjustment(y);
         return previousYaw;
     }

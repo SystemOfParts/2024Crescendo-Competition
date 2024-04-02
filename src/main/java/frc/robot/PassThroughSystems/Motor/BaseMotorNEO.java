@@ -130,10 +130,6 @@ public class BaseMotorNEO implements BaseMotorInterface {
         pid.setPositionPIDWrappingEnabled(true);
         pid.setPositionPIDWrappingMinInput(NEOSwerveConfiguration.minInput);
         pid.setPositionPIDWrappingMaxInput(NEOSwerveConfiguration.maxInput);
-
-
-        motorNEO.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 20); // May remove, Possible faster angle motor updates?
-        // From five updates per second to fifty
         
         // Configure PID values
 

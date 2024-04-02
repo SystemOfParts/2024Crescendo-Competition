@@ -5,6 +5,7 @@
 package frc.robot.commands.AutosBlue;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -22,7 +23,10 @@ public class FAST_AutoBlueCenterTwoNote extends SequentialCommandGroup {
     ShooterSubsystem m_s
   ) {
     addCommands(
+      new WaitCommand(.5),
+
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),
+      new WaitCommand(.5),
       new AutoIntakeMoveShoot(false, Orientations.AUTO_SUBWOOFER, null, null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoIntakeMoveShoot(true, Orientations.AUTO_STARTLINE, "a_b_center_2_SAN", null, 0.5, 0.5, m_a, m_s, m_i),
       new AutoMoveToOrientationCommand(m_a, m_s, m_i, Orientations.HOME));

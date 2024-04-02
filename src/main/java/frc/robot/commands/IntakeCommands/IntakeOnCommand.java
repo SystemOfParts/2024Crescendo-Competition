@@ -9,8 +9,10 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LEDSubsystem.BlinkinPattern;
 public class IntakeOnCommand extends SequentialCommandGroup{
     public IntakeOnCommand(IntakeSubsystem m_intake){
+                if (m_intake != null){
+
     addCommands(
         // runs the intake until it detects a note
         new RunCommand(() -> m_intake.runIntake(true)));
     }
-}
+}}

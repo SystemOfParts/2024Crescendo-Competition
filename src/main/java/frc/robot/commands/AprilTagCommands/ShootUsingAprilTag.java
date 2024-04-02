@@ -25,16 +25,16 @@ public class ShootUsingAprilTag extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ConditionalCommand(
-       new DeferredCommand(() -> new PrintCommand("Shooting Distance : " + (RobotContainer.llVisionSubsystem.getShootingDistance() - 1.1)), 
+       new DeferredCommand(() -> new PrintCommand("Shooting Distance : " + (RobotContainer.llVisionSubsystem.getShootingDistance())), 
        Set.of()).andThen(
       new DeferredCommand(
 
-          () -> new AprilTagShootingSequence(RobotContainer.llVisionSubsystem.distanceToShoot - 1.1), 
+          () -> new AprilTagShootingSequence(RobotContainer.llVisionSubsystem.distanceToShoot), 
           Set.of())),
 
           new PrintCommand("No AT Visible"),
 
-          () -> RobotContainer.llVisionSubsystem.isApriltagVisible() && LimelightHelpers.isInRange(RobotContainer.llVisionSubsystem.getShootingDistance(), 0.0, 4.0)
+          () -> RobotContainer.llVisionSubsystem.isApriltagVisible()
       )
     );
   }

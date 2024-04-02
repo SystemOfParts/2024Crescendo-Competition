@@ -7,9 +7,11 @@ package frc.robot.commands.AprilTagCommands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.IntakeCommands.FeedShooterCommand;
 import frc.robot.commands.IntakeCommands.IntakeOnCommand;
 import frc.robot.commands.IntakeCommands.ShootingPushNote;
@@ -30,10 +32,10 @@ public class AprilTagShootingSequence extends SequentialCommandGroup {
        new WaitCommand(1.0)
         .raceWith(
 // get shooter up to speed
-           new RunShooterBasedOnDistanceCommand(RobotContainer.gpmHelpers.getGPM0ShooterPower(distance))
+           new RunCommand(() -> RobotContainer.shooterSubsystem.runShooter(Orientations.SUBWOOFER))
              .alongWith(
                new MoveToAngleBasedOnDistanceCommand(RobotContainer.gpmHelpers.getGPM0Angle(distance))
-             )
+            // )
          ),
         new ConditionalCommand(
 
@@ -46,12 +48,13 @@ public class AprilTagShootingSequence extends SequentialCommandGroup {
           ,
           // slower command if the note is not seen by the sensor at this point
           (new WaitCommand(1.5)
-            .raceWith(new IntakeOnCommand(m_intake))
+            .raceWith(new RunCommand(() -> RobotContainer.intakeSubsystem.runIntake(true)))
            ) ,
           // is note seen by the sensor?
           RobotContainer.intakeSubsystem::isNoteInIntake),
         // wait until the shooting is done
        new PrintCommand("AprilTagShootingSequence done")
+        )
     );
     
   }

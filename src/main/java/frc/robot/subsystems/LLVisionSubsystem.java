@@ -20,7 +20,7 @@ import frc.robot.lib.VisionHelpers;
 public class LLVisionSubsystem extends SubsystemBase implements VisionHelpers {
   public static double joystickDirectionDegrees;
   public static Pose2d robotCurrentPoseBeforeClimb;
-  public double distanceToShoot = -1;
+  public double distanceToShoot = 0;
 
   /** Creates a new LLVisionSubsystem. 
    * AprilTag Vision Subsystem based on LimeLight.
@@ -54,7 +54,6 @@ public class LLVisionSubsystem extends SubsystemBase implements VisionHelpers {
 
   public double getShootingDistance(Pose2d pose) {
     if (RobotContainer.isAlianceRed) {
-
       // alex test
       //System.out.println("RP:"+pose);
       return autoPoses.RED_SPEAKER_TAG.getPose().getTranslation().getDistance(
@@ -109,5 +108,6 @@ public class LLVisionSubsystem extends SubsystemBase implements VisionHelpers {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
   }
 }

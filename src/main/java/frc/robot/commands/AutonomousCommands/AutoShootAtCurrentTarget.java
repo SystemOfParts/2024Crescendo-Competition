@@ -22,7 +22,7 @@ public class AutoShootAtCurrentTarget extends SequentialCommandGroup {
       IntakeSubsystem m_intake
       )
     {
-    System.out.println("AutoShootAtCurrentTarget");
+   // System.out.println("AutoShootAtCurrentTarget");
     addCommands(
       //new WaitCommand(.25)
       new CheckToShoot(m_shooter, m_intake),

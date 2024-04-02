@@ -39,8 +39,8 @@ public class RunTrajectorySequenceRobotAtStartPoint extends SequentialCommandGro
       //new InstantCommand(RobotContainer.driveSubsystem::zeroDriveEncoders),
       //new PrintCommand("****Starting trajectory****"),
       //new WaitCommand(0.4),
-      new InstantCommand( () -> RobotContainer.imuSubsystem.setYawForTrajectory(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees()) ),
-      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose()  ) ), 
+      new InstantCommand( () -> RobotContainer.imuSubsystem.setYawForTrajectory(trajectoryPath.getInitialHolonomicPose().getRotation().getDegrees())),
+      new InstantCommand( () -> RobotContainer.driveSubsystem.resetOdometry(trajectoryPath.getInitialHolonomicPose())), 
       //new PrintCommand(
       //  "START IX:" + trajectoryPath.getInitialPose().getX()+
       //  " IY:" + trajectoryPath.getInitialPose().getY()+

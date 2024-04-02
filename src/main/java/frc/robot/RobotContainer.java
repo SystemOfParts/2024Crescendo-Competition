@@ -438,7 +438,29 @@ private void configureBindings() {
   // ORIENT TO THE STARTLINE POSITION
   new Trigger(m_operator2Controller.button(5)) 
     .onTrue(new MoveToOrientationCommand(armSubsystem,  shooterSubsystem, intakeSubsystem, Orientations.STARTLINE));
+  new Trigger(m_operator1Controller.button(11)) 
+    .onTrue(new TurnToDegreeIMU( 
+      34, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
+    .onFalse( new DriveManuallyCommand(
+                        () -> getDriverXAxis(),
+                        () -> getDriverYAxis(),
+                        () -> getDriverOmegaAxis(),
+                        () -> getDriverFieldCentric()));
 
+  new Trigger(m_operator2Controller.button(9)) 
+    .onTrue(new TurnToDegreeIMU( 
+      -34, 
+        () -> getDriverXAxis(),
+        () -> getDriverYAxis(),
+        driveSubsystem, false))
+    .onFalse( new DriveManuallyCommand(
+                        () -> getDriverXAxis(),
+                        () -> getDriverYAxis(),
+                        () -> getDriverOmegaAxis(),
+                        () -> getDriverFieldCentric()));
  
   // DRIVER QUICK ANGLE BINDINGS
   
@@ -554,6 +576,7 @@ private void configureBindings() {
     System.out.println("***************  ************** ****************** ************ **************");
     System.out.println("***************  ************** ****************** ************ **************");
     System.out.println("***************  ************** ****************** ************ **************");
+    
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }
 
