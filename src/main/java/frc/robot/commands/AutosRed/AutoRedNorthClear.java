@@ -29,7 +29,7 @@ public class AutoRedNorthClear extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(120)),
+      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(60)),
       new AutoShootFromSubwoofer(m_arm, m_shooter, m_intake),
       
       // with the shooter and intake running, orient arm to the intake position AND starting to move to pick up the 2nd note

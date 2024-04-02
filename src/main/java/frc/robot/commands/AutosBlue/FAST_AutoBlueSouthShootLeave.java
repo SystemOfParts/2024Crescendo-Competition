@@ -24,6 +24,7 @@ public class FAST_AutoBlueSouthShootLeave extends SequentialCommandGroup {
   ) {
     addCommands(
             new WaitCommand(.5),
+            new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(-60)), // set yaw to the one in the initial pose
 
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),
       new AutoIntakeMoveShoot(false, Orientations.AUTO_SUBWOOFER, null, null, 0.5, 3.5, m_a, m_s, m_i),
