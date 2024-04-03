@@ -8,15 +8,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.RobotContainer;
+
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoIntakeMoveShoot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class FAST_AutoBlueStayShoot extends SequentialCommandGroup {
+public class FAST_AutoBlueSouthStayShoot extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */
-  public FAST_AutoBlueStayShoot(
+  public FAST_AutoBlueSouthStayShoot(
     ArmSubsystem m_a,
     IntakeSubsystem m_i,
     ShooterSubsystem m_s
