@@ -495,7 +495,6 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
      .onTrue(new TurnToDegreeIMU( 
       0, 
@@ -508,7 +507,6 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
  .onTrue(new TurnToDegreeIMU( 
       180, 
@@ -528,54 +526,32 @@ private void configureBindings() {
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
     .onFalse(new IntakeStopCommand(intakeSubsystem, false));
 
-    new JoystickButton(xboxController, 5)
-    .onTrue(new TurnToDegreeIMU( 
-      -31, 
-        () -> getDriverXAxis(),
-        () -> getDriverYAxis(),
-        driveSubsystem, false))
-    .onFalse( new DriveManuallyCommand(
-                        () -> getDriverXAxis(),
-                        () -> getDriverYAxis(),
-                        () -> getDriverOmegaAxis(),
-                        () -> getDriverFieldCentric()));
-  /* 
-  new JoystickButton(xboxController, 5)
-    .onTrue(
-        new TurnToDegreeIMU((180 - (phtnVisionSubsystem.getAprilTagZAngle())), driveSubsystem, false)) 
-
-
-    .onFalse( new DriveManuallyCommand(
-                        () -> getDriverXAxis(),
-                        () -> getDriverYAxis(),
-                        () -> getDriverOmegaAxis(),
-                        () -> getDriverFieldCentric()));
-  */    
+  
 }
 
   // GET THE AUTO COMMAND FROM THE CHOOSER
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    System.out.println("***************  **************    RUNNING AUTO    ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("               INTAKE NULL?          "+intakeSubsystem);
-    System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
-    System.out.println("                  ARM NULL?          "+armSubsystem);
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
+    // // An example command will be run in autonomous
+    // System.out.println("***************  **************    RUNNING AUTO    ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("               INTAKE NULL?          "+intakeSubsystem);
+    // System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
+    // System.out.println("                  ARM NULL?          "+armSubsystem);
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
     
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }
