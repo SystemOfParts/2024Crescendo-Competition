@@ -82,6 +82,9 @@ public class SwerveModule extends SubsystemBase {
     public double telemetryDriveEncoder(){
         return driveMotor.getDriveEncoderPositionSI();
     }
+     public double telemetryDriveVelocity(){
+        return driveMotor.getDriveEncoderVelocity();
+    }
 
  
 

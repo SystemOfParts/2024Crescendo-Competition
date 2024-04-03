@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.setLEDPattern(BlinkinPattern.CP1_HEARTBEAT_MEDIUM); 
+    m_robotContainer.setLEDPattern(BlinkinPattern.DARK_RED); 
   }
 
   @Override
