@@ -30,6 +30,8 @@ public class BaseMotorNEO implements BaseMotorInterface {
     private SparkAbsoluteEncoder angleEncoder;
     private SparkPIDController pid;
 
+    public double freakLevel = 0;
+
     public BaseMotorNEO(int CANID) {
         //System.out.println("**** Activating SparkMAX NEO CANID:" + CANID);
 
@@ -166,6 +168,10 @@ public class BaseMotorNEO implements BaseMotorInterface {
     public double getDriveEncoderVelocity() {
         return driveEncoder.getVelocity();
     }
+
+    public double getFreakiness() {
+        return driveEncoder.getVelocity();
+      }
 
     public double getAngleEncoderVelocity() {
         return angleEncoder.getVelocity();

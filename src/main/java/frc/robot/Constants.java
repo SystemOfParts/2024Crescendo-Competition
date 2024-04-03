@@ -905,7 +905,7 @@ public final class Constants {
 	
 	public static final class FreakyConstants {
 
-		public static final int Freaky = 0;
+		public static int Freaky = 0;
 		public static final String FreakyLocation = "Where's Freaky?";
 
 	}

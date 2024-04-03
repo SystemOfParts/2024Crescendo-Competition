@@ -48,6 +48,8 @@ public interface BaseMotorInterface {
 
     double getAngleEncoderVelocitySI();
 
+    double getFreakiness();
+
     void setAngleMotorChassisAngleSI(double angle); // Moves angle motor to desired angle using PID
 
     void testMotorApplyPower(double power); // Test method to check inversion and encoders

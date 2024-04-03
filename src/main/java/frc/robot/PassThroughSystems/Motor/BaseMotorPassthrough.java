@@ -87,6 +87,10 @@ public class BaseMotorPassthrough implements BaseMotorInterface {
     return baseMotorInterface.getAngleEncoderVelocitySI();
   }
 
+  public double getFreakiness() {
+    return baseMotorInterface.getFreakiness();
+  }
+
   public void setAngleMotorChassisAngleSI(double angle){
     baseMotorInterface.setAngleMotorChassisAngleSI(angle);
   }

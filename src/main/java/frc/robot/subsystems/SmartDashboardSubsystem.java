@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.FreakyConstants;
+import frc.robot.subsystems.SwerveModule;
 
 public class SmartDashboardSubsystem extends SubsystemBase {
   /** Creates a new SmartDashboardSubsystem. */
@@ -49,6 +51,7 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     //updateOdometryTelemetry();
     //updateSwerveModuleTelemetry();
     updateIMUTelemetry();
+    PrintFreakLevel();
     SmartDashboard.putBoolean("April Visibility", RobotContainer.phtnVisionSubsystem.isApriltagVisible());
     SmartDashboard.putBoolean("Note Visibility", RobotContainer.noteDetectionPhtnVisionSubsystem.isNoteVisible());
     SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
@@ -63,6 +66,14 @@ public class SmartDashboardSubsystem extends SubsystemBase {
 //    SmartDashboard.putString("PV Robot Pose", RobotContainer.phtnVisionSubsystem.getRobotFieldPosePV().toString());
 
   }
+
+  public void PrintFreakLevel() {
+
+     SmartDashboard.putNumber("Freak Level", SwerveModule.getFreakiness());
+
+     }
+
+
 
   @Override
   public void periodic() {

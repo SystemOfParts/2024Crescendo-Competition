@@ -14,7 +14,7 @@ import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 public class SwerveModule extends SubsystemBase {
 
-    private BaseMotorPassthrough driveMotor;
+    private static BaseMotorPassthrough driveMotor;
     private BaseMotorPassthrough angleMotor;
 
     private int moduleNumber;
@@ -81,6 +81,10 @@ public class SwerveModule extends SubsystemBase {
 
     public double telemetryDriveEncoder(){
         return driveMotor.getDriveEncoderPositionSI();
+    }
+
+    public static double getFreakiness() {
+        return driveMotor.getFreakiness();
     }
 
     public void testDriveMotorApplyPower(double power) {
