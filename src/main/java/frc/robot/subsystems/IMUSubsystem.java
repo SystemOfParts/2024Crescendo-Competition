@@ -99,7 +99,7 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
    */
   public double setYawForTrajectory(double y) {
     trajectoryAdjustmentIMU = RobotContainer.imuSubsystem.getYaw() - y;
-    System.out.println("setting yaw: " + trajectoryAdjustmentIMU);
+    //System.out.println("setting yaw: " + trajectoryAdjustmentIMU);
 
     return imu.setYaw(y);
 
@@ -112,7 +112,7 @@ public class IMUSubsystem extends SubsystemBase implements IMUInterface {
    */
   public void restoreYawAfterTrajectory() {
     imu.setYaw(RobotContainer.imuSubsystem.getYaw() + trajectoryAdjustmentIMU);
-    System.out.println("restoring yaw: "+ (RobotContainer.imuSubsystem.getYaw() +trajectoryAdjustmentIMU));
+    //System.out.println("restoring yaw: "+ (RobotContainer.imuSubsystem.getYaw() +trajectoryAdjustmentIMU));
   }
 
   public double getTurnRate() {

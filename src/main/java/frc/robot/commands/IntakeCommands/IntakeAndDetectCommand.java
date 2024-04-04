@@ -22,14 +22,14 @@ public class IntakeAndDetectCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    System.out.println("-- || || [ INTAKE AND DETECT INIT  ] || || --");
+    //System.out.println("-- || || [ INTAKE AND DETECT INIT  ] || || --");
     //m_intake.runIntake(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("-- || || [ INTAKE AND DETECT EXECUTE  ] || || --");
+    //System.out.println("-- || || [ INTAKE AND DETECT EXECUTE  ] || || --");
     /* if (m_intake.isNoteInIntake() && m_intake.isIntaking){
       if ((!m_intake.isShooting)&&(!m_intake.isEjecting)){
         //System.out.println("************************************************ stopping intake  ***");

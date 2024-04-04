@@ -107,24 +107,35 @@ public class RobotContainer {
   public final SendableChooser<Command> m_chooser = new SendableChooser<>();
   // FAST
 
-  private final Command m_FASTStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueCenterTwoPiece = new FAST_AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueCenterThreePieceSouth = new FAST_AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueCenterThreePieceNorth = new FAST_AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueCenterFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTCenterStayShoot = new FAST_AutoBlueStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueNorthStayShoot = new FAST_AutoBlueNorthStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthStayShoot = new FAST_AutoBlueSouthStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTCenterTwoPiece = new FAST_AutoBlueCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTCenterThreePieceSouth = new FAST_AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTCenterThreePieceNorth = new FAST_AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTCenterFourPiece = new FAST_AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueNorthShootLeave = new FAST_AutoBlueNorthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueNorthShootLeaveMid = new FAST_AutoBlueNorthShootLeaveToMid(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueNorthTwoPiece = new FAST_AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueNorthTwoPieceMid1 = new FAST_AutoBlueNorthTwoNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueNorthTwoPieceMid1EndMid2 = new FAST_AutoBlueNorthTwoNoteMid1_EndMid2(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueNorthThreePieceMid1 = new FAST_AutoBlueNorthThreeNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueNorthThreePieceMid2 = new FAST_AutoBlueNorthThreeNoteMid2(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueSouthShootLeave = new FAST_AutoBlueSouthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueSouthShootLeaveMid = new FAST_AutoBlueSouthShootLeaveToMid(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueSouthShootTwoPiece = new FAST_AutoBlueSouthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueSouthShootTwoPieceEndMid5= new FAST_AutoBlueSouthTwoNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
-  private final Command m_FASTBlueSouthShootThreePieceMid3= new FAST_AutoBlueSouthThreeNoteMid3(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootTwoPieceMid4= new FAST_AutoBlueSouthTwoNoteMid4(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTBlueSouthShootTwoPieceMid5= new FAST_AutoBlueSouthTwoNoteMid5(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueSouthShootSweep= new FAST_AutoBlueSouthSweep(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthShootLeave = new FAST_AutoRedNorthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthStayShoot = new FAST_AutoRedNorthStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthTwoPiece = new FAST_AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthTwoPieceMid1 = new FAST_AutoRedNorthTwoNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthThreePieceMid1 = new FAST_AutoRedNorthThreeNoteMid1(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedNorthThreePieceMid2 = new FAST_AutoRedNorthThreeNoteMid2(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthStayShoot = new FAST_AutoRedSouthStayShoot(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthShootLeave = new FAST_AutoRedSouthShootLeave(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthShootSweep= new FAST_AutoRedSouthSweep(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthTwoPiece = new FAST_AutoRedSouthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthTwoPieceCenter5 = new FAST_AutoRedSouthTwoNoteCenter5(armSubsystem, intakeSubsystem, shooterSubsystem);
+  private final Command m_FASTRedSouthTwoPieceCenter4 = new FAST_AutoRedSouthTwoNoteCenter4(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -171,75 +182,35 @@ public class RobotContainer {
   }
 
   private void configureAutos(){
-    /*
-    if (isAlianceRed){
-      m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
-      m_chooser.addOption("RED Center 2", m_AutoRedCenterTwoNote);
-      m_chooser.addOption("RED Center 3", m_AutoRedCenterThreeNote);
-      m_chooser.addOption("RED Center 4", m_AutoRedCenterFourNote);
-      m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
-      m_chooser.addOption("RED North Trap", m_AutoRedNorthTwoNoteTRAP);
-      m_chooser.addOption("RED South 3 Mid4", m_AutoRedSouthThreeNoteMid4);
-      m_chooser.addOption("RED South 3 Mid5", m_AutoRedSouthThreeNoteMid5);
-    } else {
-      m_chooser.setDefaultOption("Shoot 1, stay", m_AutoShootOnly);
-      m_chooser.addOption("BLUE Center 2", m_AutoBlueCenterTwoNote);
-      m_chooser.addOption("BLUE Center 3", m_AutoBlueCenterThreeNote);
-      m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
-      m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
-      m_chooser.addOption("BLUE North Trap", m_AutoBlueNorthTwoNoteTRAP);
-      m_chooser.addOption("BLUE South 3 Mid4", m_AutoBlueSouthThreeNoteMid4);
-      m_chooser.addOption("BLUE South 3 Mid5", m_AutoBlueSouthThreeNoteMid5);
-    }
-     */
-    //m_chooser.setDefaultOption("BLUE/RED ANYWHERE Shoot 1, stay", m_AutoShootOnly);
-    m_chooser.addOption("FAST 1 ANY STAY", m_FASTStayShoot);
-    m_chooser.addOption("FAST CTR 2", m_FASTBlueCenterTwoPiece);
-    m_chooser.addOption("FAST CTR 3 TO SOUTH", m_FASTBlueCenterThreePieceSouth);
-    m_chooser.addOption("FAST CTR 3 TO NORTH", m_FASTBlueCenterThreePieceSouth);
-    m_chooser.addOption("FAST CTR 4", m_FASTBlueCenterFourPiece);
+    m_chooser.addOption("FAST 1 BLUE/RED CTR STAY", m_FASTCenterStayShoot);
+    m_chooser.addOption("FAST 1 BLUE NORTH STAY", m_FASTBlueNorthStayShoot);
+    m_chooser.addOption("FAST 1 BLUE SOUTH STAY", m_FASTBlueSouthStayShoot);
+    m_chooser.addOption("FAST 1 RED NORTH STAY", m_FASTRedNorthStayShoot);
+    m_chooser.addOption("FAST 1 RED SOUTH STAY", m_FASTRedSouthStayShoot);
+    m_chooser.addOption("FAST CTR 2", m_FASTCenterTwoPiece);
+    m_chooser.addOption("FAST CTR 3 TO SOUTH B", m_FASTCenterThreePieceSouth);
+    m_chooser.addOption("FAST CTR 3 TO NORTH B", m_FASTCenterThreePieceNorth);
+    m_chooser.addOption("FAST CTR 4", m_FASTCenterFourPiece);
     m_chooser.addOption("FAST BLUE NORTH LEAVE", m_FASTBlueNorthShootLeave);
-    m_chooser.addOption("FAST BLUE NORTH LEAVE to MID", m_FASTBlueNorthShootLeaveMid);
     m_chooser.addOption("FAST BLUE NORTH 2", m_FASTBlueNorthTwoPiece);
     m_chooser.addOption("FAST BLUE NORTH 2 MID1", m_FASTBlueNorthTwoPieceMid1);
-    m_chooser.addOption("FAST BLUE NORTH 2 MID1 STOP MID2", m_FASTBlueNorthTwoPieceMid1EndMid2);
     m_chooser.addOption("FAST BLUE NORTH 3 MID1", m_FASTBlueNorthThreePieceMid1);
     m_chooser.addOption("FAST BLUE NORTH 3 MID2", m_FASTBlueNorthThreePieceMid2);
     m_chooser.addOption("FAST BLUE SOUTH LEAVE", m_FASTBlueSouthShootLeave);
-    m_chooser.addOption("FAST BLUE SOUTH LEAVE to MID", m_FASTBlueSouthShootLeaveMid);
     m_chooser.addOption("FAST BLUE SOUTH 2", m_FASTBlueSouthShootTwoPiece);
-    m_chooser.addOption("FAST BLUE SOUTH 2 END MID5", m_FASTBlueSouthShootTwoPieceEndMid5);
-    m_chooser.addOption("FAST BLUE SOUTH 3 MID3", m_FASTBlueSouthShootThreePieceMid3);
-    m_chooser.addOption("FAST BLUE SOUTH 1 SWEEP", m_FASTBlueSouthShootSweep);
-    
-    //m_chooser.addOption("BLUE/RED Center 2", m_AutoEitherCenterTwoNote);
-   /*  m_chooser.addOption("BLUE/RED Center 1 leave", m_AutoEitherCenterOneAndLeave);
-   
-    m_chooser.addOption("BLUE North 1 leave", m_AutoBlueNorthOneAndLeave);
-    m_chooser.addOption("BLUE North 2", m_AutoBlueNorthTwoNote);
-    m_chooser.addOption("BLUE Center 3 North", m_AutoBlueCenterThreeNoteNorth);
-    m_chooser.addOption("BLUE Center 3 South", m_AutoBlueCenterThreeNoteSouth); */
-    //m_chooser.addOption("BLUE Center 3 - 2 AND 3", m_AutoBlueCenterMid2And3ThreeNote);
-    //m_chooser.addOption("BLUE Center 3 - 4 AND 3", m_AutoBlueCenterMid4And3ThreeNote);
-    //m_chooser.addOption("BLUE Center 3 - 2 AND Back", m_AutoBlueCenterMid2ToSubThreeNote);
-    //m_chooser.addOption("BLUE Center 3 - 3 AND Back", m_AutoBlueCenterMid3ToSubThreeNote);
-    //m_chooser.addOption("BLUE Center 3 - 4 AND Back", m_AutoBlueCenterMid4ToSubThreeNote);
-    //m_chooser.addOption("BLUE Center 4", m_AutoBlueCenterFourNote);
-    /* m_chooser.addOption("BLUE South 1 leave", m_AutoBlueSouthOneAndLeave);
-    m_chooser.addOption("BLUE South 2", m_AutoBlueSouthTwoNoteComplete);
-    m_chooser.addOption("Red North Clear", m_AutoBlueSouthTwoNoteComplete);
-    m_chooser.addOption("RED North 2", m_AutoRedNorthTwoNote);
-    m_chooser.addOption("RED Center 3 North", m_AutoRedCenterThreeNoteNorth);
-    m_chooser.addOption("RED Center 3 South", m_AutoRedCenterThreeNoteSouth); */
-    //m_chooser.addOption("RED Center 3 - 2 AND 3", m_AutoRedCenterMid2And3ThreeNote);
-    //m_chooser.addOption("RED Center 3 - 4 AND 3", m_AutoRedCenterMid4And3ThreeNote);
-    //m_chooser.addOption("RED Center 3 - 2 AND Back", m_AutoRedCenterMid2ToSubThreeNote);
-    //m_chooser.addOption("RED Center 3 - 3 AND Back", m_AutoRedCenterMid3ToSubThreeNote);
-   // m_chooser.addOption("RED Center 3 - 4 AND Back", m_AutoRedCenterMid4ToSubThreeNote);
-    /* m_chooser.addOption("RED South 2", m_AutoRedSouthTwoNoteComplete);
-    m_chooser.addOption("RED North CLear", m_AutoRedNorthClear);
-    m_chooser.addOption("BLUE/RED TRAP from Center", m_AutoTrapEitherSub);
-    m_chooser.addOption("BLUE/RED TRAP from AMP", m_AutoTrapEitherAMP); */
+    m_chooser.addOption("FAST BLUE SOUTH 2 MID4", m_FASTBlueSouthShootTwoPieceMid4);
+    m_chooser.addOption("FAST BLUE SOUTH 2 MID5", m_FASTBlueSouthShootTwoPieceMid5);
+    m_chooser.addOption("FAST RED NORTH LEAVE", m_FASTRedNorthShootLeave);
+    m_chooser.addOption("FAST RED NORTH 2", m_FASTRedNorthTwoPiece);
+    m_chooser.addOption("FAST RED NORTH 2 MID1", m_FASTRedNorthTwoPieceMid1);
+    m_chooser.addOption("FAST RED NORTH 3 MID1", m_FASTRedNorthThreePieceMid1);
+    m_chooser.addOption("FAST RED NORTH 3 MID2", m_FASTRedNorthThreePieceMid2);
+    m_chooser.addOption("FAST RED SOUTH LEAVE", m_FASTRedSouthShootLeave);
+    m_chooser.addOption("FAST RED SOUTH 2", m_FASTRedSouthTwoPiece);   
+    m_chooser.addOption("FAST RED SOUTH 2 MID4", m_FASTRedSouthTwoPieceCenter4);   
+    m_chooser.addOption("FAST RED SOUTH 2 MID5", m_FASTRedSouthTwoPieceCenter5);   
+    m_chooser.addOption("FAST BLUE SOUTH SWEEP", m_FASTBlueSouthShootSweep);
+    m_chooser.addOption("FAST RED SOUTH SWEEP", m_FASTRedSouthShootSweep);
     SmartDashboard.putData(m_chooser);
   }
 
@@ -496,26 +467,13 @@ private void configureBindings() {
   // GET THE AUTO COMMAND FROM THE CHOOSER
   public Command getAutonomousCommand() {
     // // An example command will be run in autonomous
-    // System.out.println("***************  **************    RUNNING AUTO    ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("*                                                                            *");
-    // System.out.println("*                                                                            *");
-    // System.out.println("*                                                                            *");
-    // System.out.println("               INTAKE NULL?          "+intakeSubsystem);
-    // System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
-    // System.out.println("                  ARM NULL?          "+armSubsystem);
-    // System.out.println("*                                                                            *");
-    // System.out.println("*                                                                            *");
-    // System.out.println("*                                                                            *");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
-    // System.out.println("***************  ************** ****************** ************ **************");
+     System.out.println("***************  **************    RUNNING AUTO    ************ **************");
+     System.out.println("*                                                                            *");
+     System.out.println("               INTAKE NULL?          "+intakeSubsystem);
+     System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
+     System.out.println("                  ARM NULL?          "+armSubsystem);
+     System.out.println("*                                                                            *");
+     System.out.println("***************  ************** ****************** ************ **************");
     
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }

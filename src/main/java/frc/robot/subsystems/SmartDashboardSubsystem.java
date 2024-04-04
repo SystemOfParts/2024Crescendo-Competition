@@ -20,22 +20,22 @@ public class SmartDashboardSubsystem extends SubsystemBase {
    * If you turn a wheel counnter-clockwise the angle value and SI value should increase
    */
   public void updateOdometryTelemetry() {
-    for (int i =0; i<4; i++){
+    /* for (int i =0; i<4; i++){
       SmartDashboard.putNumber("S"+i+" Angle Encoder", RobotContainer.driveSubsystem.telemetryAngleEncoder(i));
       SmartDashboard.putNumber("S"+i+" Angle Encoder SI Corrected ", RobotContainer.driveSubsystem.telemetryAngleEncoderSI(i));
       SmartDashboard.putNumber("S"+i+" Drive Encoder", RobotContainer.driveSubsystem.telemetryDriveEncoder(i));
       
-    }
+    } */
     
   }
 
   public void updateSwerveModuleTelemetry() {
 
-     for (int i =0; i<4; i++){
+     /* for (int i =0; i<4; i++){
       SmartDashboard.putNumber("S"+i+" Actual Angle Encoder ", RobotContainer.driveSubsystem.actualAngleEncoder(i));
       SmartDashboard.putNumber("S"+i+" Actual Angle Encoder SI ", RobotContainer.driveSubsystem.actualAngleEncoderSI(i));
 
-     }
+     } */
 
   }
 
@@ -51,11 +51,11 @@ public class SmartDashboardSubsystem extends SubsystemBase {
     //updateOdometryTelemetry();
     //updateSwerveModuleTelemetry();
     updateIMUTelemetry();
-    PrintFreakLevel();
-    SmartDashboard.putBoolean("April Visibility", RobotContainer.phtnVisionSubsystem.isApriltagVisible());
-    SmartDashboard.putBoolean("Note Visibility", RobotContainer.noteDetectionPhtnVisionSubsystem.isNoteVisible());
-    SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
-    SmartDashboard.putNumber("April Y in M", RobotContainer.phtnVisionSubsystem.getAprilTagY());
+    //PrintFreakLevel();
+    //SmartDashboard.putBoolean("April Visibility", RobotContainer.phtnVisionSubsystem.isApriltagVisible());
+    //SmartDashboard.putBoolean("Note Visibility", RobotContainer.noteDetectionPhtnVisionSubsystem.isNoteVisible());
+    //SmartDashboard.putNumber("April X in M", RobotContainer.phtnVisionSubsystem.getAprilTagX());
+    //SmartDashboard.putNumber("April Y in M", RobotContainer.phtnVisionSubsystem.getAprilTagY());
     SmartDashboard.putBoolean("NOTE INTAKE SENSOR", RobotContainer.intakeSubsystem.isNoteInIntake());
     SmartDashboard.putBoolean("NOTE LEFT", RobotContainer.intakeSubsystem.detectOnLeft());
     SmartDashboard.putBoolean("NOTE RIGHT", RobotContainer.intakeSubsystem.detectOnRight());
