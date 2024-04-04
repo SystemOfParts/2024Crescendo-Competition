@@ -14,6 +14,7 @@ import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import frc.robot.commands.FASTRunTrajectorySequenceRobotAtStartPoint;
 import frc.robot.commands.AutoIntakeMoveShoot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 
 public class FAST_AutoBlueNorthShootLeaveToMid extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */

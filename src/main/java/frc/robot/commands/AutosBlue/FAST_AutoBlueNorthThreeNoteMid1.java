@@ -23,8 +23,8 @@ public class FAST_AutoBlueNorthThreeNoteMid1 extends SequentialCommandGroup {
     ShooterSubsystem m_s
   ) {
     addCommands(
-            new WaitCommand(.5),
-                        new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(60)), // set yaw to the one in the initial pose
+      new WaitCommand(.5),
+      new InstantCommand(() -> RobotContainer.imuSubsystem.setYaw(60)), // set yaw to the one in the initial pose
 
 
       new InstantCommand(() -> m_s.runShooter(Orientations.AUTO_SUBWOOFER)),

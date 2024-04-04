@@ -13,10 +13,11 @@ import frc.robot.Constants.OrientationConstants.Orientations;
 import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoIntakeMoveShoot;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 
-public class FAST_AutoBlueStayShoot extends SequentialCommandGroup {
+public class FAST_AutoBlueNorthStayShoot extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */
-  public FAST_AutoBlueStayShoot(
+  public FAST_AutoBlueNorthStayShoot(
     ArmSubsystem m_a,
     IntakeSubsystem m_i,
     ShooterSubsystem m_s

@@ -14,6 +14,7 @@ import frc.robot.commands.AutonomousCommands.AutoMoveToOrientationCommand;
 import frc.robot.commands.AutoIntakeMoveShoot;
 import frc.robot.commands.FASTRunTrajectorySequenceRobotAtStartPoint;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 
 public class FAST_AutoBlueSouthSweep extends SequentialCommandGroup {
   /** Creates a new ThreeNoteAuto. */
