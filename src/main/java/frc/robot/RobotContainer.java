@@ -126,42 +126,6 @@ public class RobotContainer {
   private final Command m_FASTBlueSouthShootThreePieceMid3= new FAST_AutoBlueSouthThreeNoteMid3(armSubsystem, intakeSubsystem, shooterSubsystem);
   private final Command m_FASTBlueSouthShootSweep= new FAST_AutoBlueSouthSweep(armSubsystem, intakeSubsystem, shooterSubsystem);
   
-  // Neutral
-  //private final Command m_AutoShootOnly = new AutoShootAndStay(armSubsystem, shooterSubsystem, intakeSubsystem);
-  //private final Command m_AutoEitherCenterOneAndLeave = new AutoEitherCenterOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  //private final Command m_AutoEitherCenterTwoNote = new AutoEitherCenterTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoTrapEitherSub = new AutoTrapFromEitherSpeaker(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoTrapEitherAMP = new AutoTrapFromEitherAMP(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_PIDAcrossUpDown = new AutoPIDAcrossUpDown(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_PIDHoloInside = new AutoPIDTuneHoloInside();
-  //private final Command m_PIDHoloOutside = new AutoPIDTuneHoloOutside();
-
-  // Blue
-  //private final Command m_AutoBlueNorthOneAndLeave = new AutoBlueNorthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  //private final Command m_AutoBlueNorthTwoNote = new AutoBlueNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterFourNote = new AutoBlueCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterThreeNoteNorth = new AutoBlueCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterThreeNoteSouth = new AutoBlueCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterMid2And3ThreeNote = new AutoBlueCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterMid4And3ThreeNote = new AutoBlueCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterMid2ToSubThreeNote = new AutoBlueCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterMid3ToSubThreeNote = new AutoBlueCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueCenterMid4ToSubThreeNote = new AutoBlueCenterMid4ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueSouthOneAndLeave = new AutoBlueSouthOneNoteLeave(armSubsystem, shooterSubsystem, intakeSubsystem);
-  //private final Command m_AutoBlueNorthClear = new AutoBlueNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoBlueSouthTwoNoteComplete = new AutoBlueSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
-  
-  // Red
-  //private final Command m_AutoRedCenterFourNote = new AutoRedCenterFourNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedNorthTwoNote = new AutoRedNorthTwoNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterThreeNoteNorth = new AutoRedCenterThreeNoteNorth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterThreeNoteSouth = new AutoRedCenterThreeNoteSouth(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterMid2And3ThreeNote = new AutoRedCenterMid2And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterMid4And3ThreeNote = new AutoRedCenterMid4And3ThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterMid2ToSubThreeNote = new AutoRedCenterMid2ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedCenterMid3ToSubThreeNote = new AutoRedCenterMid3ToSubThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedNorthClear = new AutoRedNorthClear(armSubsystem, intakeSubsystem, shooterSubsystem);
-  //private final Command m_AutoRedSouthTwoNoteComplete = new AutoRedSouthTwoNoteComplete(armSubsystem, intakeSubsystem, shooterSubsystem);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -495,7 +459,6 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE RIGHT
   new JoystickButton(xboxController, 4)
      .onTrue(new TurnToDegreeIMU( 
       0, 
@@ -508,7 +471,6 @@ private void configureBindings() {
                         () -> getDriverOmegaAxis(),
                         () -> getDriverFieldCentric()));
 
-  // ROTATE THE BOT TO ANGLE TOWARD THE STAGE LEFT
   new JoystickButton(xboxController, 1)
  .onTrue(new TurnToDegreeIMU( 
       180, 
@@ -528,54 +490,32 @@ private void configureBindings() {
     .whileTrue(new FeedShooterCommand(shooterSubsystem, intakeSubsystem)) //driver's right bumper intakes to shoot, and then goes to travel position on release
     .onFalse(new IntakeStopCommand(intakeSubsystem, false));
 
-    new JoystickButton(xboxController, 5)
-    .onTrue(new TurnToDegreeIMU( 
-      -31, 
-        () -> getDriverXAxis(),
-        () -> getDriverYAxis(),
-        driveSubsystem, false))
-    .onFalse( new DriveManuallyCommand(
-                        () -> getDriverXAxis(),
-                        () -> getDriverYAxis(),
-                        () -> getDriverOmegaAxis(),
-                        () -> getDriverFieldCentric()));
-  /* 
-  new JoystickButton(xboxController, 5)
-    .onTrue(
-        new TurnToDegreeIMU((180 - (phtnVisionSubsystem.getAprilTagZAngle())), driveSubsystem, false)) 
-
-
-    .onFalse( new DriveManuallyCommand(
-                        () -> getDriverXAxis(),
-                        () -> getDriverYAxis(),
-                        () -> getDriverOmegaAxis(),
-                        () -> getDriverFieldCentric()));
-  */    
+  
 }
 
   // GET THE AUTO COMMAND FROM THE CHOOSER
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    System.out.println("***************  **************    RUNNING AUTO    ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("               INTAKE NULL?          "+intakeSubsystem);
-    System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
-    System.out.println("                  ARM NULL?          "+armSubsystem);
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("*                                                                            *");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
-    System.out.println("***************  ************** ****************** ************ **************");
+    // // An example command will be run in autonomous
+    // System.out.println("***************  **************    RUNNING AUTO    ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("               INTAKE NULL?          "+intakeSubsystem);
+    // System.out.println("              SHOOTER NULL?          "+shooterSubsystem);
+    // System.out.println("                  ARM NULL?          "+armSubsystem);
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("*                                                                            *");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
+    // System.out.println("***************  ************** ****************** ************ **************");
     
     return m_chooser.getSelected(); //AutoBlueCenterThreeNote(armSubsystem, intakeSubsystem, shooterSubsystem);
   }

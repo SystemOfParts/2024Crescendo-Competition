@@ -82,10 +82,11 @@ public class SwerveModule extends SubsystemBase {
     public double telemetryDriveEncoder(){
         return driveMotor.getDriveEncoderPositionSI();
     }
-
-    public static double getFreakiness() {
-        return driveMotor.getFreakiness();
+     public double telemetryDriveVelocity(){
+        return driveMotor.getDriveEncoderVelocity();
     }
+
+ 
 
     public void testDriveMotorApplyPower(double power) {
         driveMotor.testMotorApplyPower(power);

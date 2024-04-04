@@ -78,6 +78,11 @@ public class DriveSubsystem extends SubsystemBase {
   public double telemetryDriveEncoder(int modnumber) {
     return (swerveMods[modnumber].telemetryDriveEncoder() * 42); 
   }
+  
+  public double getFreakiness(int modnumber) {
+    return (swerveMods[modnumber].telemetryDriveVelocity()); 
+  }
+  
 
   // Used only for motor testing; run motor forward, 0.3 power
   public void testDriveMotorEncoderPhase(int modnumber){

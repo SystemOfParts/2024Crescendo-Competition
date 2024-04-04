@@ -69,7 +69,7 @@ public class SmartDashboardSubsystem extends SubsystemBase {
 
   public void PrintFreakLevel() {
 
-     SmartDashboard.putNumber("Freak Level", SwerveModule.getFreakiness());
+     SmartDashboard.putNumber("Freak Level", RobotContainer.driveSubsystem.getFreakiness(1));
 
      }
 

@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.setLEDPattern(BlinkinPattern.CP1_HEARTBEAT_MEDIUM); 
+    m_robotContainer.setLEDPattern(BlinkinPattern.DARK_RED); 
   }
 
   @Override
@@ -74,21 +74,21 @@ public class Robot extends TimedRobot {
     m_robotContainer.setAutoPattern();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("");
-    System.out.println("");
-    System.out.println("******************************************  "+m_robotContainer.intakeSubsystem);
-    System.out.println("******************************************  "+m_robotContainer.armSubsystem); 
-    System.out.println("******************************************  "+m_robotContainer.shooterSubsystem);
-    System.out.println("");
-    System.out.println("");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
-    System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("");
+    // System.out.println("");
+    // System.out.println("******************************************  "+m_robotContainer.intakeSubsystem);
+    // System.out.println("******************************************  "+m_robotContainer.armSubsystem); 
+    // System.out.println("******************************************  "+m_robotContainer.shooterSubsystem);
+    // System.out.println("");
+    // System.out.println("");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
+    // System.out.println("******************************************  AUTO  INIT  **************************************");
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
