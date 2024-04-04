@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.AutosRed;
+package frc.robot.commands.AutosRed.Archive;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -19,8 +19,8 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AutoRedCenterMid2And3ThreeNote extends SequentialCommandGroup {
-  public AutoRedCenterMid2And3ThreeNote(
+public class AutoRedCenterMid4And3ThreeNote extends SequentialCommandGroup {
+  public AutoRedCenterMid4And3ThreeNote(
     ArmSubsystem m_arm,
     IntakeSubsystem m_intake,
     ShooterSubsystem m_shooter
@@ -34,7 +34,7 @@ public class AutoRedCenterMid2And3ThreeNote extends SequentialCommandGroup {
       new ParallelCommandGroup(
         //start moving WHILE we move to intake (after a 5 second pause)
         // begin moving to the next note
-        new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeToMid2AndPod"),
+        new RunTrajectorySequenceRobotAtStartPoint("RedCenterThreeToMid4AndPod"),
         new SequentialCommandGroup(
           // wait half a second then put the intake down
           new WaitCommand(.5),
